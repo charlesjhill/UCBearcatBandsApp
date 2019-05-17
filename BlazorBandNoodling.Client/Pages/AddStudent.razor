@@ -1,0 +1,45 @@
+﻿@page "/addstudent"
+@using BlazorBandNoodling.Shared.Models
+@using System.Net.Http
+@inject HttpClient Http
+@inject Microsoft.AspNetCore.Blazor.Services.WebAssemblyUriHelper UriHelper
+
+<h1>Create Student</h1>
+<hr />
+<EditForm Model="@student" OnSubmit="@CreateStudent">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <p>
+        <label for="LastName">Last Name: </label>
+        <InputText class="form-control" id="LastName" bind-Value="@student.LastName" />
+    </p>
+    <p>
+        <label for="FirstName">First Name: </label>
+        <InputText class="form-control" id="FirstName" bind-Value="@student.FirstName" />
+    </p>
+    <p>
+        <label for="MNumber">M-Number: </label>
+        <InputText class="form-control" id="MNumber" bind-Value="@student.MNumber" />
+    </p>
+
+    <div class="btn-group">
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn" onclick="@Cancel">Cancel</button>
+    </div>
+</EditForm>
+
+@functions {
+    private Student student = new Student();
+
+    private async Task CreateStudent()
+    {
+        await Http.PostJsonAsync("/api/Students", student);
+        UriHelper.NavigateTo("/students");
+    }
+
+    void Cancel()
+    {
+        UriHelper.NavigateTo("/students");
+    }
+}

@@ -1,0 +1,65 @@
+﻿@page "/students"
+@using BlazorBandNoodling.Shared.Models
+@inject HttpClient Http
+
+<h1>CRUD Student Operations</h1>
+
+@if (students == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="btn-group">
+        <a class="btn btn-primary" href="/addstudent">Add Student</a>
+        <button class="btn btn-dark" type="button" onclick="@(async () => await AddExampleStudentAsync())">
+            Add Example Student
+        </button>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>M-Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in students)
+            {
+                <tr>
+                    <td>@student.LastName</td>
+                    <td>@student.FirstName</td>
+                    <td>@student.MNumber</td>
+                    <td>
+                        <a href="/EditStudent/@student.ID">Edit</a>
+                        <a href="/DeleteStudent/@student.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@functions {
+    Student[] students;
+
+    protected override async Task OnInitAsync()
+    {
+        students = await Http.GetJsonAsync<Student[]>("api/Students/");
+    }
+
+    protected async Task AddExampleStudentAsync()
+    {
+        var student = new Student
+        {
+            FirstName = "Ben",
+            LastName = "Hollar",
+            MNumber = "M12345678"
+        };
+        await Http.PostJsonAsync("api/Students", student);
+
+        await OnInitAsync();
+    }
+}

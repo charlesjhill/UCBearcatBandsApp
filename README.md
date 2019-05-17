@@ -11,11 +11,11 @@ The way things are currently swinging, we need a database-backed web API. We hav
 For frontends, we are doing two UIs:
 - A traditional web application, currently using [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/client).
   - This is not set in stone. Other options include: 
-  - [Razor Pages](https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-3.0&tabs=visual-studio)
-  - [Angular](https://angular.io/) - A Typescript Framework for building UIs; integrates cleanly enough with a ASP.NET backend
-  - [React](https://reactjs.org/) - More JS, should also be easy enough.
-  - [Vue.JS](https://vuejs.org/) - More JS; Don't know a lot about this one but it could be neat.
-  - Plain JS/HTML/CSS - It's an option that we just don't use a web framework at all
+    - [Razor Pages](https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-3.0&tabs=visual-studio)
+    - [Angular](https://angular.io/) - A Typescript Framework for building UIs; integrates cleanly enough with a ASP.NET backend
+    - [React](https://reactjs.org/) - More JS, should also be easy enough.
+    - [Vue.JS](https://vuejs.org/) - More JS; Don't know a lot about this one but it could be neat.
+    - Plain JS/HTML/CSS - It's an option that we just don't use a web framework at all
 - A mobile app
   - Ben is most comfortable with iOS development using Swift.
     - To save time, we could limit our initial scope to iOS only
@@ -36,5 +36,7 @@ If you want to muck around with the web app frontend (currently in Blazor), you'
 - [This](https://marketplace.visualstudio.com/items?itemName=aspnet.blazor) extension
 - Then execute the following command:  
   `dotnet new -i Microsoft.AspNetCore.Blazor.Templates::3.0.0-preview5-19227-01`
+
+---
 
 For the mobile app client, we'll need to decide what approach we're taking. If we're doing iOS only using Swift, you're going to need a Mac (or macOS if you want to run a Hackintosh or VM) and the Xcode IDE. If we take a different approach, this will change. For example, Xamarin would just require installing the Xamarin tools in Visual Studio (I believe).

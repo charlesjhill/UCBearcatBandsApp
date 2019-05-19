@@ -34,7 +34,7 @@ else
                     <td>@student.MNumber</td>
                     <td>
                         <a href="/EditStudent/@student.ID">Edit</a>
-                        <a href="/DeleteStudent/@student.ID">Delete</a>
+                        <a href="javascript:;" onclick="@(async () => await DeleteStudent(student.ID))">Delete</a>
                     </td>
                 </tr>
             }
@@ -59,6 +59,13 @@ else
             MNumber = "M12345678"
         };
         await Http.PostJsonAsync("api/Students", student);
+
+        await OnInitAsync();
+    }
+
+    protected async Task DeleteStudent(int id)
+    {
+        await Http.DeleteAsync($"api/Students/{id}");
 
         await OnInitAsync();
     }

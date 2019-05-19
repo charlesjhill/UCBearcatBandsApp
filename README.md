@@ -11,7 +11,7 @@ The way things are currently swinging, we need a database-backed web API. We hav
 For frontends, we are doing two UIs:
 - A traditional web application, currently using [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/client).
   - This is not set in stone. Other options include: 
-    - [Razor Pages](https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-3.0&tabs=visual-studio)
+    - [Razor Pages](https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-3.0&tabs=visual-studio) - Another offering from the C# camp that is an implementation of Model-View-Controller (MVC) architecture; unclear how decoupled from a webAPI it actually is.
     - [Angular](https://angular.io/) - A Typescript Framework for building UIs; integrates cleanly enough with a ASP.NET backend
     - [React](https://reactjs.org/) - More JS, should also be easy enough.
     - [Vue.JS](https://vuejs.org/) - More JS; Don't know a lot about this one but it could be neat.
@@ -25,7 +25,7 @@ For frontends, we are doing two UIs:
     - A multitude of other new, poorly documented / supported cross-platform frameworks
   
 # Set up Information
-As it currently stands, the project uses (Blazor)[https://dotnet.microsoft.com/apps/aspnet/web-apps/client] for the web-app client, and an ASP.NET Core WebAPI for the server backend.
+As it currently stands, the project uses [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/client) for the web-app client, and an ASP.NET Core WebAPI for the server backend.
 
 To ensure smooth building and development of the backend, you'll want the following two things
 - [.NET Core 3.0 Preview 5](https://dotnet.microsoft.com/download/dotnet-core/3.0)

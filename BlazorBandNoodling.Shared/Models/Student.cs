@@ -22,6 +22,11 @@ namespace BlazorBandNoodling.Shared.Models
         [RegularExpression(@"M\d{8}", ErrorMessage = "Please include an M followed by 8 digits")]
         public string MNumber { get; set; }
 
+        // Computed Properties
+
+        public string FullName => FirstName + " " + LastName;
+
+
         // "Connection" Properties
 
         ICollection<Enrollment> Enrollments { get; set; }

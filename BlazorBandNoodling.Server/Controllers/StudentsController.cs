@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BlazorBandNoodling.Server.DataAccess;
@@ -23,7 +22,7 @@ namespace BlazorBandNoodling.Server.Controllers
 
         // GET: api/Students
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Student>>> GetStudents([FromQuery] string filterString)
+        public async Task<ActionResult<IEnumerable<Student>>> GetStudents([FromQuery] string filterString, [FromQuery] string sortOrder)
         {
             var studentQuery = _context.Students.Select(s => s);
 
@@ -32,7 +31,24 @@ namespace BlazorBandNoodling.Server.Controllers
                 studentQuery = studentQuery.Where(s => s.LastName.Contains(filterString) || s.FirstName.Contains(filterString));
             }
 
-            return await studentQuery.ToListAsync().ConfigureAwait(false);
+            switch (sortOrder)
+            {
+                case "lname_desc":
+                    studentQuery = studentQuery.OrderByDescending(s => s.LastName);
+                    break;
+                case "fname":
+                    studentQuery = studentQuery.OrderBy(s => s.FirstName);
+                    break;
+                case "fname_desc":
+                    studentQuery = studentQuery.OrderByDescending(s => s.FirstName);
+                    break;
+                default:
+                    studentQuery = studentQuery.OrderBy(s => s.LastName);
+                    break;
+            }
+
+
+            return await studentQuery.AsNoTracking().ToListAsync().ConfigureAwait(false);
         }
 
         // GET: api/Students/5

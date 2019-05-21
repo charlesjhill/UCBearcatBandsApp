@@ -34,13 +34,20 @@ else
         </div>
     </div>
 
-
     <table class="table table-striped">
         <caption>List of Students</caption>
         <thead>
             <tr>
-                <th scope="col">Last Name</th>
-                <th scope="col">First Name</th>
+                <th scope="col">
+                    <a href="javascript:;" onclick="@(async () => await ToggleLastNameSort())">
+                        Last Name
+                    </a>
+                </th>
+                <th scope="col">
+                    <a href="javascript:;" onclick="@(async () => await ToggleFirstNameSort())">
+                        First Name
+                    </a>
+                </th>
                 <th scope="col">M-Number</th>
                 <th></th>
             </tr>
@@ -83,6 +90,11 @@ else
     protected Student selectedStudent = new Student();
 
     protected string FilterString { get; set; } = "";
+
+    protected string CurrentSort { get; set; } = "lname";
+
+    protected string BaseUrl { get; set; } = "api/Students";
+    protected Dictionary<string, string> QueryParameters { get; set; } = new Dictionary<string, string>();
 
     // Initialization/Utility Functions
 
@@ -137,13 +149,14 @@ else
 
     protected async Task FilterStudents()
     {
+        QueryParameters["filterString"] = FilterString;
         await GetStudents(); // GetStudents applies any filterstring
     }
 
     protected async Task GetStudents()
     {
-        string url = "api/Students";
-        url = QueryHelpers.AddQueryString(url, "filterString", FilterString);
+        // Add the query parameters in QueryParameters to the url
+        string url = QueryHelpers.AddQueryString(BaseUrl, QueryParameters);
         students = await Http.GetJsonAsync<Student[]>(url);
     }
 
@@ -169,4 +182,25 @@ else
 
     }
 
+    // Sorting Operations
+
+    protected async Task ToggleLastNameSort()
+    {
+        CurrentSort = CurrentSort == "lname"
+                      ? "lname_desc"
+                      : "lname";
+        QueryParameters["sortOrder"] = CurrentSort;
+
+        await GetStudents();
+    }
+
+    protected async Task ToggleFirstNameSort()
+    {
+        CurrentSort = CurrentSort == "fname"
+                      ? "fname_desc"
+                      : "fname";
+        QueryParameters["sortOrder"] = CurrentSort;
+        
+        await GetStudents();
+    }
 }

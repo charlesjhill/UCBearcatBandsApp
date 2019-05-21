@@ -1,5 +1,6 @@
 ﻿@page "/students"
 @using BlazorBandNoodling.Shared.Models
+@using Microsoft.AspNetCore.WebUtilities
 @inject HttpClient Http
 
 <h1>Student Operations</h1>
@@ -81,7 +82,7 @@ else
     protected string ModalTitle { get; set; }
     protected Student selectedStudent = new Student();
 
-    protected string FilterString { get; set; }
+    protected string FilterString { get; set; } = "";
 
     // Initialization/Utility Functions
 
@@ -136,17 +137,14 @@ else
 
     protected async Task FilterStudents()
     {
-        // For now, grab all the students, then filter client-side
-        await GetStudents();
-        if (FilterString != "")
-        {
-            students = students.Where(student => student.FullName.Contains(FilterString)).ToArray();
-        }
+        await GetStudents(); // GetStudents applies any filterstring
     }
 
     protected async Task GetStudents()
     {
-        students = await Http.GetJsonAsync<Student[]>("api/Students");
+        string url = "api/Students";
+        url = QueryHelpers.AddQueryString(url, "filterString", FilterString);
+        students = await Http.GetJsonAsync<Student[]>(url);
     }
 
     protected async Task DeleteStudent()

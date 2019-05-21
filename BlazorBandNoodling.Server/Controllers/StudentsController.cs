@@ -23,9 +23,16 @@ namespace BlazorBandNoodling.Server.Controllers
 
         // GET: api/Students
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+        public async Task<ActionResult<IEnumerable<Student>>> GetStudents([FromQuery] string filterString)
         {
-            return await _context.Students.ToListAsync().ConfigureAwait(false);
+            var studentQuery = _context.Students.Select(s => s);
+
+            if (!string.IsNullOrEmpty(filterString))
+            {
+                studentQuery = studentQuery.Where(s => s.LastName.Contains(filterString) || s.FirstName.Contains(filterString));
+            }
+
+            return await studentQuery.ToListAsync().ConfigureAwait(false);
         }
 
         // GET: api/Students/5

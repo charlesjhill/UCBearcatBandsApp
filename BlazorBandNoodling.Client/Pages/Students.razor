@@ -10,15 +10,29 @@
 }
 else
 {
-    <div class="mb-2">
-        <button class="btn btn-primary" type="button" onclick="@AddStudent">
-            Add Student
-        </button>
-        <button class="btn btn-dark" type="button" onclick="@(async () => await AddExampleStudentAsync())">
-            Add Example Student
-        </button>
+    <div class="container-fluid">
+        <div class="row mb-3 justify-content-between">
+            <div class="col">
+                <div class="btn-group" role="group" aria-label="Add Students">
+                    <button class="btn btn-primary" type="button" onclick="@AddStudent">
+                        Add Student
+                    </button>
+                    <button class="btn btn-dark" type="button" onclick="@(async () => await AddExampleStudentAsync())">
+                        Add Example Student
+                    </button>
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search" bind="@FilterString" />
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-info" onclick="@FilterStudents">Filter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
+
 
     <table class="table table-striped">
         <caption>List of Students</caption>
@@ -49,13 +63,13 @@ else
     @if (isAddOrEdit)
     {
         <StudentAddModal Title="@ModalTitle" Student="@selectedStudent"
-                      OnSave="@SaveStudent" OnCancel="@CloseModal"/>
+                         OnSave="@SaveStudent" OnCancel="@CloseModal" />
     }
 
     @if (isDelete)
     {
         <StudentDeleteModal Title="@ModalTitle" Student="@selectedStudent"
-                            OnSave="@DeleteStudent" OnCancel="@CloseModal"/>
+                            OnSave="@DeleteStudent" OnCancel="@CloseModal" />
     }
 }
 
@@ -67,16 +81,13 @@ else
     protected string ModalTitle { get; set; }
     protected Student selectedStudent = new Student();
 
+    protected string FilterString { get; set; }
+
     // Initialization/Utility Functions
 
     protected override async Task OnInitAsync()
     {
         await GetStudents();
-    }
-
-    protected async Task GetStudents()
-    {
-        students = await Http.GetJsonAsync<Student[]>("api/Students");
     }
 
     protected async Task AddExampleStudentAsync()
@@ -92,13 +103,13 @@ else
         await GetStudents();
     }
 
+    // DOM Manipulation Functions
+
     protected void CloseModal()
     {
         this.isAddOrEdit = false;
         this.isDelete = false;
     }
-
-    // DOM Manipulation Functions
 
     protected void AddStudent()
     {
@@ -122,6 +133,21 @@ else
     }
 
     // DB Interaction Functions
+
+    protected async Task FilterStudents()
+    {
+        // For now, grab all the students, then filter client-side
+        await GetStudents();
+        if (FilterString != "")
+        {
+            students = students.Where(student => student.FullName.Contains(FilterString)).ToArray();
+        }
+    }
+
+    protected async Task GetStudents()
+    {
+        students = await Http.GetJsonAsync<Student[]>("api/Students");
+    }
 
     protected async Task DeleteStudent()
     {

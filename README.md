@@ -14,13 +14,8 @@ For frontends, we are doing two UIs:
   - [Angular](https://angular.io/) - A Typescript Framework for web applications; Mature and tested. Supported by Google Open Source
   - [React](https://reactjs.org/) - "A JS library for building UIs" - Supported by Facebook Open Source
   - [Vue.JS](https://vuejs.org/) - "Approachable, versatile, performant " - Newcomer with regards to these things, but it's pretty poppin on GitHub.
-- A mobile app
-  - Ben is most comfortable with iOS development using Swift.
-    - To save time, we could limit our initial scope to iOS only
-  - This class would be a good chance to learn something else. Options include:
-    - [Xamarin](https://visualstudio.microsoft.com/xamarin/) - A C# based cross-platform mobile development framework. It allegedly lets you make native UIs per-platform with minimal platform-specific code.
-    - Two separate, mutually exclusive apps for Android (Java, Kotlin) and iOS (Swift). 
-    - A multitude of other new, poorly documented / supported cross-platform frameworks
+- An iOS only mobile app
+  - Details about our configuration / setup are below.
   
 # Set up Information
 ---
@@ -45,9 +40,13 @@ For frontends, we are doing two UIs:
 ???
 
 ## iOS App Setup
+Since the iOS app is really just going to be a frontend wrapper for our web API, I'll go ahead and suggest you set up a backend server. The app won't really do much if it can't ping that.
+
+After you've done that, do the following to work on the iOS app:
 1. Have a Mac (or run macOS)
 2. Download the Xcode IDE.
-3. ???
-4. Ask Ben
+3. Install [CocoaPods](https://cocoapods.org), used as a package manager in the same vein as `pip` for Python.
+4. Inside the "MobileApp" directory, you'll find a file named `Podfile`; this specifies our dependencies. Run `pod install` in the terminal to install them.
+5. Open the `MobileApp.xcworkspace` file in Xcode, and everything should be ready to go. Note that you don't use `MobileApp.xcodeproj`, it's not tied into the CocoaPods dependencies.
 
-This procedure might differ if we roll with Xamarin or something else for the backend, in which case you'll want Visual Studio (or something else).
+Ben has some lingering concerns about code signing (requires an iCloud account and he's set it up to use his), but this should more or less work. If you run into issues consult Ben.

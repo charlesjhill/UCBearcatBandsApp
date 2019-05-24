@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="modal dialog-container" tabindex="-1" role="dialog" style="display:block" id="Modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">@Title</h3>
+                <button type="button" class="close" onclick="@OnCancel" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @ChildContent
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-block @SaveClass" onclick="@(async e => await OnSave.InvokeAsync(e))" data-dismiss="modal">
+                    @SaveText
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+
+    [Parameter]
+    private string Title { get; set; } = "Modal";
+
+    [Parameter]
+    private RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    private EventCallback OnCancel { get; set; }
+
+    [Parameter]
+    private EventCallback OnSave { get; set;}
+
+    /// <summary>
+    /// Text for the save button
+    /// </summary>
+    [Parameter]
+    private string SaveText { get; set; } = "Save";
+
+    /// <summary>
+    /// Configurable save button css class. Defaults to "btn-info"
+    /// </summary>
+    [Parameter]
+    private string SaveClass { get; set; } = "btn-info";
+}

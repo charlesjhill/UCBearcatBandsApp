@@ -490,3 +490,11 @@ xcuserdata/
 *.dSYM
 timeline.xctimeline
 playground.xcworkspace
+
+# CocoaPods
+#   This is really just a personal preference, but it's my preference to not commit dependencies (pods) to VC. 
+#   We'll ignore the downloaded Pods, the .lock file, and .xcworkspace (created by `pod install`)
+#
+[Pp]ods
+[Pp]odfile.lock
+*.xcworkspace

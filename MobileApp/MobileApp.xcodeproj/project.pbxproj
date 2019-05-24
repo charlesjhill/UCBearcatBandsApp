@@ -102,7 +102,6 @@
 			isa = PBXGroup;
 			children = (
 				B5D68D1122983DD200600B76 /* MobileApp */,
-				B530D2102298A67D001F22A6 /* Protocols */,
 				B5D68D2622983DD300600B76 /* MobileAppTests */,
 				B5D68D1022983DD200600B76 /* Products */,
 				B45693B380EEE561EB583D06 /* Pods */,
@@ -128,6 +127,7 @@
 				B5D68D3522983E6900600B76 /* Controllers */,
 				B5D68D3422983E5600600B76 /* Views */,
 				B5D68D3222983E4700600B76 /* Models */,
+				B530D2102298A67D001F22A6 /* Protocols */,
 			);
 			path = MobileApp;
 			sourceTree = "<group>";

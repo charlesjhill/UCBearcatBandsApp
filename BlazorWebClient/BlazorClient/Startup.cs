@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using BlazorClient.Services;
 
 namespace BlazorClient
 {
@@ -7,6 +8,7 @@ namespace BlazorClient
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IStudentDataAccess, StudentDataAccess>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)

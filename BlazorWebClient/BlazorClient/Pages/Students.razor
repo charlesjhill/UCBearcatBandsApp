@@ -1,7 +1,5 @@
 ﻿@page "/students"
-@using BlazorClient.Shared
-@using Microsoft.AspNetCore.WebUtilities
-@inject HttpClient Http
+@inject BlazorClient.Services.IStudentDataAccess DataService
 
 <h1>Student Operations</h1>
 
@@ -92,22 +90,11 @@ else
 
     protected string SearchString { get; set; } = "";
 
-    protected string CurrentSort { get; set; } = "lname";
+    protected string CurrentSort { get; set; } = "last_name";
 
-    protected string BaseUrl { get; set; } = "http://127.0.0.1:8000/students";
     protected Dictionary<string, string> QueryParameters { get; set; } = new Dictionary<string, string>();
 
     // Initialization/Utility Functions
-
-    protected string AppendSlash(string url)
-    {
-        if (url.Last() != '/')
-        {
-            return url + '/';
-        }
-
-        return url;
-    }
 
     protected override async Task OnInitAsync()
     {
@@ -122,7 +109,7 @@ else
             LastName = "Hollar",
             MNumber = "M12345678"
         };
-        await Http.PostJsonBetterAsync(AppendSlash(BaseUrl), student);
+        await DataService.AddStudent(student);
 
         await GetStudents();
     }
@@ -144,25 +131,26 @@ else
 
     protected async Task EditStudent(int id)
     {
-        selectedStudent = await Http.GetJsonBetterAsync<Student>(AppendSlash($"{BaseUrl}/{id}"));
+        selectedStudent = await DataService.RetrieveStudent(id);
         ModalTitle = "Edit Student";
         isAddOrEdit = true;
     }
 
     protected async Task DeleteConfirm(int id)
     {
-        selectedStudent = await Http.GetJsonBetterAsync<Student>(AppendSlash($"{BaseUrl}/{id}"));
+        selectedStudent = await DataService.RetrieveStudent(id);
         ModalTitle = "Delete Student";
         isDelete = true;
     }
 
-    // DB Interaction Functions
+    // DataService Interaction Functions
 
     protected async Task FilterStudents()
     {
         string searchKeyName = "search";
         if (string.IsNullOrEmpty(SearchString) && QueryParameters.ContainsKey(searchKeyName))
         {
+            // If we have an empty search, we shouldn't attach a search string
             QueryParameters.Remove(searchKeyName);
         }
         else
@@ -175,14 +163,12 @@ else
 
     protected async Task GetStudents()
     {
-        // Add the query parameters in QueryParameters to the url
-        string url = QueryHelpers.AddQueryString(AppendSlash(BaseUrl), QueryParameters);
-        students = await Http.GetJsonBetterAsync<Student[]>(url);
+        students = await DataService.GetStudents(QueryParameters);
     }
 
     protected async Task DeleteStudent()
     {
-        await Http.DeleteAsync(AppendSlash($"{BaseUrl}/{selectedStudent.ID}"));
+        await DataService.DeleteStudent(selectedStudent.ID);
         isDelete = false;
         await GetStudents();
     }
@@ -191,11 +177,11 @@ else
     {
         if (selectedStudent.ID != 0)
         {
-            await Http.PutJsonBetterAsync(AppendSlash($"{BaseUrl}/{selectedStudent.ID}"), selectedStudent);
+            await DataService.UpdateStudent(selectedStudent);
         }
         else
         {
-            await Http.PostJsonBetterAsync(AppendSlash(BaseUrl), selectedStudent);
+            await DataService.AddStudent(selectedStudent);
         }
         isAddOrEdit = false;
         await GetStudents();

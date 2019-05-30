@@ -5,15 +5,16 @@ It's an app for the UC Bearcat Bands
 ---
 The way things are currently swinging, we need a database-backed web API. The current play is with this one:
 - [Django](https://www.djangoproject.com/) - A "batteries-included" python web-framework
-  - To make coding a proper API easier, [Djano-Rest-Framework](https://www.django-rest-framework.org/) is hella nice.
+  - To make coding a REST API easier, [Djano-Rest-Framework](https://www.django-rest-framework.org/) is hella nice.
   - P.S., the way the Django project is currently structured is not something I'm strongly attached to and I'm willing to move the "app" folder (`bands`) outside of the project folder (`ucbearcatbandsproject`) if we determine that'd be easier to work with.
 
 For frontends, we are doing two UIs:
-- A traditional web application. We are currently using [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/client), a framework for making Single-Page Applications (SPAs) using C#/.NET. We have other options though:
-  - [Django?](https://docs.djangoproject.com/en/2.2/topics/templates/) - Django Templates would allow for us to create a rudimentary web-frontend, but it's unclear exactly how it would mesh with the REST API or if it is suitable for SPAs like the other options. We should research this.
-  - [Angular](https://angular.io/) - A Typescript Framework for web applications; Mature and tested. Supported by Google Open Source
-  - [React](https://reactjs.org/) - "A JS library for building UIs" - Supported by Facebook Open Source
-  - [Vue.JS](https://vuejs.org/) - "Approachable, versatile, performant " - Newcomer with regards to these things, but it's pretty poppin on GitHub.
+- A traditional web application. We currently have a demo written in [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/client), a framework for making Single-Page Applications (SPAs) using C#/.NET. We have other options:
+  - [Django?](https://docs.djangoproject.com/en/2.2/topics/templates/) - Django Templates would allow for us to create a web-frontend which tightly integrates with Django, but not Django-Rest-Framework. As a result, we wouldn't be able to use the REST API if we roll with this for the site, thus we'd essentially need to maintain two APIs. However, it does integrate cleanly otherwise.
+  - Instead of using Django Templates, we can also use a "traditional" javascript UI framework for building the site. IF we use one of these, we'd be able to use the REST API we are maintaining for the mobile app, plus they have solid developer communities and are quite powerful. However, it's another thing we'd need to learn and figure out.
+    - [Angular](https://angular.io/) - A Typescript Framework for web applications; Mature and tested. Supported by Google Open Source
+    - [React](https://reactjs.org/) - "A JS library for building UIs" - Supported by Facebook Open Source
+    - [Vue.JS](https://vuejs.org/) - "Approachable, versatile, performant " - Newcomer of the trio, but it does have the most momentum. Fully community supported, w/o the grace of a core dev team of an existing corporation.
 - An iOS only mobile app
   - Details about our configuration / setup are below.
   

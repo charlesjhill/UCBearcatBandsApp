@@ -54,6 +54,10 @@ SITE_ID = 1
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'ucbearcatbandsproject.users.serializers.CustomRegisterSerializer'
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

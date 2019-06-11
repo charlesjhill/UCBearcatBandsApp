@@ -30,12 +30,13 @@ For frontends, we are doing two UIs:
 6. Noodle away
 
 ## The Blazor Frontend Demo
-1. Install Visual Studio 2019, version >= 16.1
+1. Install Visual Studio 2019 (version >= 16.1) and make sure to include the `ASP.NET and web development` workload during installation.
 2. Install [NET.Core 3.0 Preview 5](https://dotnet.microsoft.com/download/dotnet-core/3.0)
 3. Install [this](https://marketplace.visualstudio.com/items?itemName=aspnet.blazor) extension to enable Blazor support.
-4. Execute the following command in a powershell windows (cmd is probably fine but idk):  
+4. Execute the following command in a terminal window (powershell, cmd, etc):  
    `dotnet new -i Microsoft.AspNetCore.Blazor.Templates::3.0.0-preview5-19227-01`
-5. Pop open that solution and get cracking!
+5. Back in VS now, enable usage of .NET Core SDK previews (`Tools` > `Options` > `Environment` > `Preview Features` > `Use previews ...`)
+6. Pop open that solution and get cracking!
 
 ## The "Actual" Fronted
 ???

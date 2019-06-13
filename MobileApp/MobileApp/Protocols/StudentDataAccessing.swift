@@ -12,7 +12,7 @@ import typealias Alamofire.Parameters
 protocol StudentDataAccessing {
     
     /// The common format of a completion handler for student retrieval requests
-    typealias StudentsRetrieved = ((_ students: [Student]?) -> Void)?
+    typealias StudentsRetrievedHandler = ((_ students: [Student]?) -> Void)?
     
     /// Searches for students matching the given search terms
     ///
@@ -20,13 +20,13 @@ protocol StudentDataAccessing {
     ///   - searchTerms: A Parameters dictionary supplying search terms. Currently, valid options include:
     ///     - search: A String to search for in the students
     ///     - ordering: The ordering to be done, specified by a string of the element to search by
-    func searchForStudents(searchTerms: Parameters, completion: StudentsRetrieved)
+    func searchForStudents(searchTerms: Parameters, completion: StudentsRetrievedHandler)
     
     /// Requests and loads all available students
     ///
     /// - Parameters:
     ///   - completion: An optional completion handler to deal with the result of the query
-    func loadAllStudents(completion: StudentsRetrieved)
+    func loadAllStudents(completion: StudentsRetrievedHandler)
     
     /// Adds a Student to the database
     ///

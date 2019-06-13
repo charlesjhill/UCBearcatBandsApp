@@ -1,41 +1,15 @@
 //
-//  StudentVC.swift
+//  StudentDataAccessor.swift
 //  MobileApp
 //
-//  Created by Ben Hollar on 5/24/19.
+//  Created by Ben Hollar on 6/13/19.
 //  Copyright © 2019 UCBearcatBandsDev. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import Alamofire
 
-class StudentVC: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-
-        // DEBUG: Purely for debugging, just call the functions here. We _should_ just do this via the interface
-        // triggering the functions
-        loadAllStudents() { result in
-            guard let students = result else { return }
-            for s in students { print(s) }
-        }
-        
-        addStudent(firstName: "Test", lastName: "Student", mNumber: "M12345678")
-        
-        let searchTerms: Parameters = ["search": "test",
-                                       "ordering": "first_name"]
-        searchForStudents(searchTerms: searchTerms) { result in
-            guard let students = result else { return }
-            for s in students { self.deleteStudent(student: s) }
-        }
-        // END DEBUG
-    }
-
-}
-
-extension StudentVC: StudentDataAccessing {
+class StudentDataAccessor: StudentDataAccessing {
     
     /// The URL to access when speaking with the backend API
     /// - TODO:
@@ -43,8 +17,8 @@ extension StudentVC: StudentDataAccessing {
     private var studentsUrl: String {
         get { return "http://localhost:8000/students/" }
     }
-
-    func searchForStudents(searchTerms: Parameters, completion: StudentsRetrieved = nil) {
+    
+    func searchForStudents(searchTerms: Parameters, completion: StudentsRetrievedHandler = nil) {
         // Get the formatted query URL
         guard let searchUrl = URL.makeUrlWithTerms(baseUrl: studentsUrl, terms: searchTerms) else {
             completion?(nil)
@@ -56,7 +30,7 @@ extension StudentVC: StudentDataAccessing {
         }
     }
     
-    func loadAllStudents(completion: StudentsRetrieved = nil) {
+    func loadAllStudents(completion: StudentsRetrievedHandler = nil) {
         Alamofire.request(studentsUrl).responseJSON { response in
             completion?(self.parseReponseJson(response: response))
         }
@@ -76,7 +50,7 @@ extension StudentVC: StudentDataAccessing {
         guard let id = student.id else { return }
         Alamofire.request("\(studentsUrl)\(id)/", method: .put, parameters: params, encoding: JSONEncoding.default)
     }
-
+    
     func deleteStudent(student: Student) {
         guard let id = student.id else { return }
         Alamofire.request("\(studentsUrl)\(id)/", method: .delete)
@@ -107,4 +81,3 @@ extension StudentVC: StudentDataAccessing {
     }
     
 }
-

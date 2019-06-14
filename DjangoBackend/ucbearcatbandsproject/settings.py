@@ -54,8 +54,19 @@ SITE_ID = 1
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'ucbearcatbandsproject.users.serializers.CustomUserDetailSerializer'
+}
+
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'ucbearcatbandsproject.users.serializers.CustomRegisterSerializer'
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }
 
 MIDDLEWARE = [

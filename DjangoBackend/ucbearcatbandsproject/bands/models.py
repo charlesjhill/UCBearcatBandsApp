@@ -18,3 +18,62 @@ class Student(models.Model):
         return '{} {} [{}]'.format(self.user.first_name, self.user.last_name, self.m_number)
 
 
+class PurchaseInfo(models.Model):
+    date = models.DateField()
+    cost = models.DecimalField(decimal_places=2,
+                               max_digits=20)
+    vendor = models.CharField(max_length=255)
+    invoice_number = models.CharField(max_length=255)
+
+
+class Asset(models.Model):
+    purchase_info = models.OneToOneField(
+        PurchaseInfo,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    current_owner = models.ManyToManyField(
+        Student,
+        blank=True,
+        related_name='owners'
+    )
+    previous_owners = models.ManyToManyField(
+        Student,
+        blank=True,
+        related_name='previous_owners'
+    )
+
+
+class Locker(models.Model):
+    number = models.PositiveSmallIntegerField()
+    combination = models.CharField(max_length=10)
+    asset = models.ForeignKey(
+        Asset,
+        on_delete=models.PROTECT
+    )
+
+
+class MaitenanceReport(models.Model):
+    cost = models.DecimalField(decimal_places=2,
+                               max_digits=20)
+    service = models.TextField()
+    invoice_number = models.CharField(max_length=255)
+    asset = models.ForeignKey(
+        Asset,
+        on_delete=models.CASCADE
+    )
+
+
+class Instrument(Asset):
+    kind = models.CharField(max_length=255)  # TODO: Make enum
+    make = models.CharField(max_length=255)
+    model = models.CharField(max_length=255)
+    serial_number = models.CharField(max_length=255)
+    uc_tag_number = models.CharField(max_length=255,
+                                     validators=[RegexValidator(
+                                         regex=r'[A-Z]{1,2}\d+',
+                                         message='Tag numbers take the format of 1-2 capital letters followed by 1 or more digits'
+                                     )])
+    uc_asset_number = models.CharField(max_length=255)
+    condition = models.CharField(max_length=255)  # TODO: Make enum?

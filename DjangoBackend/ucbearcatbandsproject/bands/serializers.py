@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Student, PurchaseInfo, Asset, Locker, MaitenanceReport, Instrument
+from .models import Student, PurchaseInfo, Asset, Locker, MaintenanceReport, Instrument
 from ..users.serializers import UserSerializer
 
 

@@ -18,8 +18,17 @@ class PurchaseInfoSerializer(serializers.ModelSerializer):
 
 
 class AssetSerializer(serializers.ModelSerializer):
+    current_owners = StudentSerializer(many=True, read_only=True)
+    previous_owners = StudentSerializer(many=True, read_only=True)
+
     class Meta:
         model = Asset
+        fields = '__all__'
+
+
+class InstrumentSerializer(AssetSerializer):
+    class Meta:
+        model = Instrument
         fields = '__all__'
 
 
@@ -32,10 +41,4 @@ class LockerSerializer(serializers.ModelSerializer):
 class MaintenanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = MaintenanceReport
-        fields = '__all__'
-
-
-class InstrumentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Instrument
         fields = '__all__'

@@ -19,7 +19,7 @@ class Student(models.Model):
 
 
 class Asset(models.Model):
-    current_owner = models.ManyToManyField(
+    current_owners = models.ManyToManyField(
         Student,
         blank=True,
         related_name='owners'

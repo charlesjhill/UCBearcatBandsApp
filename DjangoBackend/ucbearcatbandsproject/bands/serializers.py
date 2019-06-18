@@ -29,9 +29,9 @@ class LockerSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class MaitenanceSerializer(serializers.ModelSerializer):
+class MaintenanceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MaitenanceReport
+        model = MaintenanceReport
         fields = '__all__'
 
 

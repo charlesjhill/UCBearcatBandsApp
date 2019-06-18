@@ -54,7 +54,7 @@ class Locker(models.Model):
     )
 
 
-class MaitenanceReport(models.Model):
+class MaintenanceReport(models.Model):
     cost = models.DecimalField(decimal_places=2,
                                max_digits=20)
     service = models.TextField()

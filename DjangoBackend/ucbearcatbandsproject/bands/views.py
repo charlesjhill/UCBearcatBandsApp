@@ -7,7 +7,6 @@ from .serializers import StudentSerializer
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter)
-    search_fields = ('first_name', 'last_name', 'm_number')
-    ordering_fields = ('first_name', 'last_name')
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('m_number', )
 

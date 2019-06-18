@@ -29,7 +29,7 @@ For frontends, we are doing two UIs:
    `python manage.py migrate`
 6. Noodle away
 
-## The Blazor Frontend Demo
+## The Blazor Web Frontend
 1. Install Visual Studio 2019 (version >= 16.1) and make sure to include the `ASP.NET and web development` workload during installation.
 2. Install [NET.Core 3.0 Preview 5](https://dotnet.microsoft.com/download/dotnet-core/3.0)
 3. Install [this](https://marketplace.visualstudio.com/items?itemName=aspnet.blazor) extension to enable Blazor support.
@@ -37,9 +37,6 @@ For frontends, we are doing two UIs:
    `dotnet new -i Microsoft.AspNetCore.Blazor.Templates::3.0.0-preview5-19227-01`
 5. Back in VS now, enable usage of .NET Core SDK previews (`Tools` > `Options` > `Environment` > `Preview Features` > `Use previews ...`)
 6. Pop open that solution and get cracking!
-
-## The "Actual" Fronted
-???
 
 ## iOS App Setup
 Since the iOS app is really just going to be a frontend wrapper for our web API, I'll go ahead and suggest you set up a backend server. The app won't really do much if it can't ping that.

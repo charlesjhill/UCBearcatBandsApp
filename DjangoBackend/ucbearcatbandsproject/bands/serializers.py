@@ -43,3 +43,8 @@ class MaintenanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = MaintenanceReport
         fields = '__all__'
+
+class UniformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Uniform
+        fields = '__all__'

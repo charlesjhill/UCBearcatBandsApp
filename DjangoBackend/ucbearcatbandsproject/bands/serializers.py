@@ -3,13 +3,14 @@ from .models import Student, PurchaseInfo, Asset, Locker, MaintenanceReport, Ins
 from ..users.serializers import UserSerializer
 
 
+# Define serializers here
 class StudentSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
 
     class Meta:
         model = Student
         fields = ('m_number', 'user',)
-
+        
 
 class PurchaseInfoSerializer(serializers.ModelSerializer):
     class Meta:

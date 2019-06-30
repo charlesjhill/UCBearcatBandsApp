@@ -6,7 +6,7 @@ target 'MobileApp' do
   use_frameworks!
 
   # Pods for MobileApp
-  pod 'Alamofire', '~> 4.8'
+  pod 'Moya', '~> 13.0'
 
   target 'MobileAppTests' do
     inherit! :search_paths

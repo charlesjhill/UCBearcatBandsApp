@@ -3,13 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		134DB16B2298510700B119C4 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134DB16A2298510700B119C4 /* Student.swift */; };
-		134F3FD422B19FF9009229A0 /* StudentDataAccessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F3FD322B19FF9009229A0 /* StudentDataAccessing.swift */; };
-		13AB5D4E22B307BE008C6545 /* StudentDataAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB5D4D22B307BE008C6545 /* StudentDataAccessor.swift */; };
+		1365461822C91C37008C8DC1 /* StudentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1365461722C91C37008C8DC1 /* StudentService.swift */; };
+		1365461A22C92143008C8DC1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1365461922C92143008C8DC1 /* User.swift */; };
 		13AB5D5122B30E18008C6545 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13AB5D4F22B30E18008C6545 /* Main.storyboard */; };
 		13D0A5AD229DCEE600FDB509 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D0A5AC229DCEE600FDB509 /* URL.swift */; };
 		732C615B9D0A8543F59F5DFE /* Pods_MobileAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3306D73DFB9D87E140298C9 /* Pods_MobileAppTests.framework */; };
@@ -35,8 +35,8 @@
 /* Begin PBXFileReference section */
 		0C324B0EFE131EF739112064 /* Pods-MobileApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MobileApp/Pods-MobileApp.debug.xcconfig"; sourceTree = "<group>"; };
 		134DB16A2298510700B119C4 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
-		134F3FD322B19FF9009229A0 /* StudentDataAccessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentDataAccessing.swift; sourceTree = "<group>"; };
-		13AB5D4D22B307BE008C6545 /* StudentDataAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentDataAccessor.swift; sourceTree = "<group>"; };
+		1365461722C91C37008C8DC1 /* StudentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentService.swift; sourceTree = "<group>"; };
+		1365461922C92143008C8DC1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		13AB5D5022B30E18008C6545 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		13D0A5AC229DCEE600FDB509 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		3BBC0AEB1EFE3A9BEA6DD9AA /* Pods-MobileAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MobileAppTests/Pods-MobileAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -85,12 +85,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		13AB5D4C22B307A0008C6545 /* Data Access */ = {
+		1365461622C91C17008C8DC1 /* API Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				13AB5D4D22B307BE008C6545 /* StudentDataAccessor.swift */,
+				1365461722C91C37008C8DC1 /* StudentService.swift */,
 			);
-			path = "Data Access";
+			path = "API Controllers";
 			sourceTree = "<group>";
 		};
 		13D0A5A9229DCE7300FDB509 /* Extensions */ = {
@@ -116,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				B530D2112298A6A2001F22A6 /* Dictable.swift */,
-				134F3FD322B19FF9009229A0 /* StudentDataAccessing.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -148,8 +147,8 @@
 				B5D68D1922983DD300600B76 /* Assets.xcassets */,
 				B5D68D1E22983DD300600B76 /* Info.plist */,
 				B5D68D3522983E6900600B76 /* View Controllers */,
+				1365461622C91C17008C8DC1 /* API Controllers */,
 				B5D68D3422983E5600600B76 /* Views */,
-				13AB5D4C22B307A0008C6545 /* Data Access */,
 				B5D68D3222983E4700600B76 /* Models */,
 				B530D2102298A67D001F22A6 /* Protocols */,
 				13D0A5A9229DCE7300FDB509 /* Extensions */,
@@ -170,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				134DB16A2298510700B119C4 /* Student.swift */,
+				1365461922C92143008C8DC1 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -332,17 +332,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-MobileApp/Pods-MobileApp-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MobileApp/Pods-MobileApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MobileApp/Pods-MobileApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MobileApp/Pods-MobileApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MobileApp/Pods-MobileApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -354,11 +353,11 @@
 			files = (
 				13D0A5AD229DCEE600FDB509 /* URL.swift in Sources */,
 				B5D68D1522983DD200600B76 /* StudentVC.swift in Sources */,
-				13AB5D4E22B307BE008C6545 /* StudentDataAccessor.swift in Sources */,
 				B530D2122298A6A2001F22A6 /* Dictable.swift in Sources */,
 				134DB16B2298510700B119C4 /* Student.swift in Sources */,
-				134F3FD422B19FF9009229A0 /* StudentDataAccessing.swift in Sources */,
+				1365461A22C92143008C8DC1 /* User.swift in Sources */,
 				B5D68D1322983DD200600B76 /* AppDelegate.swift in Sources */,
+				1365461822C91C37008C8DC1 /* StudentService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

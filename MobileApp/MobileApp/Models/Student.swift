@@ -11,24 +11,14 @@ import Foundation
 /// The model for a Student user
 struct Student {
     
-    /// The database-assigned ID of the student
-    ///
-    /// - Note:
-    ///   ID is optional so we may construct students locally; the database will manage assigning IDs so it is nice be
-    ///   able to say "make a new student without an ID"
-    let id: Int?
-    
-    /// The first name of the student
-    let firstName: String
-    
-    /// The last name of the student
-    let lastName: String
-    
-    /// The UC identification number - the "M Number" - of the student
+    /// The UC identification number - the "M Number" - of the Student
     ///
     /// - Note:
     ///   The letter "M" must prepend the remainder of the String, and there must be 8 digits following it.
     let mNumber: String
+    
+    /// The underlying User model of the Student, because you know, Students *are* Users
+    let user: User
     
 }
 
@@ -37,9 +27,7 @@ extension Student: Dictable {
     /// Student coding keys let us map JSON values to our desired property names (and ignore properties we don't care
     /// about, if any).
     enum CodingKeys: String, CodingKey {
-        case id
-        case firstName = "first_name"
-        case lastName = "last_name"
+        case user
         case mNumber = "m_number"
     }
 

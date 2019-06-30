@@ -13,7 +13,7 @@ from . import models
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CustomUser
-        fields = ('username', 'full_name', 'email', 'is_student', )
+        fields = ('id', 'username', 'full_name', 'email', 'is_student', )
 
 
 # This is used to keep Users and the related 'Student' class in sync

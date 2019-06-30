@@ -7,11 +7,12 @@
 //
 
 import UIKit
-import Alamofire
+import Moya
 
 class StudentVC: UIViewController {
-    
-    var dataAccessor: StudentDataAccessing = StudentDataAccessor()
+
+    /// The API service provider
+    var provider: MoyaProvider = MoyaProvider<StudentService>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,20 +20,35 @@ class StudentVC: UIViewController {
 
         // DEBUG: Purely for debugging, just call the functions here. We _should_ just do this via the interface
         // triggering the functions
-        dataAccessor.loadAllStudents() { result in
-            guard let students = result else { return }
-            for s in students { print(s) }
-        }
-        
-        dataAccessor.addStudent(firstName: "Test", lastName: "Student", mNumber: "M12345678")
-        
-        let searchTerms: Parameters = ["search": "test",
-                                       "ordering": "first_name"]
-        dataAccessor.searchForStudents(searchTerms: searchTerms) { result in
-            guard let students = result else { return }
-            for s in students { self.dataAccessor.deleteStudent(student: s) }
-        }
+        provider.request(.showStudents, completion: debugCompletion)
+        provider.request(.showStudent(id: 1), completion: debugCompletion)
+        provider.request(.searchForStudents(params: ["search": "M12345678"]), completion: debugCompletion)
         // END DEBUG
+    }
+    
+    // TODO: Replace this with per-request completion handlers, possibly a unified helper to parse JSON
+    lazy var debugCompletion: Completion = { result in
+        switch result {
+        case let .success(moyaResponse):
+            let data = moyaResponse.data
+            print(moyaResponse.statusCode)
+            var maybeStudents: [Student]? = nil
+            do {
+                maybeStudents = try JSONDecoder().decode(Array<Student>.self, from: data)
+            } catch {
+                // Did we only get a single item instead of an Array?
+                do {
+                    maybeStudents = try [JSONDecoder().decode(Student.self, from: data)]
+                } catch {
+                    print("JSON erorr: \(error)")
+                }
+            }
+            guard let students = maybeStudents else { return }
+            for s in students { print(s) }
+        case let .failure(error):
+            print(error)
+        }
+        print("")
     }
 
 }

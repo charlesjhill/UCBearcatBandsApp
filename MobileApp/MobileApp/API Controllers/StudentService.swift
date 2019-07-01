@@ -69,7 +69,9 @@ extension StudentService: TargetType {
         switch self {
         case .showStudent, .showStudents, .deleteStudent:
             return .requestPlain
-        case .searchForStudents(let params), .updateStudent(_, let params):
+        case .searchForStudents(let params):
+            return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
+        case .updateStudent(_, let params):
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
         }
     }

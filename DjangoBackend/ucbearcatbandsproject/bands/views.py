@@ -1,6 +1,6 @@
 from rest_framework import viewsets, filters
-from .models import Student, Asset, Instrument
-from .serializers import StudentSerializer, AssetSerializer, InstrumentSerializer
+from .models import Student, Asset, Instrument, UniformPiece
+from .serializers import StudentSerializer, AssetSerializer, InstrumentSerializer, UniformSerializer
 
 
 # Create your views here.
@@ -19,3 +19,7 @@ class AssetViewSet(viewsets.ModelViewSet):
 class InstrumentViewSet(viewsets.ModelViewSet):
     queryset = Instrument.objects.all()
     serializer_class = InstrumentSerializer
+
+class UniformViewSet(viewsets.ModelViewSet):
+    queryset = UniformPiece.objects.all()
+    serializer_class = UniformSerializer

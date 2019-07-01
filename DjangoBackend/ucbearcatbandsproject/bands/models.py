@@ -2,6 +2,9 @@ from django.db import models
 from django.core.validators import RegexValidator
 from ..settings import AUTH_USER_MODEL
 
+CONDITION = (('new', 'NEW'), ('good', 'GOOD'), ('fair', 'FAIR'), ('poor', 'POOR'),
+             ('bad', 'BAD'), ('unusable', 'UNUSABLE'))
+
 
 # Create your models here.
 class Student(models.Model):
@@ -29,6 +32,7 @@ class Asset(models.Model):
         blank=True,
         related_name='previous_owners'
     )
+    condition = models.CharField(max_length=10, choices=CONDITION, default='new')
 
 
 class Instrument(Asset):
@@ -42,7 +46,6 @@ class Instrument(Asset):
                                          message='Tag numbers take the format of 1-2 capital letters followed by 1 or more digits'
                                      )])
     uc_asset_number = models.CharField(max_length=255)
-    condition = models.CharField(max_length=255)  # TODO: Make enum?
 
 
 class PurchaseInfo(models.Model):
@@ -78,3 +81,12 @@ class MaintenanceReport(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
+
+
+UNIFORM_PIECES = (('jacket', 'JACKET'), ('pants', 'PANTS'))
+
+
+class UniformPiece(Asset):
+    kind = models.CharField(max_length=6, choices=UNIFORM_PIECES, default='jacket')
+    size = models.CharField(max_length=20)
+    number = models.CharField(max_length=20)

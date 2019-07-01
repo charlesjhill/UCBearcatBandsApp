@@ -31,6 +31,7 @@ class Asset(models.Model):
         blank=True,
         related_name='previous_owners'
     )
+    condition = models.CharField(max_length=10, choices=CONDITION, default='new')
 
 
 class Instrument(Asset):
@@ -44,7 +45,7 @@ class Instrument(Asset):
                                          message='Tag numbers take the format of 1-2 capital letters followed by 1 or more digits'
                                      )])
     uc_asset_number = models.CharField(max_length=255)
-    condition = models.CharField(max_length=10, choices=CONDITION, default='new')
+
 
 
 class PurchaseInfo(models.Model):
@@ -84,7 +85,7 @@ class MaintenanceReport(models.Model):
 
 UNIFORM_PIECES = (('jacket', 'JACKET'), ('pants', 'PANTS'))
 
-class UniformPiece(models.Model):
+class UniformPiece(Asset):
     kind = models.CharField(max_length=6, choices=UNIFORM_PIECES, default='jacket')
-    condition = models.CharField(max_length=10, choices=CONDITION, default='new')
     size = models.CharField(max_length=20)
+    id = models.CharField(max_length=20)

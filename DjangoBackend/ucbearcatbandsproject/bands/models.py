@@ -88,4 +88,4 @@ UNIFORM_PIECES = (('jacket', 'JACKET'), ('pants', 'PANTS'))
 class UniformPiece(Asset):
     kind = models.CharField(max_length=6, choices=UNIFORM_PIECES, default='jacket')
     size = models.CharField(max_length=20)
-    id = models.CharField(max_length=20)
+    number = models.CharField(max_length=20)

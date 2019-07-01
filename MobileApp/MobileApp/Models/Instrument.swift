@@ -26,7 +26,7 @@ enum InstrumentKind: String, Codable {
     case euphonium
     case flute
     case frenchHorn
-    case marchingHorn // see mellophone??
+    case marchingHorn // apparently different enough from mellophone
     case mellophone
     case oboe
     case piano
@@ -40,18 +40,6 @@ enum InstrumentKind: String, Codable {
     
 }
 
-/// An enumeration of the possible conditions of an Instrument
-enum InstrumentCondition: String, Codable {
-    
-    case new
-    case good
-    case fair
-    case poor
-    case bad
-    case unusable
-    
-}
-
 /// An Instrument owned by the UC Bearcat Bands
 struct Instrument: Asset {
     
@@ -60,6 +48,8 @@ struct Instrument: Asset {
     let currentOwners: [Student]
     
     let previousOwners: [Student]
+    
+    let condition: AssetCondition
     
     /// The kind of Instrument
     let kind: InstrumentKind
@@ -78,9 +68,6 @@ struct Instrument: Asset {
     
     /// The UC-provided asset number of the Instrument
     let ucAssetNumber: String
-    
-    /// The condition of the Instrument
-    let condition: InstrumentCondition
     
 }
 

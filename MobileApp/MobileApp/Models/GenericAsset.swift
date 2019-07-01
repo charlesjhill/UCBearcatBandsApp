@@ -17,12 +17,14 @@ struct GenericAsset: Asset {
     
     let previousOwners: [Student]
     
+    let condition: AssetCondition
+    
 }
 
 extension GenericAsset: Codable {
     
     enum CodingKeys: String, CodingKey {
-        case id
+        case id, condition
         case currentOwners = "current_owners"
         case previousOwners = "previous_owners"
     }

@@ -25,6 +25,18 @@ protocol DjangoModel: Codable {
     
 }
 
+/// An enumeration of the possible conditions of an Asset
+enum AssetCondition: String, Codable {
+    
+    case new
+    case good
+    case fair
+    case poor
+    case bad
+    case unusable
+    
+}
+
 /// A generic Asset of the UC Bearcat Bands
 protocol Asset: DjangoModel {
     
@@ -33,5 +45,8 @@ protocol Asset: DjangoModel {
     
     /// The previous owner(s) of the Asset, if any
     var previousOwners: [Student] { get }
+    
+    /// The condition of the Asset
+    var condition: AssetCondition { get }
     
 }

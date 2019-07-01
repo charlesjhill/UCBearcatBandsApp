@@ -10,7 +10,7 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ('m_number', 'user',)
-        
+
 
 class PurchaseInfoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -43,6 +43,7 @@ class MaintenanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = MaintenanceReport
         fields = '__all__'
+
 
 class UniformSerializer(AssetSerializer):
     class Meta:

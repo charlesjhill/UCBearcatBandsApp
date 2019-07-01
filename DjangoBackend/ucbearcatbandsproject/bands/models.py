@@ -5,6 +5,7 @@ from ..settings import AUTH_USER_MODEL
 CONDITION = (('new', 'NEW'), ('good', 'GOOD'), ('fair', 'FAIR'), ('poor', 'POOR'),
              ('bad', 'BAD'), ('unusable', 'UNUSABLE'))
 
+
 # Create your models here.
 class Student(models.Model):
     user = models.OneToOneField(AUTH_USER_MODEL,
@@ -47,7 +48,6 @@ class Instrument(Asset):
     uc_asset_number = models.CharField(max_length=255)
 
 
-
 class PurchaseInfo(models.Model):
     date = models.DateField()
     cost = models.DecimalField(decimal_places=2,
@@ -84,6 +84,7 @@ class MaintenanceReport(models.Model):
 
 
 UNIFORM_PIECES = (('jacket', 'JACKET'), ('pants', 'PANTS'))
+
 
 class UniformPiece(Asset):
     kind = models.CharField(max_length=6, choices=UNIFORM_PIECES, default='jacket')

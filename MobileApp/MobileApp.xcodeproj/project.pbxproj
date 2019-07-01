@@ -101,13 +101,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		1365461622C91C17008C8DC1 /* API Controllers */ = {
+		1365461622C91C17008C8DC1 /* API Services */ = {
 			isa = PBXGroup;
 			children = (
 				1365461722C91C37008C8DC1 /* StudentService.swift */,
 				133C329B22C95336007412CF /* AuthService.swift */,
 			);
-			path = "API Controllers";
+			path = "API Services";
 			sourceTree = "<group>";
 		};
 		13D0A5A9229DCE7300FDB509 /* Extensions */ = {
@@ -157,7 +157,7 @@
 				B5D68D1922983DD300600B76 /* Assets.xcassets */,
 				B5D68D1E22983DD300600B76 /* Info.plist */,
 				B5D68D3522983E6900600B76 /* View Controllers */,
-				1365461622C91C17008C8DC1 /* API Controllers */,
+				1365461622C91C17008C8DC1 /* API Services */,
 				B5D68D3422983E5600600B76 /* Views */,
 				B5D68D3222983E4700600B76 /* Models */,
 				13D0A5A9229DCE7300FDB509 /* Extensions */,

@@ -20,9 +20,15 @@ class StudentVC: UIViewController {
 
         // DEBUG: Purely for debugging, just call the functions here. We _should_ just do this via the interface
         // triggering the functions
-        provider.request(.showStudents, completion: debugCompletion)
-        provider.request(.showStudent(id: 1), completion: debugCompletion)
-        provider.request(.searchForStudents(params: ["search": "M12345678"]), completion: debugCompletion)
+//        provider.request(.showStudents, completion: debugCompletion)
+//        provider.request(.showStudent(id: 1), completion: debugCompletion)
+//        provider.request(.searchForStudents(params: ["search": "M12345678"]), completion: debugCompletion)
+        let s = Student(mNumber: "M10305078",
+                        user: User(id: 1, fullName: "Ben Hollar", email: "hollarbl@mail.uc.edu", isStudent: true))
+        provider.request(.updateStudent(id: 1, student: s), completion: debugCompletion)
+        
+//        let db = SampleDatabasePopulation()
+//        db.populate()
         // END DEBUG
     }
     

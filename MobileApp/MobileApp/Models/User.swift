@@ -13,9 +13,6 @@ struct User: DjangoModel {
     
     let id: Int
     
-    /// The username of the User; we'll probably ignore this
-    let username: String
-    
     /// The full name of the User
     let fullName: String
     
@@ -30,7 +27,7 @@ struct User: DjangoModel {
 extension User: Codable {
     
     enum CodingKeys: String, CodingKey {
-        case id, username, email
+        case id, email
         case fullName = "full_name"
         case isStudent = "is_student"
     }

@@ -21,6 +21,8 @@
 		136EBE4022CA5AF0004A97D8 /* Uniform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136EBE3F22CA5AF0004A97D8 /* Uniform.swift */; };
 		13AB5D5122B30E18008C6545 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13AB5D4F22B30E18008C6545 /* Main.storyboard */; };
 		13D0A5AD229DCEE600FDB509 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D0A5AC229DCEE600FDB509 /* URL.swift */; };
+		13E6FBA022CBEA4200C8A61C /* SampleDatabasePopulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6FB9F22CBEA4200C8A61C /* SampleDatabasePopulation.swift */; };
+		13E6FBA222CBF63200C8A61C /* InstrumentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6FBA122CBF63200C8A61C /* InstrumentService.swift */; };
 		732C615B9D0A8543F59F5DFE /* Pods_MobileAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3306D73DFB9D87E140298C9 /* Pods_MobileAppTests.framework */; };
 		A09BC5F3E49D556DDDB81CA5 /* Pods_MobileApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A81733A9F5199FECC44980 /* Pods_MobileApp.framework */; };
 		B5D68D1322983DD200600B76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D68D1222983DD200600B76 /* AppDelegate.swift */; };
@@ -56,6 +58,8 @@
 		136EBE3F22CA5AF0004A97D8 /* Uniform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uniform.swift; sourceTree = "<group>"; };
 		13AB5D5022B30E18008C6545 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		13D0A5AC229DCEE600FDB509 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		13E6FB9F22CBEA4200C8A61C /* SampleDatabasePopulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDatabasePopulation.swift; sourceTree = "<group>"; };
+		13E6FBA122CBF63200C8A61C /* InstrumentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentService.swift; sourceTree = "<group>"; };
 		3BBC0AEB1EFE3A9BEA6DD9AA /* Pods-MobileAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MobileAppTests/Pods-MobileAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		479325CC4750A5F4B87F1198 /* Pods-MobileApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-MobileApp/Pods-MobileApp.release.xcconfig"; sourceTree = "<group>"; };
 		B5D68D0F22983DD200600B76 /* MobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +110,7 @@
 			children = (
 				1365461722C91C37008C8DC1 /* StudentService.swift */,
 				133C329B22C95336007412CF /* AuthService.swift */,
+				13E6FBA122CBF63200C8A61C /* InstrumentService.swift */,
 			);
 			path = "API Services";
 			sourceTree = "<group>";
@@ -117,6 +122,14 @@
 				131AAB0F22C9A91B003E0B5B /* Encodable.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		13E6FB9E22CBEA0E00C8A61C /* Sample Data */ = {
+			isa = PBXGroup;
+			children = (
+				13E6FB9F22CBEA4200C8A61C /* SampleDatabasePopulation.swift */,
+			);
+			path = "Sample Data";
 			sourceTree = "<group>";
 		};
 		B45693B380EEE561EB583D06 /* Pods */ = {
@@ -161,6 +174,7 @@
 				B5D68D3422983E5600600B76 /* Views */,
 				B5D68D3222983E4700600B76 /* Models */,
 				13D0A5A9229DCE7300FDB509 /* Extensions */,
+				13E6FB9E22CBEA0E00C8A61C /* Sample Data */,
 			);
 			path = MobileApp;
 			sourceTree = "<group>";
@@ -396,6 +410,8 @@
 				1365461A22C92143008C8DC1 /* User.swift in Sources */,
 				B5D68D1322983DD200600B76 /* AppDelegate.swift in Sources */,
 				1365461822C91C37008C8DC1 /* StudentService.swift in Sources */,
+				13E6FBA022CBEA4200C8A61C /* SampleDatabasePopulation.swift in Sources */,
+				13E6FBA222CBF63200C8A61C /* InstrumentService.swift in Sources */,
 				133C329C22C95336007412CF /* AuthService.swift in Sources */,
 				131AAB1922C9C598003E0B5B /* GenericAsset.swift in Sources */,
 				131AAB1022C9A91B003E0B5B /* Encodable.swift in Sources */,

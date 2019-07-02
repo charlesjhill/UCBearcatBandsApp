@@ -30,8 +30,8 @@ enum StudentService {
     ///
     /// - Parameters:
     ///   - id: The User ID number of the Student to be updated
-    ///   - params: A Paramaters dictionary defining the values to replace in the Student.
-    case updateStudent(id: Int, params: Parameters)
+    ///   - student: The new Student information
+    case updateStudent(id: Int, student: Student)
     
     /// Deletes a Student from the database.
     ///
@@ -71,8 +71,8 @@ extension StudentService: TargetType {
             return .requestPlain
         case .searchForStudents(let params):
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
-        case .updateStudent(_, let params):
-            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+        case .updateStudent(_, let student):
+            return .requestParameters(parameters: student.toDictionary()!, encoding: JSONEncoding.default)
         }
     }
     

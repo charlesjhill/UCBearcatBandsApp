@@ -13,7 +13,7 @@ from . import models
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CustomUser
-        fields = ('id', 'username', 'full_name', 'email', 'is_student', )
+        fields = ('id', 'full_name', 'email', 'is_student', )
 
 
 # This is used when a logged in user wants their details
@@ -48,8 +48,8 @@ class CustomRegisterSerializer(RegisterSerializer):
     full_name = serializers.CharField(required=True)
     is_student = serializers.BooleanField(default=False, required=False)
     m_number = serializers.CharField(required=False, validators=[RegexValidator(
-                                    regex=r'[Mm]\d{8}',
-                                    message='Please enter an M followed by 8 digits')])
+                                     regex=r'[Mm]\d{8}',
+                                     message='Please enter an M followed by 8 digits')])
 
     def get_cleaned_data(self):
         return {
@@ -88,4 +88,3 @@ class CustomRegisterSerializer(RegisterSerializer):
         self.custom_signup(request, user)
         setup_user_email(request, user, [])
         return user
-

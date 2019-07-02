@@ -22,7 +22,7 @@ enum AuthService {
     /// Log out of the API
     case logout
     
-    /// Register
+    /// Register a student to the API
     ///
     /// - Parameters:
     ///   - email: The email for the new account

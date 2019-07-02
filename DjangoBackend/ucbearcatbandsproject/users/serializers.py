@@ -16,24 +16,30 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('username', 'full_name', 'email', 'is_student', )
 
 
-# This is used to keep Users and the related 'Student' class in sync
+# This is used when a logged in user wants their details
 class CustomUserDetailSerializer(UserDetailsSerializer):
-    m_number = serializers.CharField(source="bands.student.m_number")
+    m_number = serializers.CharField(source="student.m_number")
 
     class Meta(UserDetailsSerializer.Meta):
-        fields = UserDetailsSerializer.Meta.fields + ('m_number', )
+        model = models.CustomUser
+        fields = ('pk', 'email', 'full_name', 'm_number', 'is_student')
+        read_only_fields = ('pk', 'email', 'is_student')
 
     def update(self, instance, validated_data):
-        profile_data = validated_data.pop('student', {})
-        m_number = profile_data.get('m_number')
+        is_student_data = validated_data.pop('is_student', {})
+        if is_student_data:
+            student_data = validated_data.pop('student', {})
+            m_number = student_data.get('m_number')
 
         instance = super(CustomUserDetailSerializer, self).update(instance, validated_data)
 
         # get and update student
-        student = instance.student
-        if profile_data and m_number:
-            student.m_number = m_number
-            student.save()
+        if is_student_data:
+            student = instance.student
+            if student_data and m_number:
+                student.m_number = m_number
+                student.save()
+
         return instance
 
 

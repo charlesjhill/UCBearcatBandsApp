@@ -20,6 +20,7 @@ class InstrumentViewSet(viewsets.ModelViewSet):
     queryset = Instrument.objects.all()
     serializer_class = InstrumentSerializer
 
+
 class UniformViewSet(viewsets.ModelViewSet):
     queryset = UniformPiece.objects.all()
     serializer_class = UniformSerializer

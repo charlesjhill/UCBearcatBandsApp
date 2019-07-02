@@ -114,6 +114,7 @@ WSGI_APPLICATION = 'ucbearcatbandsproject.wsgi.application'
 #  you need to add it's domain/port to this list.
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',  # The django-API
+    'http://localhost:4200',  # The Angular frontend
     'http://localhost:4075'   # e.g. the blazor frontend
 ]
 

@@ -13,10 +13,11 @@ from . import models
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CustomUser
-        fields = ('username', 'full_name', 'email', 'is_student', )
+        fields = ('username', 'full_name', 'email', 'is_student', 'is_staff')
 
 
 # This is used when a logged in user wants their details
+# PUT Requests to this are broken
 class CustomUserDetailSerializer(UserDetailsSerializer):
     m_number = serializers.CharField(source="student.m_number")
 
@@ -29,7 +30,7 @@ class CustomUserDetailSerializer(UserDetailsSerializer):
         is_student_data = validated_data.pop('is_student', {})
         if is_student_data:
             student_data = validated_data.pop('student', {})
-            m_number = student_data.get('m_number')
+            m_number = validated_data.get('m_number')
 
         instance = super(CustomUserDetailSerializer, self).update(instance, validated_data)
 
@@ -76,6 +77,9 @@ class CustomRegisterSerializer(RegisterSerializer):
         self.cleaned_data["username"] = self.cleaned_data["email"].split('@')[0]
         user.is_student = self.cleaned_data["is_student"]
         user.full_name = self.cleaned_data["full_name"]
+        if not user.is_student:
+            user.is_staff = True
+
         adapter.save_user(request, user, self)
 
         # We should probably use Django Signals here? IDK

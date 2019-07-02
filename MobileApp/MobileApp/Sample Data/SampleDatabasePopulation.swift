@@ -12,7 +12,8 @@ import Moya
 class SampleDatabasePopulation {
     
     private var currentIdx: Int = 1
-    private var auth: MoyaProvider<AuthService> = MoyaProvider<AuthService>()
+    private var sAuth: MoyaProvider<AuthService> = MoyaProvider<AuthService>()
+    private var sInstrument: MoyaProvider<InstrumentService> = MoyaProvider<InstrumentService>()
     
     public func populate() {
         for _ in 1...500 { makeSampleStudent() }
@@ -26,13 +27,25 @@ class SampleDatabasePopulation {
         let pwd = "ucbearcatbands"
         let name = "SampleStudent\(currentIdx)"
         let number = "M12345678"
-        auth.request(.registerStudent(email: email, password: pwd, fullName: name, mNumber: number)) { result in }
+        sAuth.request(.registerStudent(email: email, password: pwd, fullName: name, mNumber: number)) { result in }
         currentIdx += 1
         
     }
     
     private func makeSampleInstrument() {
-        // TODO: Not implemented
+        
+        let instrument = Instrument(id: 1,
+                                    currentOwners: [],
+                                    previousOwners: [],
+                                    condition: .new,
+                                    kind: .trombone,
+                                    make: "Yamaha",
+                                    model: "Model",
+                                    serialNumber: generateRandomDigits(8),
+                                    ucTagNumber: "T\(generateRandomDigits(4))",
+                                    ucAssetNumber: generateRandomDigits(8))
+        sInstrument.request(.addInstrument(instrument)) { result in }
+        
     }
     
     private func makeSampleUniform() {

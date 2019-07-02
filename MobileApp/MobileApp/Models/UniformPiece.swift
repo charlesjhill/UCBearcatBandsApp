@@ -1,5 +1,5 @@
 //
-//  Uniform.swift
+//  UniformPiece.swift
 //  MobileApp
 //
 //  Created by Ben Hollar on 7/1/19.
@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// enumeration of uniforms owned by UC Bearcats Bands
 enum UniformKind: String, Codable {
     
     case jacket
@@ -33,7 +34,6 @@ struct UniformPiece: Asset {
     let size: String
     
     /// The number of the UniformPiece (as assigned by the band)
-    ///
     /// - NOTE: This is, somewhat unexpectedly, a String instead of an Int. The rationale behind this decision,
     /// currently, is due to the fact that some Uniforms (due to age) may have duplicate numbers, so using some format
     /// like "###_old" may help differentiate them. The number is the easiest way to identify the physical uniform, so

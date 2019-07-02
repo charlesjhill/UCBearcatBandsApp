@@ -42,7 +42,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     full_name = serializers.CharField(required=True)
     is_student = serializers.BooleanField(default=False, required=False)
     m_number = serializers.CharField(required=False, validators=[RegexValidator(
-                                    regex=r'[Mm]\d{8,8}',
+                                    regex=r'[Mm]\d{8}',
                                     message='Please enter an M followed by 8 digits')])
 
     def get_cleaned_data(self):

@@ -10,7 +10,8 @@ CONDITION = (('new', 'NEW'), ('good', 'GOOD'), ('fair', 'FAIR'), ('poor', 'POOR'
 class Student(models.Model):
     user = models.OneToOneField(AUTH_USER_MODEL,
                                 on_delete=models.CASCADE,
-                                primary_key=True)
+                                primary_key=True,
+                                related_name='student')
 
     m_number = models.CharField(max_length=10,
                                 validators=[RegexValidator(

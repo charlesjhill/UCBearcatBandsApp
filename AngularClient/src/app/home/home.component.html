@@ -1,0 +1,34 @@
+﻿<h1>Hi {{currentUser.full_name}}!</h1>
+<p>You're logged in with Angular 8!!</p>
+<h3>Your info:</h3>
+<form [formGroup]="infoForm">
+    <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" formControlName="fullName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.fullName.errors }" />
+        <div *ngIf="submitted && f.fullName.errors" class="invalid-feedback">
+            <div *ngIf="f.fullName.errors.required">First Name is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="mnumber">MNumber</label>
+        <input type="text" formControlName="mnumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.mnumber.errors }" />
+        <div *ngIf="submitted && f.mnumber.errors" class="invalid-feedback">
+            <div *ngIf="f.mnumber.errors.required">MNumber is required</div>
+            <div *ngIf="f.mnumber.errors.invalidMNumber">MNumber should be an 'M' follwed by 8 numbers</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+        </button>
+        <a routerLink="/login" class="btn btn-link">Cancel</a>
+    </div>
+</form>

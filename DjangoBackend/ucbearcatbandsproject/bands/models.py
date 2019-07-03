@@ -19,7 +19,7 @@ class Student(models.Model):
                                     message='Please enter an M followed by 8 digits')])
 
     def __str__(self):
-        return '{} {} [{}]'.format(self.user.first_name, self.user.last_name, self.m_number)
+        return '{} [{}]'.format(self.user.full_name, self.m_number)
 
 
 class Asset(models.Model):

@@ -9,7 +9,7 @@
 import Foundation
 
 /// An enumeration of kinds of Instruments owned by the UC Bearcat Bands
-enum InstrumentKind: String, Codable {
+enum InstrumentKind: String, Codable, CaseIterable {
     
     case altoClarinet
     case altoSaxophone

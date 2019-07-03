@@ -26,7 +26,7 @@ protocol DjangoModel: Codable {
 }
 
 /// An enumeration of the possible conditions of an Asset
-enum AssetCondition: String, Codable {
+enum AssetCondition: String, Codable, CaseIterable {
     
     case new
     case good

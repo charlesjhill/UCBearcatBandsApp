@@ -12,7 +12,16 @@ import Alamofire
 
 enum UniformService {
     
-    /// Shows Uniform given the number
+    /// Add the given Uniform to the database
+    ///
+    /// - Parameters:
+    ///   - uniform: The Uniform to be added
+    case addUniform(_ uniform: UniformPiece)
+    
+    /// Shows the Uniform with the given ID
+    ///
+    /// - Parameters:
+    ///   - id: The ID number of the Uniform
     case showUniform(id: Int)
     
     /// Shows available Uniforms
@@ -20,9 +29,19 @@ enum UniformService {
     
     // TODO: Search for uniforms?? Backend doesn't support it yet
     
+    /// Updates the Uniform with the given ID with new information
+    ///
+    /// - Parameters:
+    ///   - id: The ID number of the Uniform
+    ///   - uniform: The new information to be associated with the Uniform
     case updateUniform(id: Int, uniform: UniformPiece)
     
+    /// Deletes the Uniform with the given ID
+    ///
+    /// - Parameters:
+    ///   - id: The ID number of the Uniform
     case deleteUniform(id: Int)
+    
 }
 
 extension UniformService: TargetType {
@@ -43,6 +62,8 @@ extension UniformService: TargetType {
         switch self {
         case .showUniform, .showUniforms:
             return .get
+        case .addUniform:
+            return .post
         case .updateUniform:
             return .put
         case .deleteUniform:
@@ -69,7 +90,7 @@ extension UniformService: TargetType {
         switch self {
         case .showUniform, .showUniforms, .deleteUniform:
             return .requestPlain
-        case .updateUniform(_, let uniform):
+        case .addUniform(let uniform), .updateUniform(_, let uniform):
             return .requestParameters(parameters: uniform.toDictionary()!, encoding: JSONEncoding.default)
         }
     }

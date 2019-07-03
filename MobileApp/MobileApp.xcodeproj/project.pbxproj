@@ -110,10 +110,10 @@
 		1365461622C91C17008C8DC1 /* API Services */ = {
 			isa = PBXGroup;
 			children = (
-				91758BC822CC0FF200960548 /* UniformService.swift */,
 				1365461722C91C37008C8DC1 /* StudentService.swift */,
 				133C329B22C95336007412CF /* AuthService.swift */,
 				13E6FBA122CBF63200C8A61C /* InstrumentService.swift */,
+				91758BC822CC0FF200960548 /* UniformService.swift */,
 			);
 			path = "API Services";
 			sourceTree = "<group>";

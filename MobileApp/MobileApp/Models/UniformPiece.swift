@@ -9,7 +9,7 @@
 import Foundation
 
 /// enumeration of uniforms owned by UC Bearcats Bands
-enum UniformKind: String, Codable {
+enum UniformKind: String, Codable, CaseIterable {
     
     case jacket
     case pants

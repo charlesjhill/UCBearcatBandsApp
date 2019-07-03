@@ -11,11 +11,35 @@ import Moya
 
 enum InstrumentService {
 
+    
+    /// Add an Instrument to the database
+    ///
+    /// - Parameters:
+    ///   - instrument: The Instrument to be added
     case addInstrument(_ instrument: Instrument)
+    
+    /// Requests and shows all available Instruments
     case showInstruments
+    
+    /// Requests and shows the Instrument with the given ID
+    ///
+    /// - Parameters:
+    ///   - id: The ID number of the Instrument
     case showInstrument(id: Int)
+    
     // TODO: Search for instruments?? I don't know that this would work in the backend
+    
+    /// Updates an Instrument that currently exists in the database.
+    ///
+    /// - Parameters:
+    ///   - id: The ID number of the Instrument to be updated
+    ///   - instrument: The new Instrument information
     case updateInstrument(id: Int, instrument: Instrument)
+    
+    /// Delete the Instrument with the given ID
+    ///
+    /// - Parameters:
+    ///   - id: The ID number of the Instrument to be deleted
     case deleteInstrument(id: Int)
     
 }

@@ -14,11 +14,12 @@ class SampleDatabasePopulation {
     private var currentIdx: Int = 1
     private var sAuth: MoyaProvider<AuthService> = MoyaProvider<AuthService>()
     private var sInstrument: MoyaProvider<InstrumentService> = MoyaProvider<InstrumentService>()
+    private var sUniform: MoyaProvider<UniformService> = MoyaProvider<UniformService>()
     
-    public func populate() {
-        for _ in 1...500 { makeSampleStudent() }
-        for _ in 1...500 { makeSampleInstrument() }
-        for _ in 1...500 { makeSampleUniform() }
+    public func populate(_ n: Int = 200) {
+        for _ in 1...n { makeSampleStudent() }
+        for _ in 1...n { makeSampleInstrument() }
+        for _ in 1...n { makeSampleUniform() }
     }
     
     private func makeSampleStudent() {
@@ -37,8 +38,8 @@ class SampleDatabasePopulation {
         let instrument = Instrument(id: 1,
                                     currentOwners: [],
                                     previousOwners: [],
-                                    condition: .new,
-                                    kind: .trombone,
+                                    condition: AssetCondition.allCases.randomElement()!,
+                                    kind: InstrumentKind.allCases.randomElement()!,
                                     make: "Yamaha",
                                     model: "Model",
                                     serialNumber: generateRandomDigits(8),
@@ -49,7 +50,16 @@ class SampleDatabasePopulation {
     }
     
     private func makeSampleUniform() {
-        // TODO: Not implemented
+        
+        let uniform = UniformPiece(id: 1,
+                                   currentOwners: [],
+                                   previousOwners: [],
+                                   condition: AssetCondition.allCases.randomElement()!,
+                                   kind: UniformKind.allCases.randomElement()!,
+                                   size: "Size",
+                                   number: generateRandomDigits(8))
+        sUniform.request(.addUniform(uniform)) { result in }
+        
     }
     
     private func generateRandomDigits(_ digitNumber: Int) -> String {

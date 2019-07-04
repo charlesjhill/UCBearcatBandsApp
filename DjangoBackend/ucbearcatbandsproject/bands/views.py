@@ -7,8 +7,9 @@ from .serializers import StudentSerializer, AssetSerializer, InstrumentSerialize
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('m_number', )
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, )
+    search_fields = ('m_number', 'user__full_name', )
+    ordering_fields = ('user__full_name', )
 
 
 class AssetViewSet(viewsets.ModelViewSet):

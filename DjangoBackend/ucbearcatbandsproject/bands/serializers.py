@@ -19,8 +19,9 @@ class PurchaseInfoSerializer(serializers.ModelSerializer):
 
 
 class AssetSerializer(serializers.ModelSerializer):
-    current_owners = StudentSerializer(many=True, read_only=True)
-    previous_owners = StudentSerializer(many=True, read_only=True)
+    # Instead of below, we'll (for now) just serialize the primary key (the default behavior)
+    # current_owners = StudentSerializer(many=True)
+    # previous_owners = StudentSerializer(many=True)
 
     class Meta:
         model = Asset

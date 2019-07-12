@@ -1,23 +1,25 @@
 from django.db import models
 from django.db.models import Q
 from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 from django.utils import timezone
 from ..settings import AUTH_USER_MODEL
 
-
-
 # Students and Ensembles
 class Student(models.Model):
-    user = models.OneToOneField(AUTH_USER_MODEL,
-                                on_delete=models.CASCADE,
-                                primary_key=True,
-                                related_name='student')
-
-    m_number = models.CharField(max_length=10,
-                                unique=True,
-                                validators=[RegexValidator(
-                                    regex=r'[Mm]\d{8,8}',
-                                    message='Please enter an M followed by 8 digits')])
+    user = models.OneToOneField(
+        AUTH_USER_MODEL, 
+        on_delete=models.CASCADE, 
+        primary_key=True, 
+        related_name='student'
+    )
+    m_number = models.CharField(
+        max_length=10,
+        unique=True,
+        validators=[RegexValidator(
+            regex=r'[Mm]\d{8,8}',
+            message='Please enter an M followed by 8 digits')]
+    )
 
     def __str__(self):
         return '{} [{}]'.format(self.user.full_name, self.m_number)
@@ -30,9 +32,13 @@ class Ensemble(models.Model):
     members = models.ManyToManyField(
         Student,
         through='Enrollment',
-        through_fields=('ensemble', 'student')
+        through_fields=('ensemble', 'student'),
+        related_name='ensembles'
     )
 
+    def __str__(self):
+        return "{} ({})".format(self.name, self.term)
+    
     class Meta:
         constraints = [
             # Ensure an ensemble must have a unique name/term combination
@@ -41,43 +47,40 @@ class Ensemble(models.Model):
 
 
 class Enrollment(models.Model):
-    ensemble = models.ForeignKey(Ensemble, 
-                                 on_delete=models.CASCADE,
-                                 related_name="enrollments"
-                                 )
-    student = models.ForeignKey(Student,
-                                on_delete=models.CASCADE,
-                                related_name="enrollments")
-    assets = models.ManyToManyField("Asset",
-                                    through="AssetAssignment",
-                                    through_fields=('enrollment', 'asset'))
+    ensemble = models.ForeignKey(
+        Ensemble, 
+        on_delete=models.CASCADE,
+        related_name="enrollments"
+    )
+    student = models.ForeignKey(
+        Student,
+        on_delete=models.CASCADE,
+        related_name="enrollments"
+    )
+    assets = models.ManyToManyField(
+        'Asset',
+        through='AssetAssignment',
+        through_fields=('enrollment', 'asset'),
+        related_name='enrollments'
+    )
+    
+    def __str__(self):
+        return "{} - {}".format(self.student, self.ensemble)
 
     class Meta:
         constraints = [
             # Ensure a student isn't enrolled more than once per ensemble
             models.UniqueConstraint(fields=['ensemble', 'student'], name='unique_enrollment')
-        ]                            
-
-
-class AssetAssignment(models.Model):
-    enrollment = models.ForeignKey(Enrollment,
-                                   on_delete=models.CASCADE,
-                                   related_name="asset_assignments")
-    asset = models.ForeignKey("Asset",
-                              on_delete=models.CASCADE,
-                              related_name="assignments")
-
-    # Use an is_active flag to track current vs. previous assignments                              
-    is_active = models.BooleanField(default=True)
-
-    class Meta:
-        constraints = [
-            # Ensure an asset isn't actively assigned more than once to a given ensemble
-            models.UniqueConstraint(fields=['enrollment__ensemble', 'asset'], condition=Q(is_active=True), name='unique_asset_per_ensemble')
-        ]                           
+        ]
 
 # Assets and Stuff
+
+# Consider looking at using django-polymorphic/django-rest-polymorphic to allow for returning instances of base classes
+# (i.e. calling Asset.objects.all() yields <Instrument> AND <UniformPiece> objects)
 class Asset(models.Model):
+    """
+    Model representing any asset that should be tracked
+    """
     NEW = 'new'
     GOOD = 'good'
     FAIR = 'fair'
@@ -91,18 +94,68 @@ class Asset(models.Model):
                          (BAD, 'BAD'), 
                          (UNUSABLE, 'UNUSABLE'))
 
+    name = models.CharField(max_length=255)
+    condition = models.CharField(max_length=10, choices=CONDITION_CHOICES, default='new')
     locker = models.ForeignKey(
         'Locker',
         on_delete=models.SET_NULL,
         blank=True,
-        null=True,
-        related_name='assets'
+        null=True
     )
 
-    condition = models.CharField(max_length=10, choices=CONDITION_CHOICES, default='new')
+    def __str__(self):
+        return self.name
+    
+
+class AssetAssignment(models.Model):
+    """
+    A model for an assignment of some asset to some enrollment.
+
+    Prevents assets from being assigned multiple times to an ensemble
+    """
+    enrollment = models.ForeignKey(
+        Enrollment,
+        on_delete=models.CASCADE,
+        related_name="asset_assignments"
+    )
+    asset = models.ForeignKey(
+        Asset,
+        on_delete=models.CASCADE,
+        related_name="assignments"
+    )
+
+    # Use an is_active flag to track current vs. previous assignments                              
+    is_active = models.BooleanField(default=True)
+
+    def validate_unique(self, exclude=None):
+        """
+        Provide custom validation logic to prevent asset double-assignments to an ensemble.
+        
+        This would ordinarily be in the Meta.constraints field, but we cannot do any database
+        joins there, which we require.
+        """
+        # See if there are any entries which prevent us from creating an assignment
+        # I.e. this asset is already actively assigned to this ensemble
+        violations = AssetAssignment.objects.filter(is_active=True)                                 \
+                                            .filter(asset=self.asset)                               \
+                                            .filter(enrollment__ensemble=self.enrollment.ensemble)
+                    
+        # If we have any violations, we shouldn't allow this assignment to pass
+        if violations.exists():
+            raise ValidationError('Active AssetAssignments must be unique per ensemble')
+
+        return super().validate_unique(exclude=exclude)
+
+    def save(self, *args, **kwargs):
+        """Override saving to run our custom validation logic"""
+        self.validate_unique()
+        super().save(*args, **kwargs)
 
 
 class Instrument(Asset):
+    """
+    Model representing any instrument the band owns
+    """
     kind = models.CharField(max_length=255)  # TODO: Make enum
     make = models.CharField(max_length=255)
     model = models.CharField(max_length=255)
@@ -114,9 +167,16 @@ class Instrument(Asset):
                                      )])
     uc_asset_number = models.CharField(max_length=255)
 
+    # Do this work-around to set a name on save
+    def get_name(self):
+        return f"{self.uc_tag_number} ({self.make} {self.model})"
 
     def __str__(self):
-        return f"{self.uc_tag_number} ({self.make} {self.model})"
+        return get_name()
+
+    def save(self, *args, **kwargs):
+        self.name = self.get_name()
+        super().save(*args, **kwargs)
 
     class Meta:
         constraints = [
@@ -126,6 +186,9 @@ class Instrument(Asset):
     
 
 class UniformPiece(Asset):
+    """
+    Model representing marching band uniform pieces
+    """
     JACKET = 'jacket'
     PANTS = 'pants'
     UNIFORM_PIECES = ((JACKET, 'JACKET'), 
@@ -135,21 +198,33 @@ class UniformPiece(Asset):
     size = models.CharField(max_length=20)
     number = models.CharField(max_length=20)
 
+    # Same workaround to force saving a name
+    def get_name(self):
+        return f"{self.kind} {self.number}"
+
+    def __str__(self):
+        return self.get_name()
+
+    def save(self, *args, **kwargs):
+        self.name = self.get_name()
+        super().save(*args, **kwargs)
+
 
 # Invoices
 class Invoice(models.Model):
-    date = models.DateField(default=timezone.now())
+    date = models.DateField(default=timezone.now)
     cost = models.DecimalField(decimal_places=2,
                                max_digits=20)
     vendor = models.CharField(max_length=255, default="Buddy Rogers")
     invoice_number = models.CharField(max_length=255)
-    content = models.TextField()
+    content = models.TextField(default="")
 
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['vendor', 'invoice_number'], name='unique_invoice')
         ]
-
+        abstract = True
+        
 
 class PurchaseInfo(Invoice):
     asset = models.OneToOneField(

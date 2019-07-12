@@ -1,52 +1,63 @@
 from rest_framework import serializers
-from .models import Student, PurchaseInfo, Asset, Locker, MaintenanceReport, Instrument, UniformPiece
+from .models import Student, PurchaseInfo, Asset, Locker, MaintenanceReport, Instrument, UniformPiece, Ensemble, Enrollment, AssetAssignment
 from ..users.serializers import UserSerializer
 
+class EnrollmentSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = Enrollment
+        fields = '__all__'
 
-# Define serializers here
+# Students, Ensembles
 class StudentSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
+    enrollments = EnrollmentSerializer(many=True)
 
     class Meta:
         model = Student
-        fields = ('m_number', 'user',)
+        fields = ('user', 'm_number', 'enrollments')
 
 
-class PurchaseInfoSerializer(serializers.ModelSerializer):
+class EnsembleSerializer(serializers.ModelSerializer):
+    members = serializers.StringRelatedField(many=True)
+    
     class Meta:
-        model = PurchaseInfo
+        model = Ensemble
+        fields = ('id', 'name', 'term', 'is_active', 'members')
+
+class AssetAssignmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AssetAssignment
         fields = '__all__'
 
-
+# Assets
 class AssetSerializer(serializers.ModelSerializer):
-    # Instead of below, we'll (for now) just serialize the primary key (the default behavior)
-    # current_owners = StudentSerializer(many=True)
-    # previous_owners = StudentSerializer(many=True)
-
     class Meta:
         model = Asset
         fields = '__all__'
 
-
-class InstrumentSerializer(AssetSerializer):
+class InstrumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Instrument
         fields = '__all__'
 
-
-class LockerSerializer(serializers.ModelSerializer):
+class UniformSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Locker
+        model = UniformPiece
         fields = '__all__'
 
+# Invoices
+class PurchaseInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PurchaseInfo
+        fields = '__all__'
 
 class MaintenanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = MaintenanceReport
         fields = '__all__'
 
-
-class UniformSerializer(AssetSerializer):
+# Other
+class LockerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UniformPiece
+        model = Locker
         fields = '__all__'

@@ -5,10 +5,13 @@ from ..users.views import UserViewSet
 
 # Create a router and register our viewsets in it
 router = DefaultRouter()
+router.register(r'users', UserViewSet)
 router.register(r'students', views.StudentViewSet)
+router.register(r'ensembles', views.EnsembleViewSet)
+router.register(r'enrollments', views.EnrollmentViewSet)
+router.register(r'assignments', views.AssetAssignmentViewSet)
 router.register(r'assets', views.AssetViewSet)
 router.register(r'instruments', views.InstrumentViewSet)
-router.register(r'users', UserViewSet)
 router.register(r'uniforms', views.UniformViewSet)
 
 # Include the viewsets' urls, as well as our authentication urls

@@ -1,6 +1,6 @@
 from rest_framework import viewsets, filters
-from .models import Student, Asset, Instrument, UniformPiece
-from .serializers import StudentSerializer, AssetSerializer, InstrumentSerializer, UniformSerializer
+from .models import Student, Asset, Instrument, UniformPiece, Ensemble, Enrollment, AssetAssignment
+from .serializers import StudentSerializer, InstrumentSerializer, UniformSerializer, AssetSerializer, EnsembleSerializer, EnrollmentSerializer, AssetAssignmentSerializer
 
 
 # Create your views here.
@@ -10,6 +10,21 @@ class StudentViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, )
     search_fields = ('m_number', 'user__full_name', )
     ordering_fields = ('user__full_name', )
+
+
+class EnsembleViewSet(viewsets.ModelViewSet):
+    queryset = Ensemble.objects.all()
+    serializer_class = EnsembleSerializer
+
+
+class EnrollmentViewSet(viewsets.ModelViewSet):
+    queryset = Enrollment.objects.all()
+    serializer_class = EnrollmentSerializer
+
+
+class AssetAssignmentViewSet(viewsets.ModelViewSet):
+    queryset = AssetAssignment.objects.all()
+    serializer_class = AssetAssignmentSerializer
 
 
 class AssetViewSet(viewsets.ModelViewSet):

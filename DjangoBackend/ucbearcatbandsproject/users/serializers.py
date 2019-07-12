@@ -22,8 +22,8 @@ class CustomUserDetailSerializer(UserDetailsSerializer):
 
     class Meta(UserDetailsSerializer.Meta):
         model = models.CustomUser
-        fields = ('pk', 'email', 'full_name', 'is_student', 'is_staff')
-        read_only_fields = ('pk', 'email', 'full_name', 'is_student', 'is_staff')
+        fields = ('id', 'email', 'full_name', 'is_student', 'is_staff')
+        read_only_fields = ('id', 'email', 'full_name', 'is_student', 'is_staff')
 
 
 # This serializer defines what we need to register users

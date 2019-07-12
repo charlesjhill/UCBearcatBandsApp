@@ -22,6 +22,9 @@ struct User: DjangoModel {
     /// The User's student status (true for students, false for faculty)
     let isStudent: Bool
     
+    /// The User's staff status (false for students, true for faculty)
+    let isStaff: Bool
+    
 }
 
 extension User: Codable {
@@ -30,6 +33,7 @@ extension User: Codable {
         case id, email
         case fullName = "full_name"
         case isStudent = "is_student"
+        case isStaff = "is_staff"
     }
     
 }

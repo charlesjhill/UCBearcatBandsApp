@@ -31,6 +31,12 @@ enum AuthService {
     ///   - mNumber: The UC M-Number of the new User
     case registerStudent(email: String, password: String, fullName: String, mNumber: String)
     
+    /// Get the details of the user given a login token
+    ///
+    /// - Parameters:
+    ///   - tokenKey: The key of the AuthToken
+    case getUserDetails(tokenKey: String)
+    
 }
 
 extension AuthService: TargetType {
@@ -45,11 +51,15 @@ extension AuthService: TargetType {
             return "logout/"
         case .registerStudent:
             return "registration/"
+        case .getUserDetails:
+            return "user/"
         }
     }
     
     var method: Moya.Method {
         switch self {
+        case .getUserDetails:
+            return .get
         default:
             return .post
         }
@@ -57,7 +67,7 @@ extension AuthService: TargetType {
     
     var task: Task {
         switch self {
-        case .logout:
+        case .logout, .getUserDetails:
             return .requestPlain
         case .login(let email, let password):
             return .requestParameters(parameters: ["username": "",
@@ -86,7 +96,13 @@ extension AuthService: TargetType {
     }
     
     var headers: [String : String]? {
-        return ["Content-type": "application/json"]
+        switch self {
+        case .getUserDetails(let tokenKey):
+            return ["Content-type": "application/json",
+                    "Authorization": "Token \(tokenKey)"]
+        default:
+            return ["Content-type": "application/json"]
+        }
     }
     
 }

@@ -10,5 +10,7 @@ import UIKit
 
 class StudentPortalVC: UIViewController {
 
+    var authenticatedUser: User? = nil
+    
 }
 

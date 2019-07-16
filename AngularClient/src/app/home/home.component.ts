@@ -1,4 +1,5 @@
-﻿import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+﻿import { Student } from './../_models/Student';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
@@ -9,6 +10,7 @@ import { RegisterComponent } from '../register';
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit {
     currentUser: User;
+    currentStudent: Student;
     infoForm: FormGroup;
     submitted = false;
     loading = false;
@@ -20,13 +22,14 @@ export class HomeComponent implements OnInit {
         private alertService: AlertService
     ) {
         this.currentUser = this.authenticationService.currentUserValue;
+        this.currentStudent = this.authenticationService.currentStudentValue;
     }
 
     ngOnInit() {
         this.infoForm = this.formBuilder.group({
             fullName: [this.currentUser.full_name, Validators.required],
             email: [this.currentUser.email, Validators.required],
-            mnumber: [this.currentUser.m_number, [Validators.required, RegisterComponent.mnumberValidator]],
+            mnumber: [this.currentStudent ? this.currentStudent.m_number : '', [Validators.required, RegisterComponent.mnumberValidator]],
         });
     }
 
@@ -44,8 +47,8 @@ export class HomeComponent implements OnInit {
 
         this.loading = true;
         this.currentUser.full_name = this.f.fullName.value;
-        this.currentUser.m_number = this.f.mnumber.value;
         this.currentUser.email = this.f.email.value;
+        this.currentStudent.m_number = this.f.mnumber.value;
 
         this.userService.update(this.currentUser)
             .pipe(first())

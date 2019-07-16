@@ -26,6 +26,22 @@ For frontends, we are doing two UIs:
    `python manage.py migrate`
 6. Noodle away
 
+## Angular Frontend
+1. Make sure you have [Node.js](https://nodejs.org) installed. You can check this by running `node -v` from a terminal.
+2. Install the Angular CLI globally with the command `npm install -g @angular/cli`. 
+3. Navigate to the angular directory (the one with `angular.json`)
+4. Run the command `npm install` in this directory to install all the dependencies
+5. Run `ng serve` to open the app at `localhost:4200`
+
+### To edit the app (with VS Code)
+1. Install VS Code
+2. Grab some extensions (this is what I use)
+   - Angular Language Service
+   - AngularDoc for Visual Studio Code
+   - angular2-switcher
+   - TSLint
+   - Auto Import
+
 ## The Blazor Web Frontend
 1. Install Visual Studio 2019 (version >= 16.1) and make sure to include the `ASP.NET and web development` workload during installation.
 2. Install [NET.Core 3.0 Preview 5](https://dotnet.microsoft.com/download/dotnet-core/3.0)

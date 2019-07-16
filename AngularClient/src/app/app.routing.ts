@@ -1,17 +1,26 @@
 ﻿import { AdminGuard } from './_helpers/admin.guard';
 import { Routes, RouterModule } from '@angular/router';
-
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { AuthGuard } from './_helpers';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'dashboard', component: DashboardComponent, canActivate: [AdminGuard] },
+    { path: 'dashboard',
+      component: DashboardComponent,
+      canActivate: [AdminGuard],
+      children: [
+          { path: '', component: DashboardHomeComponent, pathMatch: 'full' },
+        //   { path: 'instruments', component: DashboardInstrumentComponent },
+        //   { path: 'uniforms', component: DashboardUniformComponent },
+        //   { path: 'ensembles', component: DashboardEnsembleComponent },
+        //   { path: 'students', component: DashboardStudentComponent }
+      ] },
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

@@ -11,6 +11,10 @@ import Moya
 
 class LoginVC: UIViewController {
     
+    @IBOutlet weak var EmailField: UITextField!
+    @IBOutlet weak var PasswordField: UITextField!
+    @IBOutlet weak var LoginButton: UIButton!
+    
     let provider = MoyaProvider<AuthService>()
     var token: AuthToken? = nil {
         didSet {
@@ -30,9 +34,17 @@ class LoginVC: UIViewController {
         }
     }
     
-    @IBOutlet weak var EmailField: UITextField!
-    @IBOutlet weak var PasswordField: UITextField!
-    @IBOutlet weak var LoginButton: UIButton!
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "toAdminPortal":
+            break
+        case "toStudentPortal":
+            let vc = segue.destination as! StudentPortalVC
+            vc.authenticatedUser = user
+        default:
+            break
+        }
+    }
     
     @IBAction func LoginPressed(_ sender: Any) {
         provider.request(.login(email: EmailField.text!, password: PasswordField.text!)) { result in

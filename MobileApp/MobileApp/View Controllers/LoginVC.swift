@@ -23,9 +23,9 @@ class LoginVC: UIViewController {
             guard user != nil else { return }
             print(user!)
             if user!.isStaff {
-                // TODO: Segue to admin view area
+                performSegue(withIdentifier: "toAdminPortal", sender: user)
             } else if user!.isStudent {
-                // TODO: Segue to student view area
+                performSegue(withIdentifier: "toStudentPortal", sender: user)
             }
         }
     }

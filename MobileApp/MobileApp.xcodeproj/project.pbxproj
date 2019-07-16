@@ -16,6 +16,7 @@
 		131AAB1922C9C598003E0B5B /* GenericAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131AAB1822C9C598003E0B5B /* GenericAsset.swift */; };
 		131AAB1B22C9C65F003E0B5B /* Locker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131AAB1A22C9C65F003E0B5B /* Locker.swift */; };
 		131AAB1D22C9C838003E0B5B /* MaintenanceReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131AAB1C22C9C838003E0B5B /* MaintenanceReport.swift */; };
+		132C83B222DE5E7F009C82CA /* AdminPortalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132C83B122DE5E7F009C82CA /* AdminPortalVC.swift */; };
 		133C329C22C95336007412CF /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133C329B22C95336007412CF /* AuthService.swift */; };
 		134DB16B2298510700B119C4 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134DB16A2298510700B119C4 /* Student.swift */; };
 		13609A4D22D8D897000BCA99 /* MoyaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13609A4C22D8D897000BCA99 /* MoyaResponse.swift */; };
@@ -28,10 +29,9 @@
 		13E6FBA222CBF63200C8A61C /* InstrumentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6FBA122CBF63200C8A61C /* InstrumentService.swift */; };
 		732C615B9D0A8543F59F5DFE /* Pods_MobileAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3306D73DFB9D87E140298C9 /* Pods_MobileAppTests.framework */; };
 		91758BC922CC0FF200960548 /* UniformService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91758BC822CC0FF200960548 /* UniformService.swift */; };
-		91CD56DD22DE612C00B411AA /* UC-Bearcat-Bands.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD56DC22DE612B00B411AA /* UC-Bearcat-Bands.png */; };
 		A09BC5F3E49D556DDDB81CA5 /* Pods_MobileApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A81733A9F5199FECC44980 /* Pods_MobileApp.framework */; };
 		B5D68D1322983DD200600B76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D68D1222983DD200600B76 /* AppDelegate.swift */; };
-		B5D68D1522983DD200600B76 /* StudentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D68D1422983DD200600B76 /* StudentVC.swift */; };
+		B5D68D1522983DD200600B76 /* StudentPortalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D68D1422983DD200600B76 /* StudentPortalVC.swift */; };
 		B5D68D1A22983DD300600B76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5D68D1922983DD300600B76 /* Assets.xcassets */; };
 		B5D68D1D22983DD300600B76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5D68D1B22983DD300600B76 /* LaunchScreen.storyboard */; };
 		B5D68D2822983DD300600B76 /* MobileAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D68D2722983DD300600B76 /* MobileAppTests.swift */; };
@@ -58,6 +58,7 @@
 		131AAB1822C9C598003E0B5B /* GenericAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericAsset.swift; sourceTree = "<group>"; };
 		131AAB1A22C9C65F003E0B5B /* Locker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locker.swift; sourceTree = "<group>"; };
 		131AAB1C22C9C838003E0B5B /* MaintenanceReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceReport.swift; sourceTree = "<group>"; };
+		132C83B122DE5E7F009C82CA /* AdminPortalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPortalVC.swift; sourceTree = "<group>"; };
 		133C329B22C95336007412CF /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		134DB16A2298510700B119C4 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		13609A4C22D8D897000BCA99 /* MoyaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaResponse.swift; sourceTree = "<group>"; };
@@ -71,11 +72,9 @@
 		3BBC0AEB1EFE3A9BEA6DD9AA /* Pods-MobileAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MobileAppTests/Pods-MobileAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		479325CC4750A5F4B87F1198 /* Pods-MobileApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-MobileApp/Pods-MobileApp.release.xcconfig"; sourceTree = "<group>"; };
 		91758BC822CC0FF200960548 /* UniformService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformService.swift; sourceTree = "<group>"; };
-		91CD56DC22DE612B00B411AA /* UC-Bearcat-Bands.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "UC-Bearcat-Bands.png"; path = "../../../../Downloads/UC-Bearcat-Bands.png"; sourceTree = "<group>"; };
-		91CD56E022DE615E00B411AA /* UC-Bearcat-Bands.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UC-Bearcat-Bands.png"; sourceTree = "<group>"; };
 		B5D68D0F22983DD200600B76 /* MobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D68D1222983DD200600B76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B5D68D1422983DD200600B76 /* StudentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentVC.swift; sourceTree = "<group>"; };
+		B5D68D1422983DD200600B76 /* StudentPortalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentPortalVC.swift; sourceTree = "<group>"; };
 		B5D68D1922983DD300600B76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5D68D1C22983DD300600B76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5D68D1E22983DD300600B76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -145,15 +144,6 @@
 			path = "Sample Data";
 			sourceTree = "<group>";
 		};
-		91CD56DF22DE614600B411AA /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-				91CD56E022DE615E00B411AA /* UC-Bearcat-Bands.png */,
-			);
-			name = "New Group";
-			path = "Models/New Group";
-			sourceTree = "<group>";
-		};
 		B45693B380EEE561EB583D06 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,7 +184,6 @@
 				B5D68D3522983E6900600B76 /* View Controllers */,
 				1365461622C91C17008C8DC1 /* API Services */,
 				B5D68D3422983E5600600B76 /* Views */,
-				91CD56DF22DE614600B411AA /* New Group */,
 				B5D68D3222983E4700600B76 /* Models */,
 				13D0A5A9229DCE7300FDB509 /* Extensions */,
 				13E6FB9E22CBEA0E00C8A61C /* Sample Data */,
@@ -214,7 +203,6 @@
 		B5D68D3222983E4700600B76 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				91CD56DC22DE612B00B411AA /* UC-Bearcat-Bands.png */,
 				134DB16A2298510700B119C4 /* Student.swift */,
 				1365461922C92143008C8DC1 /* User.swift */,
 				131AAB0D22C9A86F003E0B5B /* ModelProtocols.swift */,
@@ -241,8 +229,9 @@
 		B5D68D3522983E6900600B76 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B5D68D1422983DD200600B76 /* StudentVC.swift */,
+				B5D68D1422983DD200600B76 /* StudentPortalVC.swift */,
 				13076A8B22D7EDF100A3CB74 /* LoginVC.swift */,
+				132C83B122DE5E7F009C82CA /* AdminPortalVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -335,7 +324,6 @@
 				13AB5D5122B30E18008C6545 /* Main.storyboard in Resources */,
 				B5D68D1D22983DD300600B76 /* LaunchScreen.storyboard in Resources */,
 				B5D68D1A22983DD300600B76 /* Assets.xcassets in Resources */,
-				91CD56DD22DE612C00B411AA /* UC-Bearcat-Bands.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,13 +416,14 @@
 			files = (
 				136EBE4022CA5AF0004A97D8 /* UniformPiece.swift in Sources */,
 				131AAB1222C9B06D003E0B5B /* Instrument.swift in Sources */,
+				132C83B222DE5E7F009C82CA /* AdminPortalVC.swift in Sources */,
 				91758BC922CC0FF200960548 /* UniformService.swift in Sources */,
 				13076A8C22D7EDF100A3CB74 /* LoginVC.swift in Sources */,
 				131AAB1722C9C1A0003E0B5B /* PurchaseInfo.swift in Sources */,
 				131AAB0E22C9A86F003E0B5B /* ModelProtocols.swift in Sources */,
 				13D0A5AD229DCEE600FDB509 /* URL.swift in Sources */,
 				13609A4D22D8D897000BCA99 /* MoyaResponse.swift in Sources */,
-				B5D68D1522983DD200600B76 /* StudentVC.swift in Sources */,
+				B5D68D1522983DD200600B76 /* StudentPortalVC.swift in Sources */,
 				131AAB1B22C9C65F003E0B5B /* Locker.swift in Sources */,
 				134DB16B2298510700B119C4 /* Student.swift in Sources */,
 				1365461A22C92143008C8DC1 /* User.swift in Sources */,

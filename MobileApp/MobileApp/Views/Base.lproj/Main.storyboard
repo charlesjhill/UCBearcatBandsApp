@@ -25,8 +25,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sAX-vX-uIk">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Student Profile" id="A40-zz-eUD">
+                                        <barButtonItem key="rightBarButtonItem" title="Log Out" id="CfN-TG-ETr" customClass="Logout"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.89353972670000004" green="0.2409445643" blue="0.2150148153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -34,7 +43,7 @@
             </objects>
             <point key="canvasLocation" x="589.85507246376812" y="-285.26785714285711"/>
         </scene>
-        <!--Admin PortalVC-->
+        <!--Admin-->
         <scene sceneID="ROl-pD-TlU">
             <objects>
                 <viewController id="wCO-cc-T7m" customClass="AdminPortalVC" customModule="MobileApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -49,14 +58,47 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ev3-00-hvA">
+                                <rect key="frame" x="0.0" y="88" width="127" height="320"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Mx-y4-6q2">
+                                        <rect key="frame" x="0.0" y="8" width="127" height="30"/>
+                                        <state key="normal" title="Admin Home">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="127" id="3On-Cd-zgf"/>
+                                    <constraint firstItem="3Mx-y4-6q2" firstAttribute="centerX" secondItem="ev3-00-hvA" secondAttribute="centerX" id="H7u-9C-8gx"/>
+                                    <constraint firstAttribute="bottom" secondItem="3Mx-y4-6q2" secondAttribute="bottom" constant="282" id="Vw3-JV-hrR"/>
+                                    <constraint firstItem="3Mx-y4-6q2" firstAttribute="width" secondItem="ev3-00-hvA" secondAttribute="width" id="egF-4X-vHf"/>
+                                    <constraint firstItem="3Mx-y4-6q2" firstAttribute="top" secondItem="ev3-00-hvA" secondAttribute="top" constant="8" id="rXE-QT-ma5"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.89353972673416138" green="0.24094456434249878" blue="0.21501481533050537" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="5XZ-a9-44U" firstAttribute="bottom" secondItem="3Mx-y4-6q2" secondAttribute="bottom" constant="736" id="7IW-Ru-pcE"/>
+                            <constraint firstItem="3Mx-y4-6q2" firstAttribute="top" secondItem="5XZ-a9-44U" secondAttribute="top" constant="8" id="a7I-dL-wOG"/>
+                            <constraint firstItem="3Mx-y4-6q2" firstAttribute="top" secondItem="5XZ-a9-44U" secondAttribute="top" constant="8" id="dHl-p4-jgb"/>
+                            <constraint firstItem="ev3-00-hvA" firstAttribute="leading" secondItem="cbl-ey-ANn" secondAttribute="leading" id="jSQ-cW-GqG"/>
+                            <constraint firstItem="5XZ-a9-44U" firstAttribute="bottom" secondItem="ev3-00-hvA" secondAttribute="bottom" constant="454" id="vV8-eX-87Q"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="5XZ-a9-44U"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Admin" id="mMB-jj-5zM">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="icons8-menu-30" id="09i-tq-beN" customClass="navButton"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="LeadingConstraint" destination="jSQ-cW-GqG" id="i0V-4I-VPX"/>
+                        <outlet property="openMenu" destination="09i-tq-beN" id="38D-33-2e3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O0d-MX-P6O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="590" y="373"/>
+            <point key="canvasLocation" x="1500.0000000000002" y="372.99107142857139"/>
         </scene>
         <!--LoginVC-->
         <scene sceneID="YBr-dH-Bi7">
@@ -80,7 +122,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t3w-AN-2fw">
                                 <rect key="frame" x="62" y="438" width="290" height="30"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <color key="backgroundColor" red="0.89353972670000004" green="0.2409445643" blue="0.2150148153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -93,7 +135,7 @@
                                     <action selector="LoginPressed:" destination="Ueg-WQ-EVw" eventType="touchUpInside" id="2KF-HL-xpR"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Created by the UC Bearcat Bands Dev Team" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="had-yN-Pz9">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Created by the UC Bearcat Bands App Dev Team" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="had-yN-Pz9">
                                 <rect key="frame" x="0.0" y="825" width="414" height="17"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -109,7 +151,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.89353972673416138" green="0.24094456434249878" blue="0.21501481533050537" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="EVp-K5-eyB" firstAttribute="top" secondItem="JdC-to-Arl" secondAttribute="bottom" constant="30" id="2E1-8j-Dtu"/>
                             <constraint firstItem="K4t-Ph-Fa3" firstAttribute="top" secondItem="EVp-K5-eyB" secondAttribute="bottom" constant="30" id="2nM-l8-OU9"/>
@@ -136,15 +178,34 @@
                         <outlet property="LoginButton" destination="t3w-AN-2fw" id="NfO-wG-bFf"/>
                         <outlet property="PasswordField" destination="K4t-Ph-Fa3" id="RzN-4Z-asw"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="toStudentPortal" id="vF3-NF-Zrl"/>
-                        <segue destination="wCO-cc-T7m" kind="show" identifier="toAdminPortal" id="5es-HD-Uyp"/>
+                        <segue destination="pi2-mB-4BZ" kind="show" identifier="toAdminPortal" id="5es-HD-Uyp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="unN-lC-TS2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-366.66666666666669" y="20.089285714285712"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="2VY-6u-M3c">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pi2-mB-4BZ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="66J-gq-oOk">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="wCO-cc-T7m" kind="relationship" relationship="rootViewController" id="9B7-cE-0Ei"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nc9-ZC-nHC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="589.85507246376812" y="372.99107142857139"/>
+        </scene>
     </scenes>
     <resources>
         <image name="UC-Bearcat-Bands" width="834" height="385"/>
+        <image name="icons8-menu-30" width="30" height="30"/>
     </resources>
 </document>

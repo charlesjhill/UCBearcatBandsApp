@@ -23,18 +23,15 @@ class SampleDatabasePopulation {
     }
     
     private func makeSampleStudent() {
-        
         let email = "sampleEmail\(currentIdx)@gmail.com"
         let pwd = "ucbearcatbands"
         let name = "SampleStudent\(currentIdx)"
         let number = "M12345678"
-        sAuth.request(.registerStudent(email: email, password: pwd, fullName: name, mNumber: number)) { result in }
+        sAuth.request(.registerStudent(email: email, password: pwd, fullName: name, mNumber: number), completion: handler)
         currentIdx += 1
-        
     }
     
     private func makeSampleInstrument() {
-        
         let instrument = Instrument(id: 1,
                                     currentOwners: [],
                                     previousOwners: [],
@@ -45,12 +42,10 @@ class SampleDatabasePopulation {
                                     serialNumber: generateRandomDigits(8),
                                     ucTagNumber: "T\(generateRandomDigits(4))",
                                     ucAssetNumber: generateRandomDigits(8))
-        sInstrument.request(.addInstrument(instrument)) { result in }
-        
+        sInstrument.request(.addInstrument(instrument), completion: handler)
     }
     
     private func makeSampleUniform() {
-        
         let uniform = UniformPiece(id: 1,
                                    currentOwners: [],
                                    previousOwners: [],
@@ -58,8 +53,7 @@ class SampleDatabasePopulation {
                                    kind: UniformKind.allCases.randomElement()!,
                                    size: "Size",
                                    number: generateRandomDigits(8))
-        sUniform.request(.addUniform(uniform)) { result in }
-        
+        sUniform.request(.addUniform(uniform), completion: handler)
     }
     
     private func generateRandomDigits(_ digitNumber: Int) -> String {
@@ -72,6 +66,18 @@ class SampleDatabasePopulation {
             number += "\(randomNumber)"
         }
         return number
+    }
+    
+    private lazy var handler: Completion = { result in
+        switch result {
+        case let .success(moyaResponse):
+            let data = moyaResponse.data
+            print(moyaResponse.statusCode)
+            print(String(data: data, encoding: .utf8)!)
+        case let .failure(error):
+            print(error)
+        }
+        print("")
     }
     
 }

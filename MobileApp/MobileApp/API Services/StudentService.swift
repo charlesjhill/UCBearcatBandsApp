@@ -77,7 +77,7 @@ extension StudentService: TargetType {
     }
     
     var sampleData: Data {
-        let sampleUser = User(id: 1, fullName: "Ben Hollar", email: "hollarbl@mail.uc.edu", isStudent: true)
+        let sampleUser = User(id: 1, fullName: "Ben Hollar", email: "hollarbl@mail.uc.edu", isStudent: true, isStaff: false)
         let sampleStudent = [Student(mNumber: "M10305078", user: sampleUser)]
         let sampleStudentData = try! JSONEncoder().encode(sampleStudent)
         

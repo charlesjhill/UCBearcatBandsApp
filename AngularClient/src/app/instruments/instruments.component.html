@@ -1,0 +1,15 @@
+<p>Instruments</p>
+<table class="table">
+   <tr>
+     <th scope="col">Tag Number</th>
+     <th scope="col">Kind</th>
+     <th scope="col">Condition</th>
+     <th scope="col">Assigned To</th>
+     <th scope="col">Actions</th>
+   </tr>
+   <tr *ngFor="let instrument of inventory; let i = index">
+     <td>{{ instrument.uc_asset_number }}</td>
+     <td>{{ instrument.kind }}</td>
+     <td>{{ instrument.condition }}</td>
+   </tr>
+</table>

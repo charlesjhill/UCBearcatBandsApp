@@ -48,6 +48,9 @@ class Instrument(Asset):
                                      )])
     uc_asset_number = models.CharField(max_length=255)
 
+    def __str__(self):
+        return '{} {} {} [{}] [{}] [{}]'.format(self.kind, self.make, self.model, self.serial_number, self.uc_tag_number, self.uc_asset_number)
+
 
 class PurchaseInfo(models.Model):
     date = models.DateField()

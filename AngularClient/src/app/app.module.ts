@@ -1,7 +1,9 @@
-﻿import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatTableModule } from '@angular/material';
+
 
 import { appRoutingModule } from './app.routing';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
@@ -10,14 +12,16 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { DashboardComponent } from './dashboard';
 import { RegisterComponent } from './register';
-import { AlertComponent } from './_components';
+import { AlertComponent } from './_components';;
+import { InstrumentsComponent } from './instruments/instruments.component'
 
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
-        appRoutingModule
+        appRoutingModule,
+        MatTableModule
     ],
     declarations: [
         AppComponent,
@@ -25,7 +29,8 @@ import { AlertComponent } from './_components';
         LoginComponent,
         RegisterComponent,
 		DashboardComponent,
-        AlertComponent
+        AlertComponent,
+        InstrumentsComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

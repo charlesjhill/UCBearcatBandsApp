@@ -13,6 +13,7 @@ router.register(r'assignments', views.AssetAssignmentViewSet)
 router.register(r'assets', views.AssetViewSet)
 router.register(r'instruments', views.InstrumentViewSet)
 router.register(r'uniforms', views.UniformViewSet)
+router.register(r'lockers', views.LockerViewSet)
 
 # Include the viewsets' urls, as well as our authentication urls
 urlpatterns = [

@@ -94,13 +94,15 @@ class Asset(models.Model):
                          (BAD, 'BAD'), 
                          (UNUSABLE, 'UNUSABLE'))
 
+    # name *should* be automatically set by any subclass of Asset
     name = models.CharField(max_length=255)
     condition = models.CharField(max_length=10, choices=CONDITION_CHOICES, default='new')
     locker = models.ForeignKey(
         'Locker',
         on_delete=models.SET_NULL,
         blank=True,
-        null=True
+        null=True,
+        related_name="assets"
     )
 
     def __str__(self):

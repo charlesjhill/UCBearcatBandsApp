@@ -1,6 +1,8 @@
 from rest_framework import viewsets, filters
 from .models import Student, Asset, Instrument, UniformPiece, Ensemble, Enrollment, AssetAssignment, Locker
+import ucbearcatbandsproject.bands.models as models
 from .serializers import StudentSerializer, InstrumentSerializer, UniformSerializer, AssetSerializer, EnsembleSerializer, EnrollmentSerializer, AssetAssignmentSerializer, LockerSerializer
+import ucbearcatbandsproject.bands.serializers as serializers
 
 
 # Create your views here.
@@ -59,3 +61,13 @@ class UniformViewSet(viewsets.ModelViewSet):
 class LockerViewSet(viewsets.ModelViewSet):
     queryset = Locker.objects.all()
     serializer_class = LockerSerializer
+
+
+class PurchaseViewSet(viewsets.ModelViewSet):
+    queryset = models.PurchaseInfo.objects.all()
+    serializer_class = serializers.PurchaseInfoSerializer
+
+
+class MaintenanceViewSet(viewsets.ModelViewSet):
+    queryset = models.MaintenanceReport.objects.all()
+    serializer_class = serializers.MaintenanceSerializer

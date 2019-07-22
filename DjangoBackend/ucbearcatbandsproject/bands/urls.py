@@ -14,6 +14,8 @@ router.register(r'assets', views.AssetViewSet)
 router.register(r'instruments', views.InstrumentViewSet)
 router.register(r'uniforms', views.UniformViewSet)
 router.register(r'lockers', views.LockerViewSet)
+router.register(r'purchases', views.PurchaseViewSet)
+router.register(r'maintenances', views.MaintenanceViewSet)
 
 # Include the viewsets' urls, as well as our authentication urls
 urlpatterns = [

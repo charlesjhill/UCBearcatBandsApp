@@ -10,11 +10,15 @@ class EnrollmentSerializer(serializers.ModelSerializer):
 # Students, Ensembles
 class StudentSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
-    enrollments = EnrollmentSerializer(many=True)
 
     class Meta:
         model = Student
         fields = ('user', 'm_number', 'enrollments')
+
+        # Controls how many layers of nested serializations should be done
+        # e.g. 1 : Each enrollment is expanded;
+        #      2 : enrollment .ensemble, .student, .assets are all expanded as well
+        depth = 1
 
 
 class EnsembleSerializer(serializers.ModelSerializer):
@@ -28,20 +32,22 @@ class AssetAssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = AssetAssignment
         fields = '__all__'
+        depth = 1
 
 # Assets
 class AssetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Asset
         fields = '__all__'
+        depth = 1
 
-class InstrumentSerializer(serializers.ModelSerializer):
-    class Meta:
+class InstrumentSerializer(AssetSerializer):
+    class Meta(AssetSerializer.Meta):
         model = Instrument
         fields = '__all__'
 
-class UniformSerializer(serializers.ModelSerializer):
-    class Meta:
+class UniformSerializer(AssetSerializer):
+    class Meta(AssetSerializer.Meta):
         model = UniformPiece
         fields = '__all__'
 
@@ -60,4 +66,5 @@ class MaintenanceSerializer(serializers.ModelSerializer):
 class LockerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Locker
-        fields = '__all__'
+        fields = ('id', 'number', 'combination', 'assets')
+        depth = 1

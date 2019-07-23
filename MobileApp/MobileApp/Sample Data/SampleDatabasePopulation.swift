@@ -34,8 +34,6 @@ class SampleDatabasePopulation {
     private func makeSampleInstrument() {
         let instrument = Instrument(id: 1,
                                     name: "temp", // database will override; working on not making it required, but we'd send it anyways
-                                    currentOwners: [],
-                                    previousOwners: [],
                                     condition: AssetCondition.allCases.randomElement()!,
                                     kind: InstrumentKind.allCases.randomElement()!,
                                     make: "Yamaha",
@@ -49,8 +47,6 @@ class SampleDatabasePopulation {
     private func makeSampleUniform() {
         let uniform = UniformPiece(id: 1,
                                    name: "temp", // database will override; working on not making it required, but we'd send it anyways
-                                   currentOwners: [],
-                                   previousOwners: [],
                                    condition: AssetCondition.allCases.randomElement()!,
                                    kind: UniformKind.allCases.randomElement()!,
                                    size: "Size",

@@ -11,8 +11,8 @@ import UIKit
 class AdminDashboardVC: UIViewController {
     
     override func viewDidLoad() {
-        let db = SampleDatabasePopulation()
-        db.populate()
+//        let db = SampleDatabasePopulation()
+//        db.populate()
     }
 
 }

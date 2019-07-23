@@ -1,4 +1,4 @@
-﻿import { MaterialsModule } from './materials-module/materials-module.module';
+import { MaterialsModule } from './materials-module/materials-module.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';

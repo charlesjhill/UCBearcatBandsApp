@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MatTableModule } from '@angular/material';
-
+import { MatTableModule, MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import { appRoutingModule } from './app.routing';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
@@ -13,7 +13,8 @@ import { LoginComponent } from './login';
 import { DashboardComponent } from './dashboard';
 import { RegisterComponent } from './register';
 import { AlertComponent } from './_components';;
-import { InstrumentsComponent } from './instruments/instruments.component'
+import { InstrumentsComponent, OverviewDialog } from './instruments/instruments.component'
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -21,16 +22,24 @@ import { InstrumentsComponent } from './instruments/instruments.component'
         ReactiveFormsModule,
         HttpClientModule,
         appRoutingModule,
-        MatTableModule
+        MatTableModule,
+        MatDialogModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule
     ],
     declarations: [
         AppComponent,
         HomeComponent,
         LoginComponent,
         RegisterComponent,
-		DashboardComponent,
-        AlertComponent,
-        InstrumentsComponent
+		    DashboardComponent,
+        AlertComponent,        InstrumentsComponent,
+        OverviewDialog
+    ],
+    entryComponents: [
+      OverviewDialog
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

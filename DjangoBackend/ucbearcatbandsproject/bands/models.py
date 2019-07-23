@@ -96,7 +96,7 @@ class Asset(models.Model):
                          (UNUSABLE, 'UNUSABLE'))
 
     # name *should* be automatically set by any subclass of Asset
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, blank=True)
     condition = models.CharField(max_length=10, choices=CONDITION_CHOICES, default='new')
     locker = models.ForeignKey(
         'Locker',

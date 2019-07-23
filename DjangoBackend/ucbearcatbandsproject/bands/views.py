@@ -1,8 +1,6 @@
 from rest_framework import viewsets, filters
-from .models import Student, Asset, Instrument, UniformPiece, Ensemble, Enrollment, AssetAssignment, Locker
-import ucbearcatbandsproject.bands.models as models
-from .serializers import StudentSerializer, InstrumentSerializer, UniformSerializer, AssetSerializer, EnsembleSerializer, EnrollmentSerializer, AssetAssignmentSerializer, LockerSerializer
-import ucbearcatbandsproject.bands.serializers as serializers
+from . import models
+from . import serializers
 
 
 # Create your views here.
@@ -10,43 +8,44 @@ import ucbearcatbandsproject.bands.serializers as serializers
 # Details here: https://www.django-rest-framework.org/api-guide/filtering/
 
 class StudentViewSet(viewsets.ModelViewSet):
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+    queryset = models.Student.objects.all()
+    serializer_class = serializers.StudentSerializer
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, )
     search_fields = ('m_number', 'user__full_name', )
     ordering_fields = ('user__full_name', )
 
 
 class EnsembleViewSet(viewsets.ModelViewSet):
-    queryset = Ensemble.objects.all()
-    serializer_class = EnsembleSerializer
+    queryset = models.Ensemble.objects.all()
+    serializer_class = serializers.EnsembleSerializer
     filter_backends = (filters.SearchFilter, )
     search_fields = ('__str__', )
 
 
 class EnrollmentViewSet(viewsets.ModelViewSet):
-    queryset = Enrollment.objects.all()
-    serializer_class = EnrollmentSerializer
+    queryset = models.Enrollment.objects.all()
+    serializer_class = serializers.EnrollmentSerializer
     filter_backends = (filters.SearchFilter, )
     search_fields = ('ensemble__name', 'student__user__full_name', )
 
 
 class AssetAssignmentViewSet(viewsets.ModelViewSet):
-    queryset = AssetAssignment.objects.all()
-    serializer_class = AssetAssignmentSerializer
+    queryset = models.AssetAssignment.objects.all()
+    serializer_class = serializers.AssetAssignmentSerializer
     filter_backends = (filters.SearchFilter, )
     search_fields = ('enrollment__student__user__full_name', 'asset__name', )
 
 
 class AssetViewSet(viewsets.ModelViewSet):
-    queryset = Asset.objects.all()
-    serializer_class = AssetSerializer
+    queryset = models.Asset.objects.all()
+    serializer_class = serializers.AssetSerializer
 
 
 class InstrumentViewSet(viewsets.ModelViewSet):
-    queryset = Instrument.objects.all()
-    serializer_class = InstrumentSerializer
-    # How to handle potentially searching a lot of fields? We could force a client to do this, but it does seem inefficient.
+    queryset = models.Instrument.objects.all()
+    serializer_class = serializers.InstrumentSerializer
+
+    # How do we allow clients to search a particular field? Make the client do it?
     # Perhaps creating our own filter backend to more modularly do searches/filtering is the answer?
     # I.e. we could have a parameter `search_kind`, `search_make`, etc.
     filter_backends = (filters.SearchFilter, )
@@ -54,13 +53,13 @@ class InstrumentViewSet(viewsets.ModelViewSet):
 
 
 class UniformViewSet(viewsets.ModelViewSet):
-    queryset = UniformPiece.objects.all()
-    serializer_class = UniformSerializer
+    queryset = models.UniformPiece.objects.all()
+    serializer_class = serializers.UniformSerializer
 
 
 class LockerViewSet(viewsets.ModelViewSet):
-    queryset = Locker.objects.all()
-    serializer_class = LockerSerializer
+    queryset = models.Locker.objects.all()
+    serializer_class = serializers.LockerSerializer
 
 
 class PurchaseViewSet(viewsets.ModelViewSet):

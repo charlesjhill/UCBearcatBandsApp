@@ -1,9 +1,9 @@
 from django.db import models
-from django.db.models import Q
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from ..settings import AUTH_USER_MODEL
+
 
 # Students and Ensembles
 class Student(models.Model):
@@ -72,6 +72,7 @@ class Enrollment(models.Model):
             # Ensure a student isn't enrolled more than once per ensemble
             models.UniqueConstraint(fields=['ensemble', 'student'], name='unique_enrollment')
         ]
+
 
 # Assets and Stuff
 
@@ -174,7 +175,7 @@ class Instrument(Asset):
         return f"{self.uc_tag_number} ({self.make} {self.model})"
 
     def __str__(self):
-        return get_name()
+        return self.get_name()
 
     def save(self, *args, **kwargs):
         self.name = self.get_name()

@@ -1,18 +1,20 @@
 from rest_framework import serializers
-from .models import Student, PurchaseInfo, Asset, Locker, MaintenanceReport, Instrument, UniformPiece, Ensemble, Enrollment, AssetAssignment
+from . import models
 from ..users.serializers import UserSerializer
+
 
 class EnrollmentSerializer(serializers.ModelSerializer):
     class Meta: 
-        model = Enrollment
+        model = models.Enrollment
         fields = '__all__'
+
 
 # Students, Ensembles
 class StudentSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
 
     class Meta:
-        model = Student
+        model = models.Student
         fields = ('user', 'm_number', 'enrollments')
 
         # Controls how many layers of nested serializations should be done
@@ -25,46 +27,53 @@ class EnsembleSerializer(serializers.ModelSerializer):
     members = serializers.StringRelatedField(many=True)
     
     class Meta:
-        model = Ensemble
+        model = models.Ensemble
         fields = ('id', 'name', 'term', 'is_active', 'members')
+
 
 class AssetAssignmentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AssetAssignment
+        model = models.AssetAssignment
         fields = '__all__'
         depth = 1
+
 
 # Assets
 class AssetSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Asset
+        model = models.Asset
         fields = '__all__'
         depth = 1
 
+
 class InstrumentSerializer(AssetSerializer):
     class Meta(AssetSerializer.Meta):
-        model = Instrument
+        model = models.Instrument
         fields = '__all__'
+
 
 class UniformSerializer(AssetSerializer):
     class Meta(AssetSerializer.Meta):
-        model = UniformPiece
+        model = models.UniformPiece
         fields = '__all__'
+
 
 # Invoices
 class PurchaseInfoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = PurchaseInfo
+        model = models.PurchaseInfo
         fields = '__all__'
+
 
 class MaintenanceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MaintenanceReport
+        model = models.MaintenanceReport
         fields = '__all__'
+
 
 # Other
 class LockerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Locker
+        model = models.Locker
         fields = ('id', 'number', 'combination', 'assets')
         depth = 1

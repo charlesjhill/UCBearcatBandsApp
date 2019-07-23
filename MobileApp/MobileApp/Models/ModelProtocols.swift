@@ -40,6 +40,9 @@ enum AssetCondition: String, Codable, CaseIterable {
 /// A generic Asset of the UC Bearcat Bands
 protocol Asset: DjangoModel {
     
+    /// The name of the Asset
+    var name: String { get }
+    
     /// The current owner(s) of the Asset, if any
     var currentOwners: [Student] { get }
     

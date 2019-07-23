@@ -1,5 +1,5 @@
 //
-//  StudentVC.swift
+//  StudentDashboardVC.swift
 //  MobileApp
 //
 //  Created by Ben Hollar on 5/24/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StudentPortalVC: UIViewController {
+class StudentDashboardVC: UIViewController {
 
     var authenticatedUser: User? = nil
     

@@ -1,9 +1,8 @@
+import { MaterialsModule } from './materials-module/materials-module.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MatTableModule, MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import { appRoutingModule } from './app.routing';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
@@ -12,9 +11,9 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { DashboardComponent } from './dashboard';
 import { RegisterComponent } from './register';
-import { AlertComponent } from './_components';;
-import { InstrumentsComponent, OverviewDialog } from './instruments/instruments.component'
-import { FormsModule } from '@angular/forms';
+import { AlertComponent } from './_components';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';;
+import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component'
 
 @NgModule({
     imports: [
@@ -22,24 +21,17 @@ import { FormsModule } from '@angular/forms';
         ReactiveFormsModule,
         HttpClientModule,
         appRoutingModule,
-        MatTableModule,
-        MatDialogModule,
         BrowserAnimationsModule,
-        FormsModule,
-        MatFormFieldModule,
-        MatInputModule
+        MaterialsModule
     ],
     declarations: [
         AppComponent,
         HomeComponent,
         LoginComponent,
         RegisterComponent,
-		    DashboardComponent,
-        AlertComponent,        InstrumentsComponent,
-        OverviewDialog
-    ],
-    entryComponents: [
-      OverviewDialog
+        DashboardComponent,
+        AlertComponent,
+        DashboardHomeComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
@@ -49,4 +41,4 @@ import { FormsModule } from '@angular/forms';
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule { };
+export class AppModule { }

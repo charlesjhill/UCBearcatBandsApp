@@ -1,4 +1,4 @@
-﻿import { User, TokenReturn, ReturnUser } from '../_models';
+﻿import { User, TokenReturn, ReturnUser, Student } from '../_models';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
@@ -10,31 +10,41 @@ import { environment } from 'src/environments/environment';
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     private currentUserToken: string;
+
+    private currentStudentSubject: BehaviorSubject<Student>;
+    public currentStudent: Observable<Student>;
+
     public currentUser: Observable<User>;
 
     constructor(private http: HttpClient) {
         this.currentUserToken = '';
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
+        this.currentStudentSubject = new BehaviorSubject<Student>(JSON.parse(localStorage.getItem('currentStudent')));
+        this.currentStudent = this.currentStudentSubject.asObservable();
     }
 
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
     }
 
+    public get currentStudentValue(): Student {
+        return this.currentStudentSubject.value;
+    }
+
     // Use concatMaps to handle the sequential series of steps without having to subscribe
-    login(email: string, password: string): Observable<User> {
+    login(email: string, password: string): Observable<any> {
         return this.http.post<TokenReturn>(`${environment.apiUrl}/rest-auth/login/`, { email, password })
             .pipe(
-                concatMap(lr => {
+                concatMap(tr => {
                     // First store the received token, then fire off the request for user details
-                    this.currentUserToken = lr.key;
+                    this.currentUserToken = tr.key;
 
                     // After this call, we are going to rely on `jwt.interceptor` to handle setting this header
                     const httpOptions = {
                         headers: new HttpHeaders({
                             'Content-Type': 'application/json',
-                            Authorization: `Token ${lr.key}`
+                            Authorization: `Token ${tr.key}`
                         })
                     };
 
@@ -47,13 +57,27 @@ export class AuthenticationService {
                     user.email = ru.email;
                     user.full_name = ru.full_name;
                     user.is_student = ru.is_student;
-                    user.m_number = ru.m_number;
-                    user.pk = ru.pk;
+                    user.pk = ru.id;
                     user.token = this.currentUserToken;
 
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.currentUserSubject.next(user);
-                    return of(user);
+                    if (user.is_student) {
+                        return this.http.get(`${environment.apiUrl}/students/${user.pk}/`);
+                    } else {
+                        return of(user);
+                    }
+                }),
+                concatMap(thing => {
+                    // Do some janky stuff here to get the student properties IF our person is a student
+                    if (thing.hasOwnProperty('m_number') && (thing as Student).m_number) {
+                        const student = new Student();
+                        student.m_number = (thing as Student).m_number;
+                        localStorage.setItem('currentStudent', JSON.stringify(student));
+                        this.currentStudentSubject.next(student);
+                    }
+
+                    return of(thing);
                 })
             );
     }
@@ -63,5 +87,8 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
         this.currentUserToken = '';
         this.currentUserSubject.next(null);
+
+        localStorage.removeItem('currentStudent');
+        this.currentStudentSubject.next(null);
     }
 }

@@ -3,17 +3,13 @@ It's an app for the UC Bearcat Bands
 
 # Architecture
 ---
-The way things are currently swinging, we need a database-backed web API. The current play is with this one:
-- [Django](https://www.djangoproject.com/) - A "batteries-included" python web-framework
-  - To make coding a REST API easier, [Djano-Rest-Framework](https://www.django-rest-framework.org/) is hella nice.
+The way things are currently swinging, we needed a database-backed web API. We're running this through [Django](https://www.djangoproject.com/) for the web part.
+  - The api part is facilitated by [Django-Rest-Framework](https://www.django-rest-framework.org/).
   - P.S., the way the Django project is currently structured is not something I'm strongly attached to and I'm willing to move the "app" folder (`bands`) outside of the project folder (`ucbearcatbandsproject`) if we determine that'd be easier to work with.
 
 For frontends, we are doing two UIs:
-- A traditional web application. We currently have a demo written in [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/client), a framework for making Single-Page Applications (SPAs) using C#/.NET. We have other options:
-  - [Django?](https://docs.djangoproject.com/en/2.2/topics/templates/) - Django Templates would allow for us to create a web-frontend which tightly integrates with Django, but not Django-Rest-Framework. As a result, we wouldn't be able to use the REST API if we roll with this for the site, thus we'd essentially need to maintain two APIs. However, it does integrate cleanly otherwise.
-  - [Angular](https://angular.io/) - A Typescript Framework for web applications; Mature and tested. Supported by Google Open Source
-- An iOS only mobile app
-  - Details about our configuration / setup are below.
+- A traditional web application. This is being written in [Angular](https://angular.io) using a mix of [Bootstrap](https://getbootstrap.com/) CSS and [Material](https://material.angular.io/) components.
+- An iOS only mobile app, necessarily written using Swift. See details below
   
 # Set up Information
 ---
@@ -26,13 +22,36 @@ For frontends, we are doing two UIs:
    `python manage.py migrate`
 6. Noodle away
 
+## Angular Frontend
+1. Make sure you have [Node.js](https://nodejs.org) installed. You can check this by running `node -v` from a terminal. We are mostly in this for the package manager, `npm`.
+2. Install the Angular CLI globally with the command `npm install -g @angular/cli`. This is used to build the angular app and facilitate development in other ways.
+3. Navigate to the angular directory in the project (the one with `angular.json`)
+4. Run the command `npm install` in this directory to install all the javascript dependencies for the project.
+5. Run `ng serve` to open the app at `localhost:4200`
+
+### To edit the app (with VS Code)
+1. Install VS Code
+2. Grab some extensions (this is what I use)
+   - Angular Language Service
+   - AngularDoc for Visual Studio Code
+   - angular2-switcher
+   - TSLint
+   - Auto Import
+3. If the app is opened using `ng serve` (as instructed above), any saved changes should cause the app to live update.
+
+### On debugging
+- Using the browser devtools are really helpful; Especially tabs for:
+  - `Inspector`: For seeing the pages generated HTML, styling applied to elements, etc.
+  - `Console`: Any errors in the app will be spit out here. If something isn't working, take a look at this.
+  - `Network`: Useful to verify API requests and responses being made
+  - `Storage`: Not as useful as the other tabs, but if you want to make sure something is being stored, this is the place.
+- Using the debugger functionality of VS Code is pretty nice. Setting up is easier for Chrome than firefox, but it is worth it if you want access to breakpoints (which you probably do). Look up how to set this up.
+
 ## The Blazor Web Frontend
-1. Install Visual Studio 2019 (version >= 16.1) and make sure to include the `ASP.NET and web development` workload during installation.
-2. Install [NET.Core 3.0 Preview 5](https://dotnet.microsoft.com/download/dotnet-core/3.0)
-3. Install [this](https://marketplace.visualstudio.com/items?itemName=aspnet.blazor) extension to enable Blazor support.
-4. Execute the following command in a terminal window (powershell, cmd, etc):  
-   `dotnet new -i Microsoft.AspNetCore.Blazor.Templates::3.0.0-preview5-19227-01`
-5. Back in VS now, enable usage of .NET Core SDK previews (`Tools` > `Options` > `Environment` > `Preview Features` > `Use previews ...`)
+1. Install Visual Studio 2019 (version = latest) and make sure to include the `ASP.NET and web development` workload during installation.
+2. Install the latest [NET.Core 3.0 Preview](https://dotnet.microsoft.com/download/dotnet-core/3.0)
+3. Install [this](https://marketplace.visualstudio.com/items?itemName=aspnet.blazor) extension and follow any steps not already done to enable Blazor support.
+4. Back in VS now, enable usage of .NET Core SDK previews (`Tools` > `Options` > `Environment` > `Preview Features` > `Use previews ...`)
 6. Pop open that solution and get cracking!
 
 ## iOS App Setup

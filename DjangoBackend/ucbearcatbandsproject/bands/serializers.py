@@ -24,18 +24,19 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 class EnsembleSerializer(serializers.ModelSerializer):
-    members = serializers.StringRelatedField(many=True)
+    members = StudentSerializer(many=True, read_only=True)
     
     class Meta:
         model = models.Ensemble
-        fields = ('id', 'name', 'term', 'is_active', 'members')
+        fields = ('id', 'name', 'term', 'is_active', 'members', 'enrollments')
+        depth = 1
 
 
 class AssetAssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.AssetAssignment
         fields = '__all__'
-        depth = 1
+        # depth = 1
 
 
 # Assets

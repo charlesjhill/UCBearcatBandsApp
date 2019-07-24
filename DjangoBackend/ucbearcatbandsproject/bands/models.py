@@ -8,9 +8,9 @@ from ..settings import AUTH_USER_MODEL
 # Students and Ensembles
 class Student(models.Model):
     user = models.OneToOneField(
-        AUTH_USER_MODEL, 
-        on_delete=models.CASCADE, 
-        primary_key=True, 
+        AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        primary_key=True,
         related_name='student'
     )
     m_number = models.CharField(
@@ -38,7 +38,7 @@ class Ensemble(models.Model):
 
     def __str__(self):
         return "{} ({})".format(self.name, self.term)
-    
+
     class Meta:
         constraints = [
             # Ensure an ensemble must have a unique name/term combination
@@ -48,7 +48,7 @@ class Ensemble(models.Model):
 
 class Enrollment(models.Model):
     ensemble = models.ForeignKey(
-        Ensemble, 
+        Ensemble,
         on_delete=models.CASCADE,
         related_name="enrollments"
     )
@@ -63,7 +63,7 @@ class Enrollment(models.Model):
         through_fields=('enrollment', 'asset'),
         related_name='enrollments'
     )
-    
+
     def __str__(self):
         return "{} - {}".format(self.student, self.ensemble)
 
@@ -88,11 +88,11 @@ class Asset(models.Model):
     POOR = 'poor'
     BAD = 'bad'
     UNUSABLE = 'unusable'
-    CONDITION_CHOICES = ((NEW, 'NEW'), 
-                         (GOOD, 'GOOD'), 
-                         (FAIR, 'FAIR'), 
+    CONDITION_CHOICES = ((NEW, 'NEW'),
+                         (GOOD, 'GOOD'),
+                         (FAIR, 'FAIR'),
                          (POOR, 'POOR'),
-                         (BAD, 'BAD'), 
+                         (BAD, 'BAD'),
                          (UNUSABLE, 'UNUSABLE'))
 
     # name *should* be automatically set by any subclass of Asset
@@ -108,7 +108,7 @@ class Asset(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 
 class AssetAssignment(models.Model):
     """
@@ -139,10 +139,10 @@ class AssetAssignment(models.Model):
         """
         # See if there are any entries which prevent us from creating an assignment
         # I.e. this asset is already actively assigned to this ensemble
-        violations = AssetAssignment.objects.filter(is_active=True)                                 \
-                                            .filter(asset=self.asset)                               \
-                                            .filter(enrollment__ensemble=self.enrollment.ensemble)
-                    
+        violations = AssetAssignment.objects.filter(is_active=True) \
+            .filter(asset=self.asset) \
+            .filter(enrollment__ensemble=self.enrollment.ensemble)
+
         # If we have any violations, we shouldn't allow this assignment to pass
         if violations.exists():
             raise ValidationError('Active AssetAssignments must be unique per ensemble')
@@ -186,7 +186,7 @@ class Instrument(Asset):
             # We shouldn't have two instruments where all these properties are shared
             models.UniqueConstraint(fields=['kind', 'make', 'model', 'serial_number'], name='unique_instruments')
         ]
-    
+
 
 class UniformPiece(Asset):
     """
@@ -194,7 +194,7 @@ class UniformPiece(Asset):
     """
     JACKET = 'jacket'
     PANTS = 'pants'
-    UNIFORM_PIECES = ((JACKET, 'JACKET'), 
+    UNIFORM_PIECES = ((JACKET, 'JACKET'),
                       (PANTS, 'PANTS'))
 
     kind = models.CharField(max_length=6, choices=UNIFORM_PIECES, default=JACKET)
@@ -227,7 +227,7 @@ class Invoice(models.Model):
             models.UniqueConstraint(fields=['vendor', 'invoice_number'], name='unique_invoice')
         ]
         abstract = True
-        
+
 
 class PurchaseInfo(Invoice):
     asset = models.OneToOneField(

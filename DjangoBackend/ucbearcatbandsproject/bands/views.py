@@ -1,4 +1,9 @@
 from rest_framework import viewsets, filters
+from rest_framework.decorators import action
+from rest_framework.response import Response
+import itertools
+
+from ucbearcatbandsproject.bands.models import Instrument, Student
 from . import models
 from . import serializers
 
@@ -13,6 +18,15 @@ class StudentViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, )
     search_fields = ('m_number', 'user__full_name', )
     ordering_fields = ('user__full_name', )
+
+    # We can add additional actions to a view like this
+    # They will automatically get routed to a url too, which is handy
+    @action(detail=True, methods=['get'])
+    def instruments(self, request, pk=None):
+        student: models.Student = self.get_object()
+        instruments = Instrument.objects.filter(assignments__enrollment__student=student)
+        serializer = serializers.InstrumentSerializer(instruments, many=True)
+        return Response(serializer.data)
 
 
 class EnsembleViewSet(viewsets.ModelViewSet):
@@ -51,10 +65,24 @@ class InstrumentViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter, )
     search_fields = ('kind', 'make', 'model', 'uc_tag_number', 'uc_asset_number')
 
+    @action(detail=True, methods=['get'])
+    def students(self, request, pk=None):
+        instrument: models.Instrument = self.get_object()
+        students = Student.objects.filter(enrollments__asset_assignments__asset=instrument)
+        serializer = serializers.StudentSerializer(students, many=True)
+        return Response(serializer.data)
+
 
 class UniformViewSet(viewsets.ModelViewSet):
     queryset = models.UniformPiece.objects.all()
     serializer_class = serializers.UniformSerializer
+
+    @action(detail=True, methods=['get'])
+    def students(self, request, pk=None):
+        uniform: models.UniformPiece = self.get_object()
+        students = Student.objects.filter(enrollments__asset_assignments__asset=uniform)
+        serializer = serializers.StudentSerializer(students, many=True)
+        return Response(serializer.data)
 
 
 class LockerViewSet(viewsets.ModelViewSet):

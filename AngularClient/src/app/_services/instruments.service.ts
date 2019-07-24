@@ -4,7 +4,6 @@ import { UserService } from './user.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-//import 'rxjs/add/operator/mapTo';
 
 export interface Instrument {
   kind: string;

@@ -1,0 +1,14 @@
+<h3>Members</h3>
+<table class="table">
+    <thead>
+        <th scope="col">Name</th>
+        <th scope="col">Instruments</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let member of ensemble.members">
+            <td>
+                {{ member.user.full_name }}
+            </td>
+        </tr>
+    </tbody>
+</table>

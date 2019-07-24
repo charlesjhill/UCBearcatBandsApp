@@ -1,3 +1,4 @@
+import { DashboardEnsemblesComponent } from './dashboard-ensembles/dashboard-ensembles.component';
 import { AdminGuard } from './_helpers/admin.guard';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home';
@@ -19,7 +20,7 @@ const routes: Routes = [
           { path: '', component: DashboardHomeComponent, pathMatch: 'full' },
           { path: 'instruments', component: InstrumentsComponent },
         //   { path: 'uniforms', component: DashboardUniformComponent },
-        //   { path: 'ensembles', component: DashboardEnsembleComponent },
+          { path: 'ensembles', component: DashboardEnsemblesComponent },
         //   { path: 'students', component: DashboardStudentComponent }
       ] },
 

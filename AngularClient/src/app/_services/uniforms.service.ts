@@ -4,19 +4,17 @@ import { UserService } from './user.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+//import 'rxjs/add/operator/mapTo';
 
-export interface Instrument {
+export interface Uniform {
   kind: string;
-  make: string;
-  model: string;
-  serial_number: string;
-  uc_tag_number: string;
-  uc_asset_number: string;
   condition: string;
+  size: string;
+  number: string;
 }
 
 @Injectable({ providedIn: 'root' })
-export class InstrumentsService {
+export class UniformsService {
 
   constructor(private __http: HttpClient, private _userService: UserService) { }
 
@@ -37,39 +35,34 @@ export class InstrumentsService {
   };
 
   // Uses http.get() to Load data from single API endpoint
-  list(): Observable<Instrument[]> {
-    return this.__http.get<Instrument[]>(`${environment.apiUrl}/instruments/`);
+  list(): Observable<Uniform[]> {
+    return this.__http.get<Uniform[]>(`${environment.apiUrl}/uniforms/`);
   }
 
-  addInstrument (instrument: Instrument): Observable<Instrument> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })};
-    return this.__http.post<Instrument>(`${environment.apiUrl}/instruments/`, instrument, httpOptions)
-      .pipe(catchError(this.handleError));
-  }
-
-  deleteInstrument(id): Observable<any> {
+  addUniform(uniform: Uniform): Observable<Uniform> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'my-auth-token'
       })
     };
-    return this.__http.delete(`${environment.apiUrl}/instruments/` + id + '/')
+    return this.__http.post<Uniform>(`${environment.apiUrl}/uniforms/`, uniform, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  updateInstrument(instrument: Instrument, id): Observable<Instrument> {
+  deleteUniform(id): Observable<any> {
+    return this.__http.delete(`${environment.apiUrl}/uniforms/` + id + '/')
+      .pipe(catchError(this.handleError));
+  }
+
+  updateUniform(uniform: Uniform, id): Observable<Uniform> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'my-auth-token'
       })
     };
-    return this.__http.put<Instrument>(`${environment.apiUrl}/instruments/`+ id + '/', instrument, httpOptions)
+    return this.__http.put<Uniform>(`${environment.apiUrl}/uniforms/` + id + '/', uniform, httpOptions)
       .pipe(catchError(this.handleError));
   }
 }

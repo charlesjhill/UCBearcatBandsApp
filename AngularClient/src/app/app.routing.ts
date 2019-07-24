@@ -8,6 +8,7 @@ import { AuthGuard } from './_helpers';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
+import { UniformsComponent } from './uniforms/uniforms.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -19,7 +20,7 @@ const routes: Routes = [
       children: [
           { path: '', component: DashboardHomeComponent, pathMatch: 'full' },
           { path: 'instruments', component: InstrumentsComponent },
-        //   { path: 'uniforms', component: DashboardUniformComponent },
+          { path: 'uniforms', component: UniformsComponent },
           { path: 'ensembles', component: DashboardEnsemblesComponent },
         //   { path: 'students', component: DashboardStudentComponent }
       ] },

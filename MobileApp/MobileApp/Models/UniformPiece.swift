@@ -23,10 +23,6 @@ struct UniformPiece: Asset {
     
     let name: String
     
-    let currentOwners: [Student]
-    
-    let previousOwners: [Student]
-    
     let condition: AssetCondition
     
     /// The kind of the UniformPiece
@@ -48,8 +44,6 @@ extension UniformPiece: Codable {
     
     enum CodingKeys: String, CodingKey {
         case id, name, condition, kind, size, number
-        case currentOwners = "current_owners"
-        case previousOwners = "previous_owners"
     }
     
 }

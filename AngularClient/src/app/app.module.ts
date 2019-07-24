@@ -15,6 +15,7 @@ import { AlertComponent } from './_components';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component'
 import { InstrumentsComponent, OverviewDialog } from './instruments/instruments.component';
+import { UniformsComponent } from './uniforms/uniforms.component';
 import { DashboardEnsemblesComponent } from './dashboard-ensembles/dashboard-ensembles.component';
 import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.component';
 
@@ -38,7 +39,8 @@ import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.compo
         InstrumentsComponent,
         OverviewDialog,
         DashboardEnsemblesComponent,
-        EnsembleDetailComponent
+        EnsembleDetailComponent,
+        UniformsComponent
     ],
     entryComponents: [
         OverviewDialog

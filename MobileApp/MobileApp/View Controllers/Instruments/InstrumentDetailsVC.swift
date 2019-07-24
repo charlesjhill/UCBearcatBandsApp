@@ -1,5 +1,5 @@
 //
-//  InstrumentListVC.swift
+//  InstrumentDetailsVC.swift
 //  MobileApp
 //
 //  Created by Ben Hollar on 7/23/19.
@@ -8,6 +8,8 @@
 
 import UIKit
 
-class InstrumentListVC: UIViewController {
+class InstrumentDetailsVC: UIViewController {
+    
+    var instrument: Instrument? = nil
     
 }

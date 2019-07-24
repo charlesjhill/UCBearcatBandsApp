@@ -47,10 +47,6 @@ struct Instrument: Asset {
     
     let name: String
     
-    let currentOwners: [Student]
-    
-    let previousOwners: [Student]
-    
     let condition: AssetCondition
     
     /// The kind of Instrument
@@ -77,8 +73,6 @@ extension Instrument: Codable {
     
     enum CodingKeys: String, CodingKey {
         case id, name, kind, make, model, condition
-        case currentOwners = "current_owners"
-        case previousOwners = "previous_owners"
         case serialNumber = "serial_number"
         case ucTagNumber = "uc_tag_number"
         case ucAssetNumber = "uc_asset_number"

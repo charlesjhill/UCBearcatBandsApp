@@ -26,9 +26,9 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let instrument">
-      <button mat-button>Details</button>
-      <button mat-button>Edit</button>
-      <button mat-button>Delete</button>
+      <button mat-button (click)="viewForm(instrument)">Details</button>
+      <button mat-button (click)="editForm(instrument, instrument.id)">Edit</button>
+      <button mat-button (click)="onDelete(instrument.id)">Delete</button>
     </td>
   </ng-container>
 

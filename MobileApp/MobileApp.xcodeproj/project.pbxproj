@@ -40,6 +40,9 @@
 		13F0B5CE22E7F05100CE565E /* InstrumentDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F0B5CD22E7F05100CE565E /* InstrumentDetailsVC.swift */; };
 		732C615B9D0A8543F59F5DFE /* Pods_MobileAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3306D73DFB9D87E140298C9 /* Pods_MobileAppTests.framework */; };
 		91758BC922CC0FF200960548 /* UniformService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91758BC822CC0FF200960548 /* UniformService.swift */; };
+		91A5782322E7E4FF00C23E78 /* EnsembleListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5782222E7E4FF00C23E78 /* EnsembleListVC.swift */; };
+		91A5782522E7E5EA00C23E78 /* EnsembleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5782422E7E5EA00C23E78 /* EnsembleService.swift */; };
+		91A5782722E8A26800C23E78 /* Ensemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5782622E8A26800C23E78 /* Ensemble.swift */; };
 		A09BC5F3E49D556DDDB81CA5 /* Pods_MobileApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A81733A9F5199FECC44980 /* Pods_MobileApp.framework */; };
 		B5D68D1322983DD200600B76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D68D1222983DD200600B76 /* AppDelegate.swift */; };
 		B5D68D1522983DD200600B76 /* StudentDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D68D1422983DD200600B76 /* StudentDashboardVC.swift */; };
@@ -93,6 +96,9 @@
 		3BBC0AEB1EFE3A9BEA6DD9AA /* Pods-MobileAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MobileAppTests/Pods-MobileAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		479325CC4750A5F4B87F1198 /* Pods-MobileApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-MobileApp/Pods-MobileApp.release.xcconfig"; sourceTree = "<group>"; };
 		91758BC822CC0FF200960548 /* UniformService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformService.swift; sourceTree = "<group>"; };
+		91A5782222E7E4FF00C23E78 /* EnsembleListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnsembleListVC.swift; sourceTree = "<group>"; };
+		91A5782422E7E5EA00C23E78 /* EnsembleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnsembleService.swift; sourceTree = "<group>"; };
+		91A5782622E8A26800C23E78 /* Ensemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ensemble.swift; sourceTree = "<group>"; };
 		B5D68D0F22983DD200600B76 /* MobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D68D1222983DD200600B76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5D68D1422983DD200600B76 /* StudentDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentDashboardVC.swift; sourceTree = "<group>"; };
@@ -142,6 +148,7 @@
 				133C329B22C95336007412CF /* AuthService.swift */,
 				13E6FBA122CBF63200C8A61C /* InstrumentService.swift */,
 				91758BC822CC0FF200960548 /* UniformService.swift */,
+				91A5782422E7E5EA00C23E78 /* EnsembleService.swift */,
 			);
 			path = "API Services";
 			sourceTree = "<group>";
@@ -256,6 +263,7 @@
 				131AAB1C22C9C838003E0B5B /* MaintenanceReport.swift */,
 				136EBE3F22CA5AF0004A97D8 /* UniformPiece.swift */,
 				13076A8D22D7F0ED00A3CB74 /* AuthToken.swift */,
+				91A5782622E8A26800C23E78 /* Ensemble.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -278,6 +286,7 @@
 				132C83B122DE5E7F009C82CA /* AdminDashboardVC.swift */,
 				13076A8B22D7EDF100A3CB74 /* LoginVC.swift */,
 				13A7DFAB22E798A000591405 /* UniformListVC.swift */,
+				91A5782222E7E4FF00C23E78 /* EnsembleListVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -478,13 +487,15 @@
 				13F0B5BF22E7D2FC00CE565E /* UIViewController.swift in Sources */,
 				134DB16B2298510700B119C4 /* Student.swift in Sources */,
 				1365461A22C92143008C8DC1 /* User.swift in Sources */,
-				13F0B5CC22E7E31F00CE565E /* InstrumentListVC.swift in Sources */,
+				91A5782722E8A26800C23E78 /* Ensemble.swift in Sources */,
 				B5D68D1322983DD200600B76 /* AppDelegate.swift in Sources */,
 				1365461822C91C37008C8DC1 /* StudentService.swift in Sources */,
 				13076A8E22D7F0ED00A3CB74 /* AuthToken.swift in Sources */,
+				91A5782522E7E5EA00C23E78 /* EnsembleService.swift in Sources */,
 				13E6FBA022CBEA4200C8A61C /* SampleDatabasePopulation.swift in Sources */,
 				13E6FBA222CBF63200C8A61C /* InstrumentService.swift in Sources */,
 				133C329C22C95336007412CF /* AuthService.swift in Sources */,
+				91A5782322E7E4FF00C23E78 /* EnsembleListVC.swift in Sources */,
 				131AAB1922C9C598003E0B5B /* GenericAsset.swift in Sources */,
 				13F0B5CE22E7F05100CE565E /* InstrumentDetailsVC.swift in Sources */,
 				13F0B5B922E7D20700CE565E /* ContainerViewController.swift in Sources */,

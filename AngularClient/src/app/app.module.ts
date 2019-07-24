@@ -15,6 +15,7 @@ import { AlertComponent } from './_components';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component'
 import { InstrumentsComponent, OverviewDialog } from './instruments/instruments.component';
+import { UniformsComponent } from './uniforms/uniforms.component';
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import { InstrumentsComponent, OverviewDialog } from './instruments/instruments.
         AlertComponent,
         DashboardHomeComponent,
         InstrumentsComponent,
-        OverviewDialog
+        OverviewDialog,
+        UniformsComponent
     ],
     entryComponents: [
         OverviewDialog

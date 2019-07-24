@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Add Instrument</h1>
+<div mat-dialog-content [formGroup]="form">
+  <p>Input data into the fields to create an instrument</p>
+  <mat-form-field>
+    <input matInput formControlName="kind" placeholder="Kind">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="size" placeholder="Size">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="number" placeholder="Number">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="condition" placeholder="Condition">
+  </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="save()">Add Instrument</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+</div>

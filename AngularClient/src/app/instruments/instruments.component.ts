@@ -17,9 +17,6 @@ export class InstrumentsComponent implements OnInit {
   public new_instrument: Instrument;
 
   displayedColumns: string[] = ["tag_number", "kind", "condition", "assign", "actions"];
-
-  // Api to hit
-  private __url = 'http://localhost:8000/instruments/'
   registerForm: FormGroup;
   constructor(
     private instrumentService: InstrumentsService,
@@ -43,10 +40,6 @@ export class InstrumentsComponent implements OnInit {
 
   ngOnInit() {
     this.getInstruments()
-    //this.user = {
-      //username: '',
-      //password: ''
-    //};
   }
 
   public condition: any;

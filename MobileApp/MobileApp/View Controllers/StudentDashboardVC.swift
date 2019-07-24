@@ -12,8 +12,5 @@ class StudentDashboardVC: UIViewController {
 
     var authenticatedUser: User? = nil
     
-    @IBAction func LogoutButton(sender: AnyObject) {
-        self.navigationController?.popToRootViewController(animated: true)
-    }
 }
 

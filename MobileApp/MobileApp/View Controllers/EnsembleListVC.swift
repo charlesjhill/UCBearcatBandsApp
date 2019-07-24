@@ -2,8 +2,12 @@
 //  EnsembleListVC.swift
 //  MobileApp
 //
-//  Created by Stephanie Tam on 7/23/19.
+//  Created by Ben Hollar on 7/24/19.
 //  Copyright © 2019 UCBearcatBandsDev. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class EnsembleListVC: UIViewController {
+    // TODO: Implement
+}

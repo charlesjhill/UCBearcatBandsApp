@@ -2,7 +2,7 @@
 It's an app for the UC Bearcat Bands
 
 # Architecture
----
+
 The way things are currently swinging, we needed a database-backed web API. We're running this through [Django](https://www.djangoproject.com/) for the web part.
   - The api part is facilitated by [Django-Rest-Framework](https://www.django-rest-framework.org/).
   - P.S., the way the Django project is currently structured is not something I'm strongly attached to and I'm willing to move the "app" folder (`bands`) outside of the project folder (`ucbearcatbandsproject`) if we determine that'd be easier to work with.
@@ -12,7 +12,6 @@ For frontends, we are doing two UIs:
 - An iOS only mobile app, necessarily written using Swift. See details below
   
 # Set up Information
----
 ## The Django Backend
 1. Make sure you have python 3.7 installed.
 2. Install `pipenv` using `pip` to facilitate package downloads.
@@ -46,13 +45,6 @@ For frontends, we are doing two UIs:
   - `Network`: Useful to verify API requests and responses being made
   - `Storage`: Not as useful as the other tabs, but if you want to make sure something is being stored, this is the place.
 - Using the debugger functionality of VS Code is pretty nice. Setting up is easier for Chrome than firefox, but it is worth it if you want access to breakpoints (which you probably do). Look up how to set this up.
-
-## The Blazor Web Frontend
-1. Install Visual Studio 2019 (version = latest) and make sure to include the `ASP.NET and web development` workload during installation.
-2. Install the latest [NET.Core 3.0 Preview](https://dotnet.microsoft.com/download/dotnet-core/3.0)
-3. Install [this](https://marketplace.visualstudio.com/items?itemName=aspnet.blazor) extension and follow any steps not already done to enable Blazor support.
-4. Back in VS now, enable usage of .NET Core SDK previews (`Tools` > `Options` > `Environment` > `Preview Features` > `Use previews ...`)
-6. Pop open that solution and get cracking!
 
 ## iOS App Setup
 Since the iOS app is really just going to be a frontend wrapper for our web API, I'll go ahead and suggest you set up a backend server. The app won't really do much if it can't ping that.

@@ -89,6 +89,64 @@ export class InstrumentsComponent implements OnInit {
         this.alertService.error(error);
       })
   }
+
+  onDelete(id) {
+    this.instrumentService.deleteInstrument(id).pipe().subscribe(
+      data => {
+        this.alertService.success('Deletion successful', true);
+      }, error => {
+        this.alertService.error(error);
+      })
+  }
+
+  onEdit(instrument, id) {
+    this.instrumentService.updateInstrument(instrument,id).pipe().subscribe(
+      data => {
+        this.alertService.success('Updating successful', true);
+      }, error => {
+        this.alertService.error(error);
+      })
+  }
+
+  editForm(instrument: Instrument, id): void {
+    let is_closed = false;
+
+    const dialogRef = this.dialog.open(OverviewDialog, {
+      data: {
+        condition: instrument.condition,
+        kind: instrument.kind,
+        make: instrument.make,
+        model: instrument.model,
+        serial_number: instrument.serial_number,
+        uc_tag_number: instrument.uc_tag_number,
+        uc_asset_number: instrument.uc_asset_number
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (data != null) {
+        this.new_instrument = data;
+        console.log(this.new_instrument);
+        this.onEdit(this.new_instrument, id);
+      }
+    });
+  }
+
+  viewForm(instrument: Instrument): void {
+    let is_closed = false;
+
+    const dialogRef = this.dialog.open(OverviewDialog, {
+      data: {
+        condition: instrument.condition,
+        kind: instrument.kind,
+        make: instrument.make,
+        model: instrument.model,
+        serial_number: instrument.serial_number,
+        uc_tag_number: instrument.uc_tag_number,
+        uc_asset_number: instrument.uc_asset_number
+      }
+    });
+  }
 }
 
 export interface Instrument {
@@ -133,6 +191,12 @@ export class OverviewDialog {
     public dialogRef: MatDialogRef<OverviewDialog>,
     @Inject(MAT_DIALOG_DATA) data) {
     this.kind = data.kind;
+    this.make = data.make;
+    this.model = data.model;
+    this.serial_number = data.serial_number;
+    this.uc_tag_number = data.uc_tag_number;
+    this.uc_asset_number = data.uc_asset_number;
+    this.condition = data.condition;
   }
 
   onNoClick() {

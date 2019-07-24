@@ -1,30 +1,30 @@
 //
-//  InstrumentCellVC.swift
+//  UniformCellVC.swift
 //  MobileApp
 //
-//  Created by Ben Hollar on 7/23/19.
+//  Created by Ben Hollar on 7/24/19.
 //  Copyright © 2019 UCBearcatBandsDev. All rights reserved.
 //
 
 import UIKit
 
-class InstrumentCellVC: UIViewController {
+class UniformCellVC: UIViewController {
     
-    let instrument: Instrument
+    let uniform: UniformPiece
     
     @IBOutlet private var bigLabel: UILabel?
     @IBOutlet private var detailLabel: UILabel?
     
-    init(_ i: Instrument) {
-        instrument = i
-        super.init(nibName: "InstrumentCell", bundle: nil)
+    init(_ u: UniformPiece) {
+        uniform = u
+        super.init(nibName: "UniformCell", bundle: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        bigLabel?.text = instrument.name
-        detailLabel?.text = instrument.kind.rawValue
+        bigLabel?.text = uniform.name
+        detailLabel?.text = uniform.kind.rawValue
     }
     
     required init?(coder aDecoder: NSCoder) {

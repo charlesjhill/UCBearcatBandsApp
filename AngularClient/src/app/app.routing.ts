@@ -1,10 +1,11 @@
-﻿import { AdminGuard } from './_helpers/admin.guard';
+import { AdminGuard } from './_helpers/admin.guard';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { AuthGuard } from './_helpers';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { InstrumentsComponent } from './instruments/instruments.component';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
 
 const routes: Routes = [
@@ -16,7 +17,7 @@ const routes: Routes = [
       canActivate: [AdminGuard],
       children: [
           { path: '', component: DashboardHomeComponent, pathMatch: 'full' },
-        //   { path: 'instruments', component: DashboardInstrumentComponent },
+          { path: 'instruments', component: InstrumentsComponent },
         //   { path: 'uniforms', component: DashboardUniformComponent },
         //   { path: 'ensembles', component: DashboardEnsembleComponent },
         //   { path: 'students', component: DashboardStudentComponent }

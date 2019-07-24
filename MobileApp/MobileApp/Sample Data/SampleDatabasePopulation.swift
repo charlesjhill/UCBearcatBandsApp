@@ -26,15 +26,14 @@ class SampleDatabasePopulation {
         let email = "sampleEmail\(currentIdx)@gmail.com"
         let pwd = "ucbearcatbands"
         let name = "SampleStudent\(currentIdx)"
-        let number = "M12345678"
+        let number = "M\(generateRandomDigits(8))"
         sAuth.request(.registerStudent(email: email, password: pwd, fullName: name, mNumber: number), completion: handler)
         currentIdx += 1
     }
     
     private func makeSampleInstrument() {
         let instrument = Instrument(id: 1,
-                                    currentOwners: [],
-                                    previousOwners: [],
+                                    name: "temp", // database will override; working on not making it required, but we'd send it anyways
                                     condition: AssetCondition.allCases.randomElement()!,
                                     kind: InstrumentKind.allCases.randomElement()!,
                                     make: "Yamaha",
@@ -47,8 +46,7 @@ class SampleDatabasePopulation {
     
     private func makeSampleUniform() {
         let uniform = UniformPiece(id: 1,
-                                   currentOwners: [],
-                                   previousOwners: [],
+                                   name: "temp", // database will override; working on not making it required, but we'd send it anyways
                                    condition: AssetCondition.allCases.randomElement()!,
                                    kind: UniformKind.allCases.randomElement()!,
                                    size: "Size",

@@ -13,6 +13,8 @@ struct GenericAsset: Asset {
     
     let id: Int
     
+    let name: String
+    
     let currentOwners: [Student]
     
     let previousOwners: [Student]
@@ -24,7 +26,7 @@ struct GenericAsset: Asset {
 extension GenericAsset: Codable {
     
     enum CodingKeys: String, CodingKey {
-        case id, condition
+        case id, name, condition
         case currentOwners = "current_owners"
         case previousOwners = "previous_owners"
     }

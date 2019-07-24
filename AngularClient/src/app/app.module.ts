@@ -1,4 +1,4 @@
-﻿import { MaterialsModule } from './materials-module/materials-module.module';
+import { MaterialsModule } from './materials-module/materials-module.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,8 +12,9 @@ import { LoginComponent } from './login';
 import { DashboardComponent } from './dashboard';
 import { RegisterComponent } from './register';
 import { AlertComponent } from './_components';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';;
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component'
+import { InstrumentsComponent, OverviewDialog } from './instruments/instruments.component';
 
 @NgModule({
     imports: [
@@ -31,7 +32,12 @@ import { DashboardHomeComponent } from './dashboard-home/dashboard-home.componen
         RegisterComponent,
         DashboardComponent,
         AlertComponent,
-        DashboardHomeComponent
+        DashboardHomeComponent,
+        InstrumentsComponent,
+        OverviewDialog
+    ],
+    entryComponents: [
+        OverviewDialog
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

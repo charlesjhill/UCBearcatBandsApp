@@ -73,7 +73,7 @@ extension UniformService: TargetType {
     
     var sampleData: Data {
         // TODO: Reevaluate sample data?
-        let sampleUniform = UniformPiece(id: 1, currentOwners: [] , previousOwners: [] , condition: .new, kind: .pants, size: "s", number: "435_old")
+        let sampleUniform = UniformPiece(id: 1, name: "", condition: .new, kind: .pants, size: "s", number: "435_old")
         let sampleUniformData = try! JSONEncoder().encode(sampleUniform)
 
         switch self {

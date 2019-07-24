@@ -234,8 +234,8 @@
 			isa = PBXGroup;
 			children = (
 				B5D68D1422983DD200600B76 /* StudentDashboardVC.swift */,
-				13076A8B22D7EDF100A3CB74 /* LoginVC.swift */,
 				132C83B122DE5E7F009C82CA /* AdminDashboardVC.swift */,
+				13076A8B22D7EDF100A3CB74 /* LoginVC.swift */,
 				13A7DFA922E7988100591405 /* InstrumentListVC.swift */,
 				13A7DFAB22E798A000591405 /* UniformListVC.swift */,
 			);

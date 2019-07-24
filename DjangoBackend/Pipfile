@@ -13,6 +13,8 @@ djangorestframework = "*"
 django-cors-headers = "*"
 django-rest-auth = "*"
 django-allauth = "*"
+django-polymorphic = "*"
+django-rest-polymorphic = "*"
 
 [requires]
 python_version = "3.7"

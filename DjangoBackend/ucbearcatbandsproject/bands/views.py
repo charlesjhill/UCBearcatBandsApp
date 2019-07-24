@@ -1,7 +1,6 @@
 from rest_framework import viewsets, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
-import itertools
 
 from ucbearcatbandsproject.bands.models import Instrument, Student
 from . import models
@@ -33,7 +32,7 @@ class EnsembleViewSet(viewsets.ModelViewSet):
     queryset = models.Ensemble.objects.all()
     serializer_class = serializers.EnsembleSerializer
     filter_backends = (filters.SearchFilter, )
-    search_fields = ('__str__', )
+    search_fields = ('name', 'term')
 
 
 class EnrollmentViewSet(viewsets.ModelViewSet):
@@ -52,7 +51,14 @@ class AssetAssignmentViewSet(viewsets.ModelViewSet):
 
 class AssetViewSet(viewsets.ModelViewSet):
     queryset = models.Asset.objects.all()
-    serializer_class = serializers.AssetSerializer
+    serializer_class = serializers.AssetPolymorphicSerializer
+
+    @action(detail=True, methods=['get'])
+    def students(self, request, pk=None):
+        asset: models.Asset = self.get_object()
+        students = Student.objects.filter(enrollments__asset_assignments__asset=asset)
+        serializer = serializers.StudentSerializer(students, many=True)
+        return Response(serializer.data)
 
 
 class InstrumentViewSet(viewsets.ModelViewSet):

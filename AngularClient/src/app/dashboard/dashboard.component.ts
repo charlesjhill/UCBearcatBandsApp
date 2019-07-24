@@ -13,8 +13,4 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
-  onInstrument() {
-    this.router.navigate(['/instruments']);
-  }
-
 }

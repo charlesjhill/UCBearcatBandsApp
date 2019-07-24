@@ -51,26 +51,4 @@ export class InstrumentsService {
     return this.__http.post<Instrument>(`${environment.apiUrl}/instruments/`, instrument, httpOptions)
       .pipe(catchError(this.handleError));
   }
-
-  deleteInstrument(id): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-    return this.__http.delete(`${environment.apiUrl}/instruments/`+ id + '/')
-      .pipe(catchError(this.handleError));
-  }
-
-  updateInstrument(instrument: Instrument): Observable<Instrument> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-    return this.__http.put<Instrument>(`${environment.apiUrl}/instruments/`, instrument, httpOptions)
-      .pipe(catchError(this.handleError));
-  }
 }

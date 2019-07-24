@@ -16,7 +16,7 @@ export class InstrumentsComponent implements OnInit {
   // An object representing the data in the 'add' form
   public new_instrument: Instrument;
 
-  displayedColumns: string[] = ["tag_number", "kind", "condition", "assign", "make", "model", "serial_number", "asset_number", "actions"];
+  displayedColumns: string[] = ["tag_number", "kind", "condition", "assign", "actions"];
 
   // Api to hit
   private __url = 'http://localhost:8000/instruments/'
@@ -89,52 +89,9 @@ export class InstrumentsComponent implements OnInit {
         this.alertService.error(error);
       })
   }
-
-  onDelete(id) {
-    this.instrumentService.deleteInstrument(id).pipe().subscribe(
-      data => {
-        this.alertService.success('Deletion successful', true);
-      }, error => {
-        this.alertService.error(error);
-      })
-  }
-
-  onEdit() {
-    this.instrumentService.updateInstrument(this.new_instrument).pipe().subscribe(
-      data => {
-        this.alertService.success('Updating successful', true);
-      }, error => {
-        this.alertService.error(error);
-      })
-  }
-
-  editForm(instrument: Instrument): void {
-    let is_closed = false;
-
-    const dialogRef = this.dialog.open(OverviewDialog, {
-      data: {
-        condition: instrument.condition,
-        kind: instrument.kind,
-        make: instrument.make,
-        model: instrument.model,
-        serial_number: instrument.serial_number,
-        uc_tag_number: instrument.uc_tag_number,
-        uc_asset_number: instrument.uc_asset_number }
-    });
-
-    dialogRef.afterClosed().subscribe(data => {
-      if (data != null) {
-        this.new_instrument = data;
-        console.log(this.new_instrument);
-        this.onEdit();
-      }
-    });
-  }
-
 }
 
 export interface Instrument {
-  id: string;
   kind: string;
   make: string;
   model: string;
@@ -176,12 +133,6 @@ export class OverviewDialog {
     public dialogRef: MatDialogRef<OverviewDialog>,
     @Inject(MAT_DIALOG_DATA) data) {
     this.kind = data.kind;
-    this.make = data.make;
-    this.model = data.model;
-    this.serial_number = data.serial_number;
-    this.uc_asset_number = data.uc_asset_number;
-    this.uc_tag_number = data.uc_tag_number;
-    this.condition = data.condition
   }
 
   onNoClick() {
@@ -196,7 +147,7 @@ export class OverviewDialog {
   ngOnInit() {
     this.form = this.fb.group({
       kind: [this.kind, []],
-      make: [this.make, []],
+        make: [this.make, []],
       model: [this.model, []],
       condition: [this.condition, []],
       uc_asset_number: [this.uc_asset_number, []],

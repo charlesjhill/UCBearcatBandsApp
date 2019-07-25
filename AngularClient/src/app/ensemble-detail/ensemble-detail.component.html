@@ -1,14 +1,34 @@
-<h3>Members</h3>
-<table class="table">
-    <thead>
-        <th scope="col">Name</th>
-        <th scope="col">Instruments</th>
-    </thead>
-    <tbody>
-        <tr *ngFor="let member of ensemble.members">
-            <td>
-                {{ member.user.full_name }}
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="container-fluid">
+    <h3>Members</h3>
+    <table class="table">
+        <thead>
+            <th scope="col">Name</th>
+            <th scope="col">Instruments</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let enrollment of ensemble.enrollments">
+                <td>
+                    <!-- Student Name -->
+                    {{ enrollment.student.user.full_name }}
+                </td>
+                <td>
+                    <!-- Student's Instruments -->
+                    <ng-container *ngFor="let asset of enrollment.assets">
+                        <ng-container *ngIf="asset.resourcetype === 'Instrument'">
+                            {{ asset.name }};
+                        </ng-container>
+                    </ng-container>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- Actions which affect the entire ensemble, instead of particular members of the ensemble -->
+
+    <!-- To keep admins from accidently deleting an ensemble, we'll lock this behind the "danger zone" -->
+    <div class="row">
+        <div class="col">
+            <mat-slide-toggle color="warn" (change)="toggleDangerZone($event)" class="mx-2">Enable Danger Zone?</mat-slide-toggle>
+            <button mat-flat-button color="warn" [disabled]="!enableDangerZone" (click)="deleteEnsemble()">DELETE</button>
+        </div>
+    </div>
+</div>

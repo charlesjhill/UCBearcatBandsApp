@@ -16,7 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component'
 import { InstrumentsComponent, OverviewDialog } from './instruments/instruments.component';
 import { UniformsComponent } from './uniforms/uniforms.component';
-import { DashboardEnsemblesComponent } from './dashboard-ensembles/dashboard-ensembles.component';
+import { DashboardEnsemblesComponent, DashEnsembleAddDialog } from './dashboard-ensembles/dashboard-ensembles.component';
 import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.component';
 
 @NgModule({
@@ -40,10 +40,12 @@ import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.compo
         OverviewDialog,
         DashboardEnsemblesComponent,
         EnsembleDetailComponent,
-        UniformsComponent
+        UniformsComponent,
+        DashEnsembleAddDialog
     ],
     entryComponents: [
-        OverviewDialog
+        OverviewDialog,
+        DashEnsembleAddDialog
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

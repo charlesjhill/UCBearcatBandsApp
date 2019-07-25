@@ -34,7 +34,7 @@ export class InstrumentsService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  };
+  }
 
   // Uses http.get() to Load data from single API endpoint
   list(): Observable<Instrument[]> {

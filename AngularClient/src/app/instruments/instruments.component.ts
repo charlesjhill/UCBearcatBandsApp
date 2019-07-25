@@ -166,7 +166,7 @@ export class InstrumentClass {
   selector: 'OverviewDialog',
   templateUrl: 'dialog.html',
 })
-export class OverviewDialog {
+export class OverviewDialog implements OnInit {
 
   public instrument: InstrumentClass;
   form: FormGroup;

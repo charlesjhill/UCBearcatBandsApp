@@ -1,7 +1,8 @@
-import { EnsembleService } from './../_services/ensemble.service';
-import { StudentService } from './../student.service';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Ensemble } from '../_models';
+import { EnsembleService } from './../_services/ensemble.service';
+import { StudentService } from '../_services';
+
+import { Component, OnInit, Input } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material';
 
 @Component({

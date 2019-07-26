@@ -39,7 +39,8 @@ class LoginVC: UIViewController {
         case "toAdminPortal":
             break
         case "toStudentPortal":
-            let vc = segue.destination as! StudentDashboardVC
+            let navVC = segue.destination as! UINavigationController
+            let vc = navVC.topViewController as! StudentDashboardVC
             vc.authenticatedUser = user
         default:
             break

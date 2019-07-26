@@ -16,7 +16,6 @@ export class EnsembleService {
   }
 
   private baseURL = `${environment.apiUrl}/ensembles/`;
-
   private currentEnsemblesSubject: BehaviorSubject<Ensemble[]>;
   public currentEnsembles: Observable<Ensemble[]>;
 

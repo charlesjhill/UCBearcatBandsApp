@@ -18,6 +18,7 @@ import { InstrumentsComponent, OverviewDialog } from './instruments/instruments.
 import { UniformsComponent } from './uniforms/uniforms.component';
 import { DashboardEnsemblesComponent, DashEnsembleAddDialog } from './dashboard-ensembles/dashboard-ensembles.component';
 import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.component';
+import { AssignStudentsComponent } from './ensemble-detail/assign-students/assign-students.component';
 
 @NgModule({
     imports: [
@@ -41,11 +42,13 @@ import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.compo
         DashboardEnsemblesComponent,
         EnsembleDetailComponent,
         UniformsComponent,
-        DashEnsembleAddDialog
+        DashEnsembleAddDialog,
+        AssignStudentsComponent
     ],
     entryComponents: [
         OverviewDialog,
-        DashEnsembleAddDialog
+        DashEnsembleAddDialog,
+        AssignStudentsComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

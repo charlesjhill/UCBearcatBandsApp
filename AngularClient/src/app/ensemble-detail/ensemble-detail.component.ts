@@ -1,9 +1,11 @@
 import { Ensemble } from '../_models';
 import { EnsembleService } from './../_services/ensemble.service';
-import { StudentService } from '../_services';
+import { StudentService, AlertService } from '../_services';
 
 import { Component, OnInit, Input } from '@angular/core';
-import { MatSlideToggleChange } from '@angular/material';
+import { MatSlideToggleChange, MatDialog } from '@angular/material';
+import { AssignStudentsComponent } from './assign-students/assign-students.component';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ensemble-detail',
@@ -12,8 +14,9 @@ import { MatSlideToggleChange } from '@angular/material';
 })
 export class EnsembleDetailComponent implements OnInit {
 
-  constructor(private studentService: StudentService,
-              private ensembleService: EnsembleService) { }
+  constructor(private ensembleService: EnsembleService,
+              private alertService: AlertService,
+              public dialog: MatDialog) { }
 
   @Input() ensemble: Ensemble;
   @Input() isOpen: boolean;
@@ -25,6 +28,30 @@ export class EnsembleDetailComponent implements OnInit {
 
   toggleDangerZone(event: MatSlideToggleChange) {
     this.enableDangerZone = event.checked;
+  }
+
+  addStudents() {
+    console.log('adding students');
+    const dialogRef = this.dialog.open(AssignStudentsComponent, {
+      data: {
+        ensemble: this.ensemble
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Add students dialog closed');
+      // if (result) {
+      //   this.ensembleService.add(result)
+      //   .pipe(first())
+      //   .subscribe(
+      //     data => {
+      //       this.alertService.success('Students Added', true);
+      //     }, error => {
+      //       this.alertService.error(error);
+      //     }
+      //   );
+      // }
+    });
   }
 
   deleteEnsemble(): void {

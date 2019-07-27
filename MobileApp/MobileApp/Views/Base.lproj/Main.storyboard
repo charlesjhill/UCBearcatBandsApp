@@ -206,10 +206,32 @@
                     <view key="view" contentMode="scaleToFill" id="kn4-x7-wMe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2AT-LV-uA7">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="414" id="36G-hC-jP7"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="2AT-LV-uA7" firstAttribute="centerX" secondItem="Xsj-pZ-RAh" secondAttribute="centerX" id="V2r-0R-OPs"/>
+                            <constraint firstItem="2AT-LV-uA7" firstAttribute="width" secondItem="Xsj-pZ-RAh" secondAttribute="width" id="Xza-go-Mvb"/>
+                            <constraint firstItem="2AT-LV-uA7" firstAttribute="centerY" secondItem="Xsj-pZ-RAh" secondAttribute="centerY" id="iQb-Xz-Qpc"/>
+                            <constraint firstItem="2AT-LV-uA7" firstAttribute="height" secondItem="Xsj-pZ-RAh" secondAttribute="height" id="tC8-zA-Lzp"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Xsj-pZ-RAh"/>
                     </view>
+<<<<<<< Updated upstream
                     <navigationItem key="navigationItem" title="Ensembles" id="oog-Pj-VOr"/>
+=======
+                    <navigationItem key="navigationItem" id="oog-Pj-VOr"/>
+                    <connections>
+                        <outlet property="ListView" destination="2AT-LV-uA7" id="Nlc-NM-T74"/>
+                    </connections>
+>>>>>>> Stashed changes
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jhn-GG-s84" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -349,6 +371,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pzw-b2-OC5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1661" y="2920"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="3sS-zj-OsU">
+            <objects>
+                <viewController id="ewN-zx-Mag" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KAI-xR-WUd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="CAU-Qd-ckC"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hRn-Cn-3n0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-778" y="2920"/>
         </scene>
         <!--AdminTabController-->
         <scene sceneID="rbi-Jj-fHw">

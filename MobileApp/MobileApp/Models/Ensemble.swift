@@ -11,7 +11,7 @@ import Foundation
 struct Ensemble: DjangoModel {
     let id: Int
     
-    let fullName: String
+    let name: String
     
     let term: String
     
@@ -24,7 +24,7 @@ extension Ensemble: Codable {
     
     enum CodingKeys: String, CodingKey {
         case id, term, asset
-        case fullName = "full_name"
+        case fullName = "ensemble_name"
         case isActive = "is_active"
     }
 }

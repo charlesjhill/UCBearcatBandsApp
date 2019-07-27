@@ -46,6 +46,9 @@
 		91758BC922CC0FF200960548 /* UniformService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91758BC822CC0FF200960548 /* UniformService.swift */; };
 		91A5782522E7E5EA00C23E78 /* EnsembleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5782422E7E5EA00C23E78 /* EnsembleService.swift */; };
 		91A5782722E8A26800C23E78 /* Ensemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5782622E8A26800C23E78 /* Ensemble.swift */; };
+		91A5782F22EBC16C00C23E78 /* EnsembleDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5782E22EBC16C00C23E78 /* EnsembleDetailsVC.swift */; };
+		91A5783122EBC5EA00C23E78 /* EnsembleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91A5783022EBC5E900C23E78 /* EnsembleCell.xib */; };
+		91A5783322EBCF6600C23E78 /* EnsembleCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5783222EBCF6600C23E78 /* EnsembleCellVC.swift */; };
 		A09BC5F3E49D556DDDB81CA5 /* Pods_MobileApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A81733A9F5199FECC44980 /* Pods_MobileApp.framework */; };
 		B5D68D1322983DD200600B76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D68D1222983DD200600B76 /* AppDelegate.swift */; };
 		B5D68D1522983DD200600B76 /* StudentDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D68D1422983DD200600B76 /* StudentDashboardVC.swift */; };
@@ -88,7 +91,7 @@
 		13AA4BD122E8A29800FF7473 /* UniformDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformDetailsVC.swift; sourceTree = "<group>"; };
 		13AA4BD322E8A42200FF7473 /* UniformCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformCellVC.swift; sourceTree = "<group>"; };
 		13AA4BD522E8A48E00FF7473 /* UniformCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UniformCell.xib; sourceTree = "<group>"; };
-		13AA4BD822E8AB9D00FF7473 /* EnsembleListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnsembleListVC.swift; sourceTree = "<group>"; };
+		13AA4BD822E8AB9D00FF7473 /* EnsembleListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnsembleListVC.swift; path = ../EnsembleListVC.swift; sourceTree = "<group>"; };
 		13D0A5AC229DCEE600FDB509 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		13E6FB9F22CBEA4200C8A61C /* SampleDatabasePopulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDatabasePopulation.swift; sourceTree = "<group>"; };
 		13E6FBA122CBF63200C8A61C /* InstrumentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentService.swift; sourceTree = "<group>"; };
@@ -105,6 +108,9 @@
 		91758BC822CC0FF200960548 /* UniformService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformService.swift; sourceTree = "<group>"; };
 		91A5782422E7E5EA00C23E78 /* EnsembleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnsembleService.swift; sourceTree = "<group>"; };
 		91A5782622E8A26800C23E78 /* Ensemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ensemble.swift; sourceTree = "<group>"; };
+		91A5782E22EBC16C00C23E78 /* EnsembleDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnsembleDetailsVC.swift; sourceTree = "<group>"; };
+		91A5783022EBC5E900C23E78 /* EnsembleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EnsembleCell.xib; sourceTree = "<group>"; };
+		91A5783222EBCF6600C23E78 /* EnsembleCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnsembleCellVC.swift; sourceTree = "<group>"; };
 		B5D68D0F22983DD200600B76 /* MobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D68D1222983DD200600B76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5D68D1422983DD200600B76 /* StudentDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentDashboardVC.swift; sourceTree = "<group>"; };
@@ -211,6 +217,17 @@
 			path = Instruments;
 			sourceTree = "<group>";
 		};
+		91A5782B22EBB37900C23E78 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				13AA4BD822E8AB9D00FF7473 /* EnsembleListVC.swift */,
+				91A5783222EBCF6600C23E78 /* EnsembleCellVC.swift */,
+				91A5782E22EBC16C00C23E78 /* EnsembleDetailsVC.swift */,
+				91A5783022EBC5E900C23E78 /* EnsembleCell.xib */,
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		B45693B380EEE561EB583D06 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,13 +314,13 @@
 		B5D68D3522983E6900600B76 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				91A5782B22EBB37900C23E78 /* New Group */,
 				13AA4BD022E8A27A00FF7473 /* Uniforms */,
 				13F0B5C322E7D50A00CE565E /* Instruments */,
 				13F0B5C222E7D4F500CE565E /* Container VCs */,
 				B5D68D1422983DD200600B76 /* StudentDashboardVC.swift */,
 				132C83B122DE5E7F009C82CA /* AdminDashboardVC.swift */,
 				13076A8B22D7EDF100A3CB74 /* LoginVC.swift */,
-				13AA4BD822E8AB9D00FF7473 /* EnsembleListVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -397,6 +414,7 @@
 				13A07B5122E7A1E3001759C2 /* Main.storyboard in Resources */,
 				13AA4BD622E8A48E00FF7473 /* UniformCell.xib in Resources */,
 				B5D68D1A22983DD300600B76 /* Assets.xcassets in Resources */,
+				91A5783122EBC5EA00C23E78 /* EnsembleCell.xib in Resources */,
 				13A07B5022E7A1E3001759C2 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,8 +510,10 @@
 				131AAB1222C9B06D003E0B5B /* Instrument.swift in Sources */,
 				132C83B222DE5E7F009C82CA /* AdminDashboardVC.swift in Sources */,
 				13A7DFAC22E798A000591405 /* UniformListVC.swift in Sources */,
+				91A5782F22EBC16C00C23E78 /* EnsembleDetailsVC.swift in Sources */,
 				91758BC922CC0FF200960548 /* UniformService.swift in Sources */,
 				13076A8C22D7EDF100A3CB74 /* LoginVC.swift in Sources */,
+				91A5783322EBCF6600C23E78 /* EnsembleCellVC.swift in Sources */,
 				13F0B5BD22E7D2B900CE565E /* UIView.swift in Sources */,
 				13AA4BD922E8AB9D00FF7473 /* EnsembleListVC.swift in Sources */,
 				131AAB1722C9C1A0003E0B5B /* PurchaseInfo.swift in Sources */,

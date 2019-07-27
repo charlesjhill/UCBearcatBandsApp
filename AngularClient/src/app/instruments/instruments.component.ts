@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { InstrumentsService, AlertService } from '../_services';
+import { InstrumentsService, AlertService, EnsembleService, UserService, AssignmentService, EnrollmentService } from '../_services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Instrument, Ensemble, Assignment, Enrollment, User, Student } from '../_models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-instruments',
@@ -16,13 +18,17 @@ export class InstrumentsComponent implements OnInit {
   // An object representing the data in the 'add' form
   public new_instrument: Instrument;
 
-  displayedColumns: string[] = ["tag_number", "kind", "condition", "assign", "actions"];
+  displayedColumns: string[] = ["tag_number", "kind", "condition",
+    //"assign",
+    "actions"];
   registerForm: FormGroup;
   constructor(
     private instrumentService: InstrumentsService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
     private alertService: AlertService,
+    private enrollmentService: EnrollmentService,
+    private assignmentService: AssignmentService,
   ) { }
 
   public getInstruments() {
@@ -140,26 +146,76 @@ export class InstrumentsComponent implements OnInit {
       }
     });
   }
-}
 
-export interface Instrument {
-  kind: string;
-  make: string;
-  model: string;
-  serial_number: string;
-  uc_tag_number: string;
-  uc_asset_number: string;
-  condition: string;
-}
+  student: Student;
+  ensemble: Ensemble;
+  enrollment: Enrollment;
+  assignment: Assignment;
+  assigned: Student[];
 
-export class InstrumentClass {
-  kind: string;
-  make: string;
-  model: string;
-  serial_number: string;
-  uc_tag_number: string;
-  uc_asset_number: string;
-  condition: string;
+  showAssigned(id): string {
+    //hit /instruments/{{id}}/students
+    //return student name
+    this.instrumentService.getStudentsAssigned(id).subscribe(
+      // the first argument is a function which runs on success
+      data => {
+        this.assigned = data;
+        console.log(this.assigned);
+      },
+      // the second argument is a function which runs on error
+      err => console.error(err),
+      // the third argument is a function which runs on completion
+      () => console.log('done loading')
+    );
+
+    let names: string;
+
+    //for (let i = 0; i = this.assigned.length; i++) {
+      //names += this.assigned[i].user.full_name + ",";
+    //}
+
+    return names;
+  }
+
+  Assign(id, student: Student, ensemble: Ensemble) {
+    //create enrollment
+    let enrollment = new Enrollment;
+    enrollment.ensemble = ensemble.id;
+    enrollment.student = student.user.pk;
+
+    this.enrollmentService.addEnrollment(enrollment).pipe().subscribe(
+      data => {
+        this.alertService.success('Updating successful', true);
+      }, error => {
+        this.alertService.error(error);
+      })
+
+    //creat assignment
+    let assignment = new Assignment;
+    assignment.enrollment = enrollment.id;
+    assignment.asset = id;
+
+    this.assignmentService.addAssigment(assignment).pipe().subscribe(
+      data => {
+        this.alertService.success('Updating successful', true);
+      }, error => {
+        this.alertService.error(error);
+      })
+  }
+
+  assignForm(instrument: Instrument, id): void {
+    let is_closed = false;
+
+    const dialogRef = this.dialog.open(InstrumentAssignDialog, {
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (data != null) {
+        console.log(data);
+      }
+    });
+  }
 }
 
 @Component({
@@ -167,8 +223,6 @@ export class InstrumentClass {
   templateUrl: 'dialog.html',
 })
 export class OverviewDialog {
-
-  public instrument: InstrumentClass;
   form: FormGroup;
   kind: string;
   make: string;
@@ -211,6 +265,76 @@ export class OverviewDialog {
       serial_number: [this.serial_number, []],
       uc_tag_number: [this.uc_tag_number, []]
     });
+  }
+
+}
+
+@Component({
+  selector: 'InstrumnetAssignDialog',
+  templateUrl: 'assigndialog.html',
+})
+export class InstrumentAssignDialog {
+
+  assignForm: FormGroup;
+  ensembles: Ensemble[];
+  students: Student[];
+  choosen_ensemble: Ensemble;
+  choosen_student: Student;
+
+  constructor(
+    private fb: FormBuilder,
+    private ensembleService: EnsembleService,
+    private userService: UserService,
+    public dialogRef: MatDialogRef<InstrumentAssignDialog>,
+    @Inject(MAT_DIALOG_DATA) data) {
+
+    this.choosen_ensemble = data.ensemble;
+    this.choosen_student = data.student;
+
+  }
+
+  onNoClick() {
+    // Could we add the instrument service call here?
+    this.dialogRef.close();
+  }
+
+  save() {
+    this.dialogRef.close(this.assignForm.value);
+  }
+
+  ngOnInit() {
+    this.getEnsembles();
+    this.getStudents();
+    this.assignForm = this.fb.group({
+      choosen_ensemble: [this.choosen_ensemble, []],
+      choosen_student: [this.choosen_student, []],
+    });
+  }
+
+  public getEnsembles() {
+    this.ensembleService.list().subscribe(
+      // the first argument is a function which runs on success
+      data => {
+        this.ensembles = data;
+      },
+      // the second argument is a function which runs on error
+      err => console.error(err),
+      // the third argument is a function which runs on completion
+      () => console.log('Ensembles done loading')
+    );
+  }
+
+ public getStudents() {
+    this.userService.list().subscribe(
+      // the first argument is a function which runs on success
+      data => {
+        this.students = data;
+      },
+      // the second argument is a function which runs on error
+      err => console.error(err),
+      // the third argument is a function which runs on completion
+      () => console.log('Students done loading')
+    );
   }
 
 }

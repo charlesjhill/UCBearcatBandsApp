@@ -1,6 +1,7 @@
 import { User } from './user';
 
 export class Enrollment {
+    id: number;
     ensemble: number;
     student: number;
     assets: number[];

@@ -14,10 +14,11 @@ import { RegisterComponent } from './register';
 import { AlertComponent } from './_components';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component'
-import { InstrumentsComponent, OverviewDialog } from './instruments/instruments.component';
+import { InstrumentsComponent, OverviewDialog, InstrumentAssignDialog } from './instruments/instruments.component';
 import { UniformsComponent } from './uniforms/uniforms.component';
 import { DashboardEnsemblesComponent } from './dashboard-ensembles/dashboard-ensembles.component';
 import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.component';
+import { StudentPageComponent } from './student-page/student-page.component';
 
 @NgModule({
     imports: [
@@ -40,10 +41,13 @@ import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.compo
         OverviewDialog,
         DashboardEnsemblesComponent,
         EnsembleDetailComponent,
-        UniformsComponent
+        UniformsComponent,
+        InstrumentAssignDialog,
+        StudentPageComponent,
     ],
     entryComponents: [
-        OverviewDialog
+      OverviewDialog,
+      InstrumentAssignDialog,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

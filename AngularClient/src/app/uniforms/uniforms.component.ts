@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
 import { UniformsService, AlertService } from '../_services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Uniform } from '../_models';
 
 @Component({
   selector: 'app-uniforms',
@@ -124,13 +125,6 @@ export class UniformsComponent implements OnInit {
       }
     });
   }
-}
-
-export interface Uniform {
-  kind: string;
-  condition: string;
-  size: string;
-  number: string;
 }
 
 @Component({

@@ -11,9 +11,13 @@ export class EnsembleService {
 
   constructor(private http: HttpClient) { }
 
-  private baseURL = `${environment.apiUrl}/ensembles`;
+  private baseURL = `${environment.apiUrl}/ensembles/`;
 
   list(): Observable<Ensemble[]> {
     return this.http.get<Ensemble[]>(this.baseURL);
+  }
+
+  getEnsemble(id): Observable<Ensemble> {
+    return this.http.get<Ensemble>(this.baseURL + id + '/');
   }
 }

@@ -1,1 +1,22 @@
-<p>student-page works!</p>
+<h1>Welcome {{currentUser.full_name}}</h1>
+
+<h2> Ensembles In</h2>
+<ul>
+  <li *ngFor="let ensemble of ensembles">
+    {{ensemble.term}} - {{ensemble.name}}
+  </li>
+</ul>
+
+<h2> Instruments </h2>
+<ul>
+  <li *ngFor="let instrument of instruments">
+    {{instrument.uc_tag_number}} ({{instrument.make}} {{instrument.model}}) - Locker: {{instrument.locker}}
+  </li>
+</ul>
+
+<h2> Uniform </h2>
+<ul>
+  <li *ngFor="let uniform of uniforms">
+    {{uniform.name}} - Locker: {{uniform.locker}}
+  </li>
+</ul>

@@ -67,4 +67,8 @@ export class EnrollmentService {
     return this.__http.put<Enrollment>(`${environment.apiUrl}/enrollments/` + id + '/', enrollment, httpOptions)
       .pipe(catchError(this.handleError));
   }
+
+  getEnrollment(id): Observable<Enrollment> {
+    return this.__http.get<Enrollment>(`${environment.apiUrl}/enrollments/`+id+'/');
+  }
 }

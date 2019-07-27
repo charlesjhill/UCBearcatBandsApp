@@ -5,7 +5,6 @@ import { StudentService, AlertService } from '../_services';
 import { Component, OnInit, Input } from '@angular/core';
 import { MatSlideToggleChange, MatDialog } from '@angular/material';
 import { AssignStudentsComponent } from './assign-students/assign-students.component';
-import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ensemble-detail',
@@ -40,17 +39,10 @@ export class EnsembleDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('Add students dialog closed');
-      // if (result) {
-      //   this.ensembleService.add(result)
-      //   .pipe(first())
-      //   .subscribe(
-      //     data => {
-      //       this.alertService.success('Students Added', true);
-      //     }, error => {
-      //       this.alertService.error(error);
-      //     }
-      //   );
-      // }
+      if (result) {
+        // If we modified an ensemble we need to update
+        this.ensembleService.update();
+      }
     });
   }
 

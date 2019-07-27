@@ -22,7 +22,6 @@ export class EnsembleService {
   private list(): Observable<Ensemble[]> {
     return this.http.get<Ensemble[]>(this.baseURL).pipe(first());
   }
-
   public update(): void {
     console.log('updating list of ensembles');
     this.list().subscribe(data => {
@@ -40,6 +39,7 @@ export class EnsembleService {
     );
   }
 
+
   delete(id: number): Observable<any> {
     console.log('Pre delete call');
     return this.http.delete<any>(this.baseURL + id + '/').pipe(
@@ -50,5 +50,9 @@ export class EnsembleService {
         return result;
       })
     );
+  }
+
+  getEnsemble(id): Observable<Ensemble> {
+    return this.http.get<Ensemble>(this.baseURL + id + '/');
   }
 }

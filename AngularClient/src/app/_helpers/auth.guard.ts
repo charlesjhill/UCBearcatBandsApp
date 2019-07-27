@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { AuthenticationService } from '../_services';
@@ -13,7 +13,8 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.authenticationService.currentUserValue;
         if (currentUser) {
-            if (currentUser.is_student) {
+          if (currentUser.is_student) {
+            this.router.navigate([''], { queryParams: { returnUrl: state.url } });
                 return true;
             } else {
                 // Authorised, but not a student.

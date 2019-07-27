@@ -1,7 +1,6 @@
-import { PostEnrollment } from './../../_services/enrollment.service';
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatListOption, MatSelectionListChange } from '@angular/material';
-import { Ensemble, Student } from 'src/app/_models';
+import { MatDialogRef, MAT_DIALOG_DATA, MatListOption } from '@angular/material';
+import { Ensemble, Student, PostEnrollment } from 'src/app/_models';
 import { StudentService } from 'src/app/_services';
 import { Observable, of, from } from 'rxjs';
 import { EnrollmentService } from 'src/app/_services/enrollment.service';
@@ -28,9 +27,9 @@ export class AssignStudentsComponent implements OnInit {
     this.studentService.update();
   }
 
-  saveEnrollments(selectedOptions: any[]) {
-	// Sequentially add the selected students, waiting for a response before moving on
-	// TODO: We should create a bulk-enrollment endpoint enventually
+  saveEnrollments(selectedOptions: MatListOption[]) {
+  // Sequentially add the selected students, waiting for a response before moving on
+  // TODO: We should create a bulk-enrollment endpoint enventually
     from(selectedOptions).pipe(
       concatMap(option => {
         const payload = new PostEnrollment();

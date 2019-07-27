@@ -1,11 +1,5 @@
 import { User } from './user';
-
-export class Enrollment {
-    id: number;
-    ensemble: number;
-    student: number;
-    assets: number[];
-}
+import { Enrollment } from './Enrollment';
 
 export class Student {
     m_number: string;

@@ -17,14 +17,15 @@ struct Ensemble: DjangoModel {
     
     let isActive: Bool
     
-    let asset: GenericAsset?
+    let members: [Student]?
+    
+    let enrollments: [Enrollment]?
 }
 
 extension Ensemble: Codable {
     
     enum CodingKeys: String, CodingKey {
-        case id, term, asset
-        case fullName = "ensemble_name"
+        case id, name, term, members, enrollments
         case isActive = "is_active"
     }
 }

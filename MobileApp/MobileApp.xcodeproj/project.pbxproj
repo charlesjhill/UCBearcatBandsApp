@@ -18,6 +18,7 @@
 		131AAB1D22C9C838003E0B5B /* MaintenanceReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131AAB1C22C9C838003E0B5B /* MaintenanceReport.swift */; };
 		132C83B222DE5E7F009C82CA /* AdminDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132C83B122DE5E7F009C82CA /* AdminDashboardVC.swift */; };
 		13367F0D22E909B900A73503 /* InstrumentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13367F0C22E909B900A73503 /* InstrumentListVC.swift */; };
+		1339A5AC22EBD97D00AF9675 /* Enrollment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339A5AB22EBD97D00AF9675 /* Enrollment.swift */; };
 		133C329C22C95336007412CF /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133C329B22C95336007412CF /* AuthService.swift */; };
 		134DB16B2298510700B119C4 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134DB16A2298510700B119C4 /* Student.swift */; };
 		13609A4D22D8D897000BCA99 /* MoyaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13609A4C22D8D897000BCA99 /* MoyaResponse.swift */; };
@@ -79,6 +80,7 @@
 		131AAB1C22C9C838003E0B5B /* MaintenanceReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceReport.swift; sourceTree = "<group>"; };
 		132C83B122DE5E7F009C82CA /* AdminDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminDashboardVC.swift; sourceTree = "<group>"; };
 		13367F0C22E909B900A73503 /* InstrumentListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentListVC.swift; sourceTree = "<group>"; };
+		1339A5AB22EBD97D00AF9675 /* Enrollment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enrollment.swift; sourceTree = "<group>"; };
 		133C329B22C95336007412CF /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		134DB16A2298510700B119C4 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		13609A4C22D8D897000BCA99 /* MoyaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaResponse.swift; sourceTree = "<group>"; };
@@ -217,7 +219,7 @@
 			path = Instruments;
 			sourceTree = "<group>";
 		};
-		91A5782B22EBB37900C23E78 /* New Group */ = {
+		91A5782B22EBB37900C23E78 /* Ensembles */ = {
 			isa = PBXGroup;
 			children = (
 				13AA4BD822E8AB9D00FF7473 /* EnsembleListVC.swift */,
@@ -225,7 +227,7 @@
 				91A5782E22EBC16C00C23E78 /* EnsembleDetailsVC.swift */,
 				91A5783022EBC5E900C23E78 /* EnsembleCell.xib */,
 			);
-			path = "New Group";
+			path = Ensembles;
 			sourceTree = "<group>";
 		};
 		B45693B380EEE561EB583D06 /* Pods */ = {
@@ -298,6 +300,7 @@
 				136EBE3F22CA5AF0004A97D8 /* UniformPiece.swift */,
 				13076A8D22D7F0ED00A3CB74 /* AuthToken.swift */,
 				91A5782622E8A26800C23E78 /* Ensemble.swift */,
+				1339A5AB22EBD97D00AF9675 /* Enrollment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -314,7 +317,7 @@
 		B5D68D3522983E6900600B76 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				91A5782B22EBB37900C23E78 /* New Group */,
+				91A5782B22EBB37900C23E78 /* Ensembles */,
 				13AA4BD022E8A27A00FF7473 /* Uniforms */,
 				13F0B5C322E7D50A00CE565E /* Instruments */,
 				13F0B5C222E7D4F500CE565E /* Container VCs */,
@@ -510,6 +513,7 @@
 				131AAB1222C9B06D003E0B5B /* Instrument.swift in Sources */,
 				132C83B222DE5E7F009C82CA /* AdminDashboardVC.swift in Sources */,
 				13A7DFAC22E798A000591405 /* UniformListVC.swift in Sources */,
+				1339A5AC22EBD97D00AF9675 /* Enrollment.swift in Sources */,
 				91A5782F22EBC16C00C23E78 /* EnsembleDetailsVC.swift in Sources */,
 				91758BC922CC0FF200960548 /* UniformService.swift in Sources */,
 				13076A8C22D7EDF100A3CB74 /* LoginVC.swift in Sources */,

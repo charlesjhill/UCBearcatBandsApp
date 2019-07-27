@@ -224,14 +224,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xsj-pZ-RAh"/>
                     </view>
-<<<<<<< Updated upstream
                     <navigationItem key="navigationItem" title="Ensembles" id="oog-Pj-VOr"/>
-=======
-                    <navigationItem key="navigationItem" id="oog-Pj-VOr"/>
                     <connections>
                         <outlet property="ListView" destination="2AT-LV-uA7" id="Nlc-NM-T74"/>
                     </connections>
->>>>>>> Stashed changes
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jhn-GG-s84" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

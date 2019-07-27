@@ -4,10 +4,10 @@ import { UserService } from './user.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Instrument, Student } from '../_models';
+import { Assignment } from '../_models';
 
 @Injectable({ providedIn: 'root' })
-export class InstrumentsService {
+export class AssignmentService {
 
   constructor(private __http: HttpClient, private _userService: UserService) { }
 
@@ -27,44 +27,44 @@ export class InstrumentsService {
       'Something bad happened; please try again later.');
   };
 
-  // Uses http.get() to Load data from single API endpoint
-  list(): Observable<Instrument[]> {
-    return this.__http.get<Instrument[]>(`${environment.apiUrl}/instruments/`);
+  //Lists assignments
+  list(): Observable<Assignment[]> {
+    return this.__http.get<Assignment[]>(`${environment.apiUrl}/assignments/`);
   }
 
-  addInstrument (instrument: Instrument): Observable<Instrument> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })};
-    return this.__http.post<Instrument>(`${environment.apiUrl}/instruments/`, instrument, httpOptions)
-      .pipe(catchError(this.handleError));
-  }
-
-  deleteInstrument(id): Observable<any> {
+  //Creates assignments
+  addAssigment(assignment: Assignment): Observable<Assignment> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'my-auth-token'
       })
     };
-    return this.__http.delete(`${environment.apiUrl}/instruments/` + id + '/')
+    return this.__http.post<Assignment>(`${environment.apiUrl}/assignments/`, assignment, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  updateInstrument(instrument: Instrument, id): Observable<Instrument> {
+  //Deletes assignments
+  deleteAssigment(id): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'my-auth-token'
       })
     };
-    return this.__http.put<Instrument>(`${environment.apiUrl}/instruments/`+ id + '/', instrument, httpOptions)
+    return this.__http.delete(`${environment.apiUrl}/assignments/` + id + '/')
       .pipe(catchError(this.handleError));
   }
 
-  getStudentsAssigned(id): Observable<Student[]> {
-    return this.__http.get<Student[]>(`${environment.apiUrl}/instruments/`+ id + '/students/');
+  //updates assignments
+  updateAssigment(assignment: Assignment, id): Observable<Assignment> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'my-auth-token'
+      })
+    };
+    return this.__http.put<Assignment>(`${environment.apiUrl}/assigments/` + id + '/', assignment, httpOptions)
+      .pipe(catchError(this.handleError));
   }
 }

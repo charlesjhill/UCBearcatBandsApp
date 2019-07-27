@@ -59,14 +59,40 @@ class UniformListVC: UIViewController {
 
 extension UniformListVC: ListViewControllerDelegate {
     
-    func listViewController(_ list: ListViewController, didSelect item: UIViewController, at index: Int) -> ListSelectionResponse {
-        selectedUniform = uniforms![index]
+    func listViewController(_ list: ListViewController, didSelect item: UIViewController, at indexPath: IndexPath) -> ListSelectionResponse {
+        selectedUniform = uniforms![indexPath.row]
         performSegue(withIdentifier: "toUniformDetails", sender: nil)
         return [.deselect]
     }
     
-    //    func listViewController(_ list: ListViewController, swipeConfigurationFor item: UIViewController) -> UISwipeActionsConfiguration? {
-    //        return nil
-    //    }
+    func listViewController(_ list: ListViewController, swipeConfigurationFor item: UIViewController, at indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        return nil
+    }
+    
+    func listViewController(_ list: ListViewController, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let uniformToEdit = uniforms![indexPath.row]
+        if (editingStyle == .delete) {
+            // We'll double check with the user that they actually want to delete things
+            let refreshAlert = UIAlertController(title: "Are you sure?",
+                                                 message: "You will not be able to recover \(uniformToEdit.name).",
+                                                 preferredStyle: UIAlertController.Style.alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { (action: UIAlertAction!) in
+                // Actually perform the deletion
+                self.provider.request(.deleteUniform(id: uniformToEdit.id)) { result in
+                    switch result {
+                    case let .success(moyaResponse):
+                        if moyaResponse.statusCode == 204 {
+                            self.uniforms!.remove(at: indexPath.row)
+                        }
+                    case let .failure(error):
+                        print(error)
+                    }
+                }
+            }))
+            refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            present(refreshAlert, animated: true, completion: nil)
+        }
+    }
     
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ueg-WQ-EVw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wds-kc-cdp">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -131,7 +131,18 @@
                         <viewLayoutGuide key="safeArea" id="5XZ-a9-44U"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Dashboard" image="dicon" id="kHU-od-tU7"/>
-                    <navigationItem key="navigationItem" id="bYV-s7-qxA"/>
+                    <navigationItem key="navigationItem" title="Dashboard" id="bYV-s7-qxA">
+                        <barButtonItem key="rightBarButtonItem" id="M4p-44-0bo">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jlt-AQ-Mv8">
+                                <rect key="frame" x="302" y="7" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Log Out"/>
+                                <connections>
+                                    <action selector="LogoutPressed:" destination="wCO-cc-T7m" eventType="touchUpInside" id="xtG-4L-5YH"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O0d-MX-P6O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -160,9 +171,7 @@
                         <viewLayoutGuide key="safeArea" id="fc0-nH-olj"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Uniforms" image="icons8-school-uniform-64" id="IUy-Bf-MsY"/>
-                    <navigationItem key="navigationItem" id="M5e-Xp-skz">
-                        <nil key="title"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Uniforms" id="M5e-Xp-skz"/>
                     <connections>
                         <outlet property="ListView" destination="aUw-LP-2GX" id="c5U-jv-tDb"/>
                         <segue destination="ETn-kU-uz1" kind="show" identifier="toUniformDetails" id="N3Y-VE-gO9"/>
@@ -190,7 +199,7 @@
             </objects>
             <point key="canvasLocation" x="-1661" y="1477"/>
         </scene>
-        <!--Ensemble ListVC-->
+        <!--Ensembles-->
         <scene sceneID="c8F-ZB-nVo">
             <objects>
                 <viewController id="0U7-k5-SjY" customClass="EnsembleListVC" customModule="MobileApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -200,7 +209,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Xsj-pZ-RAh"/>
                     </view>
-                    <navigationItem key="navigationItem" id="oog-Pj-VOr"/>
+                    <navigationItem key="navigationItem" title="Ensembles" id="oog-Pj-VOr"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jhn-GG-s84" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -283,7 +292,7 @@
                         <viewLayoutGuide key="safeArea" id="B1f-vi-rKL"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Instruments" image="icons8-jazz-50" id="nO3-gx-UJn"/>
-                    <navigationItem key="navigationItem" id="aY7-SB-4TH"/>
+                    <navigationItem key="navigationItem" title="Instruments" id="aY7-SB-4TH"/>
                     <connections>
                         <outlet property="ListView" destination="LVU-4t-vnP" id="KVJ-t4-fW1"/>
                         <segue destination="HIb-se-H9c" kind="show" identifier="toInstrumentDetails" id="F7u-rX-v0u"/>

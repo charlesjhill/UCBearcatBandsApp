@@ -18,19 +18,29 @@ struct ListSelectionResponse: OptionSet {
 }
 
 protocol ListViewControllerDelegate: AnyObject {
-    func listViewController(_ list: ListViewController, didSelect item: UIViewController, at index: Int) -> ListSelectionResponse
-//    func listViewController(_ list: ListViewController, swipeConfigurationFor item: UIViewController) -> UISwipeActionsConfiguration?
+    func listViewController(_ list: ListViewController, didSelect item: UIViewController, at indexPath: IndexPath) -> ListSelectionResponse
+    func listViewController(_ list: ListViewController, swipeConfigurationFor item: UIViewController, at indexPath: IndexPath) -> UISwipeActionsConfiguration?
+    func listViewController(_ list: ListViewController, canEditRowAt indexPath: IndexPath) -> Bool
+    func listViewController(_ list: ListViewController, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath)
 }
 
 extension ListViewControllerDelegate {
     
-    func listViewController(_ list: ListViewController, didSelect item: UIViewController, at index: Int) -> ListSelectionResponse {
+    func listViewController(_ list: ListViewController, didSelect item: UIViewController, at indexPath: Int) -> ListSelectionResponse {
         return [.deselect]
     }
     
-//    func listViewController(_ list: ListViewController, swipeConfigurationFor item: UIViewController) -> UISwipeActionsConfiguration? {
-//        return nil
-//    }
+    func listViewController(_ list: ListViewController, swipeConfigurationFor item: UIViewController, at indexPath: Int) -> UISwipeActionsConfiguration? {
+        return nil
+    }
+    
+    func listViewController(_ list: ListViewController, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func listViewController(_ list: ListViewController, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        return
+    }
     
 }
 
@@ -132,11 +142,17 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
     
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//
-//        let row = content[indexPath.row]
-//        return listDelegate?.listViewController(self, swipeConfigurationFor: row)
-//
-//    }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let row = content[indexPath.row]
+        return listDelegate?.listViewController(self, swipeConfigurationFor: row, at: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return listDelegate?.listViewController(self, canEditRowAt: indexPath) ?? true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        listDelegate?.listViewController(self, commit: editingStyle, forRowAt: indexPath)
+    }
     
 }

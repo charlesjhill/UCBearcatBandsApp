@@ -1,8 +1,16 @@
 <p>Select Students to Assign</p>
 <!-- Add filtering up here-->
-<mat-selection-list #studentList >
-    <mat-list-option *ngFor="let student of students$ | async" [value]="student.user.pk">
-        {{ student.user.full_name }}
-    </mat-list-option>
+<mat-selection-list #studentList>
+    <ng-container *ngFor="let student of students$ | async">
+        <mat-list-option [value]="student.user.id">
+            {{ student.user.full_name }}
+        </mat-list-option>
+    </ng-container>
 </mat-selection-list>
+<p>Selected: </p>
+<ul>
+    <li *ngFor="let i of studentList.selectedOptions.selected">
+        {{ i.value }}
+    </li>
+</ul>
 <button mat-button type="submit" (click)="saveEnrollments(studentList.selectedOptions.selected)">SAVE</button>

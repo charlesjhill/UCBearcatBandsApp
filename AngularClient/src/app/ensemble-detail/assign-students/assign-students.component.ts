@@ -1,5 +1,6 @@
+import { PostEnrollment } from './../../_services/enrollment.service';
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatListOption, MatSelectionListChange } from '@angular/material';
 import { Ensemble, Student } from 'src/app/_models';
 import { StudentService } from 'src/app/_services';
 import { Observable, of, from } from 'rxjs';
@@ -27,17 +28,23 @@ export class AssignStudentsComponent implements OnInit {
     this.studentService.update();
   }
 
-  saveEnrollments(selected: number[]) {
-    // We should add an endpoint that accepts batch processing
-    from(selected).pipe(
-      concatMap(id => {
-        return this.enrollmentService.addEnrollment(this.data.ensemble.id, id);
+  saveEnrollments(selectedOptions: any[]) {
+	// Sequentially add the selected students, waiting for a response before moving on
+	// TODO: We should create a bulk-enrollment endpoint enventually
+    from(selectedOptions).pipe(
+      concatMap(option => {
+        const payload = new PostEnrollment();
+        payload.ensemble = this.data.ensemble.id;
+        payload.student = option.value;
+
+        return this.enrollmentService.addEnrollment(payload);
       })
-    ).subscribe(data => {
-      console.log('successfully enrolled a student');
-    }, error => {
-      console.log('error: ' + error);
-    });
+    ).subscribe(
+      data => { console.log('successful enrollment'); },
+      error => { console.log(error); }
+    );
+
+    this.dialogRef.close(true);
   }
 
 }

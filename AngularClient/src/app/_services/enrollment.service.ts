@@ -1,8 +1,21 @@
+import { Instrument } from './instruments.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { first } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+export class PostEnrollment {
+  ensemble: number;
+  student: number;
+}
+
+export class Enrollment {
+  id: number;
+  ensemble: number;
+  student: number;
+  assets: any[];
+}
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +26,7 @@ export class EnrollmentService {
 
   private url = `${environment.apiUrl}/enrollments/`;
 
-  addEnrollment(ensembleId: number, studentId: number): Observable<any> {
-    const thing = { ensemble: ensembleId, student: studentId };
-    return this.http.post<any>(this.url, JSON.stringify(thing)).pipe(first());
+  addEnrollment(enrollment: PostEnrollment): Observable<Enrollment> {
+    return this.http.post<Enrollment>(this.url, enrollment).pipe(first());
   }
 }

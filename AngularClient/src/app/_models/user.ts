@@ -1,5 +1,5 @@
 ﻿export class User {
-    pk: number;
+    id: number;
     email: string;
     full_name: string;
     is_student: boolean;

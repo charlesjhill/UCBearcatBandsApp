@@ -57,13 +57,13 @@ export class AuthenticationService {
                     user.email = ru.email;
                     user.full_name = ru.full_name;
                     user.is_student = ru.is_student;
-                    user.pk = ru.id;
+                    user.id = ru.id;
                     user.token = this.currentUserToken;
 
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.currentUserSubject.next(user);
                     if (user.is_student) {
-                        return this.http.get(`${environment.apiUrl}/students/${user.pk}/`);
+                        return this.http.get(`${environment.apiUrl}/students/${user.id}/`);
                     } else {
                         return of(user);
                     }

@@ -14,7 +14,7 @@ struct Enrollment: DjangoModel {
     
     let ensemble: Int
     
-    let student: Int
+    let student: Student
     
     let assets: [Int]
     

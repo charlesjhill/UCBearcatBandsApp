@@ -35,14 +35,7 @@ class InstrumentListVC: UIViewController  {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        provider.request(.showInstruments) { result in
-            switch result {
-            case let .success(moyaResponse):
-                self.instruments = moyaResponse.parseJsonResponse(response: moyaResponse)
-            case let .failure(error):
-                print(error)
-            }
-        }
+        loadInstruments()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -52,6 +45,17 @@ class InstrumentListVC: UIViewController  {
             vc.instrument = selectedInstrument
         default:
             break
+        }
+    }
+    
+    func loadInstruments() {
+        provider.request(.showInstruments) { result in
+            switch result {
+            case let .success(moyaResponse):
+                self.instruments = moyaResponse.parseJsonResponse(response: moyaResponse)
+            case let .failure(error):
+                print(error)
+            }
         }
     }
     
@@ -98,6 +102,10 @@ extension InstrumentListVC: ListViewControllerDelegate {
             refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             present(refreshAlert, animated: true, completion: nil)
         }
+    }
+    
+    func refreshContents(of list: ListViewController) {
+        loadInstruments()
     }
     
 }

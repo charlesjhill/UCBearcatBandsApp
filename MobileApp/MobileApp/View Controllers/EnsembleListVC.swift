@@ -56,7 +56,8 @@ class EnsembleListVC: UIViewController {
     }
     
     @IBAction func addEnsemblePressed(_ sender: Any) {
-        performSegue(withIdentifier: "toCreateEnsemble", sender: nil)
+        selectedEnsemble = nil
+        performSegue(withIdentifier: "toEnsembleDetails", sender: nil)
     }
     
 }

@@ -73,6 +73,7 @@ export class AuthenticationService {
                     if (thing.hasOwnProperty('m_number') && (thing as Student).m_number) {
                         const student = new Student();
                         student.m_number = (thing as Student).m_number;
+                        student.enrollments = (thing as Student).enrollments;
                         localStorage.setItem('currentStudent', JSON.stringify(student));
                         this.currentStudentSubject.next(student);
                     }

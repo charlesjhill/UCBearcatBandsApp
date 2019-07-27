@@ -2,7 +2,7 @@ export class Enrollment {
     id: number;
     ensemble: number;
     student: number;
-    assets: number[];
+    assets: any[];
 }
 
 export class PostEnrollment {

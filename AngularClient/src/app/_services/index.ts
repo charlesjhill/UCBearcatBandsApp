@@ -4,5 +4,6 @@ export * from './user.service';
 export * from './instruments.service';
 export * from './uniforms.service';
 export * from './ensemble.service';
+export * from './student.service';
 export * from './enrollment.service';
 export * from './assignments.service';

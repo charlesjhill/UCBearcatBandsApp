@@ -222,7 +222,7 @@ export class InstrumentsComponent implements OnInit {
   selector: 'OverviewDialog',
   templateUrl: 'dialog.html',
 })
-export class OverviewDialog {
+export class OverviewDialog implements OnInit {
   form: FormGroup;
   kind: string;
   make: string;

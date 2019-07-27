@@ -1,26 +1,28 @@
 <div class="container-fluid">
-    <div class="row my-2">
+    <div class="row mb-2">
         <!-- Top Row Actions -->
         <div class="col">
-            <button mat-flat-button>Add Ensemble</button>
+            <button color="accent" mat-flat-button (click)="addEnsemble()">Add Ensemble</button>
         </div>
     </div>
-    <div class="row mx-2">
-        <mat-accordion>
-            <!-- put a *ngFor here -->
-            <mat-expansion-panel *ngFor="let ensemble of ensembles">
-                <mat-expansion-panel-header>
-                    <!-- Title info -->
-                    <mat-panel-title>
-                        {{ensemble.name | titlecase}} {{ensemble.term}}
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        {{ensemble.name}} Details
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <!-- Details of this ensemble -->
-                <app-ensemble-detail [ensemble]="ensemble"></app-ensemble-detail>
-            </mat-expansion-panel>
-        </mat-accordion>
+    <div class="row">
+        <div class="col">
+            <mat-accordion style="width: 100%">
+                <mat-expansion-panel *ngFor="let ensemble of ensembles">
+                    <mat-expansion-panel-header class="right-aligned-header">
+                        <!-- Title info -->
+                        <mat-panel-title>
+                            {{ensemble.name}} {{ensemble.term}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{ensemble.name}} Details
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <!-- Details of this ensemble -->
+                    <!-- We're going to delegate to a different component here -->
+                    <app-ensemble-detail [ensemble]="ensemble"></app-ensemble-detail>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
     </div>
 </div>

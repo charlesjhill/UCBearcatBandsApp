@@ -57,7 +57,7 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
-        let regData = new RegisterUser();
+        const regData = new RegisterUser();
         regData.email = this.f.email.value;
         regData.full_name = this.f.fullName.value;
         regData.is_student = true;

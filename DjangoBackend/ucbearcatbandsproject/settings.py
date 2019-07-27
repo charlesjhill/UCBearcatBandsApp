@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'ucbearcatbandsproject.bands',
     'ucbearcatbandsproject.users',
     'corsheaders',
+    'polymorphic'
 ]
 
 # Auth settings for allauth

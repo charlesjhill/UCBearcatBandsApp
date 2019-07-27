@@ -15,4 +15,10 @@ class AdminDashboardVC: UIViewController {
 //        db.populate()
     }
 
+    @IBAction func LogoutPressed(_ sender: Any) {
+        // For now, because I'm tired of making storyboard segues, this is easy enough
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+        self.present(vc, animated: false, completion: nil)
+    }
+    
 }

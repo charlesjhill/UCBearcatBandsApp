@@ -17,6 +17,8 @@
 		131AAB1B22C9C65F003E0B5B /* Locker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131AAB1A22C9C65F003E0B5B /* Locker.swift */; };
 		131AAB1D22C9C838003E0B5B /* MaintenanceReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131AAB1C22C9C838003E0B5B /* MaintenanceReport.swift */; };
 		132C83B222DE5E7F009C82CA /* AdminDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132C83B122DE5E7F009C82CA /* AdminDashboardVC.swift */; };
+		13367F0D22E909B900A73503 /* InstrumentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13367F0C22E909B900A73503 /* InstrumentListVC.swift */; };
+		1339A5AC22EBD97D00AF9675 /* Enrollment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339A5AB22EBD97D00AF9675 /* Enrollment.swift */; };
 		133C329C22C95336007412CF /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133C329B22C95336007412CF /* AuthService.swift */; };
 		134DB16B2298510700B119C4 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134DB16A2298510700B119C4 /* Student.swift */; };
 		13609A4D22D8D897000BCA99 /* MoyaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13609A4C22D8D897000BCA99 /* MoyaResponse.swift */; };
@@ -29,6 +31,7 @@
 		13AA4BD222E8A29800FF7473 /* UniformDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AA4BD122E8A29800FF7473 /* UniformDetailsVC.swift */; };
 		13AA4BD422E8A42200FF7473 /* UniformCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AA4BD322E8A42200FF7473 /* UniformCellVC.swift */; };
 		13AA4BD622E8A48E00FF7473 /* UniformCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13AA4BD522E8A48E00FF7473 /* UniformCell.xib */; };
+		13AA4BD922E8AB9D00FF7473 /* EnsembleListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AA4BD822E8AB9D00FF7473 /* EnsembleListVC.swift */; };
 		13D0A5AD229DCEE600FDB509 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D0A5AC229DCEE600FDB509 /* URL.swift */; };
 		13E6FBA022CBEA4200C8A61C /* SampleDatabasePopulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6FB9F22CBEA4200C8A61C /* SampleDatabasePopulation.swift */; };
 		13E6FBA222CBF63200C8A61C /* InstrumentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6FBA122CBF63200C8A61C /* InstrumentService.swift */; };
@@ -39,13 +42,14 @@
 		13F0B5C122E7D38700CE565E /* UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F0B5C022E7D38700CE565E /* UITableViewCell.swift */; };
 		13F0B5C522E7D9C100CE565E /* InstrumentCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F0B5C422E7D9C100CE565E /* InstrumentCellVC.swift */; };
 		13F0B5C722E7D9F100CE565E /* InstrumentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13F0B5C622E7D9F100CE565E /* InstrumentCell.xib */; };
-		13F0B5CC22E7E31F00CE565E /* InstrumentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F0B5CB22E7E31F00CE565E /* InstrumentListVC.swift */; };
 		13F0B5CE22E7F05100CE565E /* InstrumentDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F0B5CD22E7F05100CE565E /* InstrumentDetailsVC.swift */; };
 		732C615B9D0A8543F59F5DFE /* Pods_MobileAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3306D73DFB9D87E140298C9 /* Pods_MobileAppTests.framework */; };
 		91758BC922CC0FF200960548 /* UniformService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91758BC822CC0FF200960548 /* UniformService.swift */; };
-		91A5782322E7E4FF00C23E78 /* EnsembleListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5782222E7E4FF00C23E78 /* EnsembleListVC.swift */; };
 		91A5782522E7E5EA00C23E78 /* EnsembleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5782422E7E5EA00C23E78 /* EnsembleService.swift */; };
 		91A5782722E8A26800C23E78 /* Ensemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5782622E8A26800C23E78 /* Ensemble.swift */; };
+		91A5782F22EBC16C00C23E78 /* EnsembleDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5782E22EBC16C00C23E78 /* EnsembleDetailsVC.swift */; };
+		91A5783122EBC5EA00C23E78 /* EnsembleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91A5783022EBC5E900C23E78 /* EnsembleCell.xib */; };
+		91A5783322EBCF6600C23E78 /* EnsembleCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5783222EBCF6600C23E78 /* EnsembleCellVC.swift */; };
 		A09BC5F3E49D556DDDB81CA5 /* Pods_MobileApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A81733A9F5199FECC44980 /* Pods_MobileApp.framework */; };
 		B5D68D1322983DD200600B76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D68D1222983DD200600B76 /* AppDelegate.swift */; };
 		B5D68D1522983DD200600B76 /* StudentDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D68D1422983DD200600B76 /* StudentDashboardVC.swift */; };
@@ -75,6 +79,8 @@
 		131AAB1A22C9C65F003E0B5B /* Locker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locker.swift; sourceTree = "<group>"; };
 		131AAB1C22C9C838003E0B5B /* MaintenanceReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceReport.swift; sourceTree = "<group>"; };
 		132C83B122DE5E7F009C82CA /* AdminDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminDashboardVC.swift; sourceTree = "<group>"; };
+		13367F0C22E909B900A73503 /* InstrumentListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentListVC.swift; sourceTree = "<group>"; };
+		1339A5AB22EBD97D00AF9675 /* Enrollment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enrollment.swift; sourceTree = "<group>"; };
 		133C329B22C95336007412CF /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		134DB16A2298510700B119C4 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		13609A4C22D8D897000BCA99 /* MoyaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaResponse.swift; sourceTree = "<group>"; };
@@ -87,6 +93,7 @@
 		13AA4BD122E8A29800FF7473 /* UniformDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformDetailsVC.swift; sourceTree = "<group>"; };
 		13AA4BD322E8A42200FF7473 /* UniformCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformCellVC.swift; sourceTree = "<group>"; };
 		13AA4BD522E8A48E00FF7473 /* UniformCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UniformCell.xib; sourceTree = "<group>"; };
+		13AA4BD822E8AB9D00FF7473 /* EnsembleListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnsembleListVC.swift; path = ../EnsembleListVC.swift; sourceTree = "<group>"; };
 		13D0A5AC229DCEE600FDB509 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		13E6FB9F22CBEA4200C8A61C /* SampleDatabasePopulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDatabasePopulation.swift; sourceTree = "<group>"; };
 		13E6FBA122CBF63200C8A61C /* InstrumentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentService.swift; sourceTree = "<group>"; };
@@ -97,14 +104,15 @@
 		13F0B5C022E7D38700CE565E /* UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell.swift; sourceTree = "<group>"; };
 		13F0B5C422E7D9C100CE565E /* InstrumentCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentCellVC.swift; sourceTree = "<group>"; };
 		13F0B5C622E7D9F100CE565E /* InstrumentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstrumentCell.xib; sourceTree = "<group>"; };
-		13F0B5CB22E7E31F00CE565E /* InstrumentListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentListVC.swift; sourceTree = "<group>"; };
 		13F0B5CD22E7F05100CE565E /* InstrumentDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentDetailsVC.swift; sourceTree = "<group>"; };
 		3BBC0AEB1EFE3A9BEA6DD9AA /* Pods-MobileAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MobileAppTests/Pods-MobileAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		479325CC4750A5F4B87F1198 /* Pods-MobileApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-MobileApp/Pods-MobileApp.release.xcconfig"; sourceTree = "<group>"; };
 		91758BC822CC0FF200960548 /* UniformService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformService.swift; sourceTree = "<group>"; };
-		91A5782222E7E4FF00C23E78 /* EnsembleListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnsembleListVC.swift; sourceTree = "<group>"; };
 		91A5782422E7E5EA00C23E78 /* EnsembleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnsembleService.swift; sourceTree = "<group>"; };
 		91A5782622E8A26800C23E78 /* Ensemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ensemble.swift; sourceTree = "<group>"; };
+		91A5782E22EBC16C00C23E78 /* EnsembleDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnsembleDetailsVC.swift; sourceTree = "<group>"; };
+		91A5783022EBC5E900C23E78 /* EnsembleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EnsembleCell.xib; sourceTree = "<group>"; };
+		91A5783222EBCF6600C23E78 /* EnsembleCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnsembleCellVC.swift; sourceTree = "<group>"; };
 		B5D68D0F22983DD200600B76 /* MobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D68D1222983DD200600B76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5D68D1422983DD200600B76 /* StudentDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentDashboardVC.swift; sourceTree = "<group>"; };
@@ -203,12 +211,23 @@
 		13F0B5C322E7D50A00CE565E /* Instruments */ = {
 			isa = PBXGroup;
 			children = (
-				13F0B5CB22E7E31F00CE565E /* InstrumentListVC.swift */,
+				13367F0C22E909B900A73503 /* InstrumentListVC.swift */,
 				13F0B5C422E7D9C100CE565E /* InstrumentCellVC.swift */,
 				13F0B5C622E7D9F100CE565E /* InstrumentCell.xib */,
 				13F0B5CD22E7F05100CE565E /* InstrumentDetailsVC.swift */,
 			);
 			path = Instruments;
+			sourceTree = "<group>";
+		};
+		91A5782B22EBB37900C23E78 /* Ensembles */ = {
+			isa = PBXGroup;
+			children = (
+				13AA4BD822E8AB9D00FF7473 /* EnsembleListVC.swift */,
+				91A5783222EBCF6600C23E78 /* EnsembleCellVC.swift */,
+				91A5782E22EBC16C00C23E78 /* EnsembleDetailsVC.swift */,
+				91A5783022EBC5E900C23E78 /* EnsembleCell.xib */,
+			);
+			path = Ensembles;
 			sourceTree = "<group>";
 		};
 		B45693B380EEE561EB583D06 /* Pods */ = {
@@ -281,6 +300,7 @@
 				136EBE3F22CA5AF0004A97D8 /* UniformPiece.swift */,
 				13076A8D22D7F0ED00A3CB74 /* AuthToken.swift */,
 				91A5782622E8A26800C23E78 /* Ensemble.swift */,
+				1339A5AB22EBD97D00AF9675 /* Enrollment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -297,6 +317,7 @@
 		B5D68D3522983E6900600B76 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				91A5782B22EBB37900C23E78 /* Ensembles */,
 				13AA4BD022E8A27A00FF7473 /* Uniforms */,
 				13F0B5C322E7D50A00CE565E /* Instruments */,
 				13F0B5C222E7D4F500CE565E /* Container VCs */,
@@ -396,6 +417,7 @@
 				13A07B5122E7A1E3001759C2 /* Main.storyboard in Resources */,
 				13AA4BD622E8A48E00FF7473 /* UniformCell.xib in Resources */,
 				B5D68D1A22983DD300600B76 /* Assets.xcassets in Resources */,
+				91A5783122EBC5EA00C23E78 /* EnsembleCell.xib in Resources */,
 				13A07B5022E7A1E3001759C2 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -491,9 +513,13 @@
 				131AAB1222C9B06D003E0B5B /* Instrument.swift in Sources */,
 				132C83B222DE5E7F009C82CA /* AdminDashboardVC.swift in Sources */,
 				13A7DFAC22E798A000591405 /* UniformListVC.swift in Sources */,
+				1339A5AC22EBD97D00AF9675 /* Enrollment.swift in Sources */,
+				91A5782F22EBC16C00C23E78 /* EnsembleDetailsVC.swift in Sources */,
 				91758BC922CC0FF200960548 /* UniformService.swift in Sources */,
 				13076A8C22D7EDF100A3CB74 /* LoginVC.swift in Sources */,
+				91A5783322EBCF6600C23E78 /* EnsembleCellVC.swift in Sources */,
 				13F0B5BD22E7D2B900CE565E /* UIView.swift in Sources */,
+				13AA4BD922E8AB9D00FF7473 /* EnsembleListVC.swift in Sources */,
 				131AAB1722C9C1A0003E0B5B /* PurchaseInfo.swift in Sources */,
 				13F0B5C522E7D9C100CE565E /* InstrumentCellVC.swift in Sources */,
 				131AAB0E22C9A86F003E0B5B /* ModelProtocols.swift in Sources */,
@@ -509,12 +535,12 @@
 				91A5782722E8A26800C23E78 /* Ensemble.swift in Sources */,
 				B5D68D1322983DD200600B76 /* AppDelegate.swift in Sources */,
 				1365461822C91C37008C8DC1 /* StudentService.swift in Sources */,
+				13367F0D22E909B900A73503 /* InstrumentListVC.swift in Sources */,
 				13076A8E22D7F0ED00A3CB74 /* AuthToken.swift in Sources */,
 				91A5782522E7E5EA00C23E78 /* EnsembleService.swift in Sources */,
 				13E6FBA022CBEA4200C8A61C /* SampleDatabasePopulation.swift in Sources */,
 				13E6FBA222CBF63200C8A61C /* InstrumentService.swift in Sources */,
 				133C329C22C95336007412CF /* AuthService.swift in Sources */,
-				91A5782322E7E4FF00C23E78 /* EnsembleListVC.swift in Sources */,
 				131AAB1922C9C598003E0B5B /* GenericAsset.swift in Sources */,
 				13F0B5CE22E7F05100CE565E /* InstrumentDetailsVC.swift in Sources */,
 				13F0B5B922E7D20700CE565E /* ContainerViewController.swift in Sources */,

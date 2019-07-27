@@ -58,15 +58,41 @@ class InstrumentListVC: UIViewController  {
 }
 
 extension InstrumentListVC: ListViewControllerDelegate {
-    
-    func listViewController(_ list: ListViewController, didSelect item: UIViewController, at index: Int) -> ListSelectionResponse {
-        selectedInstrument = instruments![index]
+
+    func listViewController(_ list: ListViewController, didSelect item: UIViewController, at indexPath: IndexPath) -> ListSelectionResponse {
+        selectedInstrument = instruments![indexPath.row]
         performSegue(withIdentifier: "toInstrumentDetails", sender: nil)
         return [.deselect]
     }
     
-//    func listViewController(_ list: ListViewController, swipeConfigurationFor item: UIViewController) -> UISwipeActionsConfiguration? {
-//        return nil
-//    }
+    func listViewController(_ list: ListViewController, swipeConfigurationFor item: UIViewController, at indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        return nil
+    }
+    
+    func listViewController(_ list: ListViewController, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let instrumentToEdit = instruments![indexPath.row]
+        if (editingStyle == .delete) {
+            // We'll double check with the user that they actually want to delete things
+            let refreshAlert = UIAlertController(title: "Are you sure?",
+                                                 message: "You will not be able to recover \(instrumentToEdit.name).",
+                                                 preferredStyle: UIAlertController.Style.alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { (action: UIAlertAction!) in
+                // Actually perform the deletion
+                self.provider.request(.deleteInstrument(id: instrumentToEdit.id)) { result in
+                    switch result {
+                    case let .success(moyaResponse):
+                        if moyaResponse.statusCode == 204 {
+                            self.instruments!.remove(at: indexPath.row)
+                        }
+                    case let .failure(error):
+                        print(error)
+                    }
+                }
+            }))
+            refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            present(refreshAlert, animated: true, completion: nil)
+        }
+    }
     
 }

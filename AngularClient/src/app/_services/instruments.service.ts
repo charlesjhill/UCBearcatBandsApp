@@ -4,16 +4,7 @@ import { UserService } from './user.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-
-export interface Instrument {
-  kind: string;
-  make: string;
-  model: string;
-  serial_number: string;
-  uc_tag_number: string;
-  uc_asset_number: string;
-  condition: string;
-}
+import { Instrument, Student } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class InstrumentsService {
@@ -71,5 +62,9 @@ export class InstrumentsService {
     };
     return this.__http.put<Instrument>(`${environment.apiUrl}/instruments/`+ id + '/', instrument, httpOptions)
       .pipe(catchError(this.handleError));
+  }
+
+  getStudentsAssigned(id): Observable<Student[]> {
+    return this.__http.get<Student[]>(`${environment.apiUrl}/instruments/`+ id + '/students/');
   }
 }

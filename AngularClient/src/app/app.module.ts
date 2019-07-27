@@ -14,11 +14,12 @@ import { RegisterComponent } from './register';
 import { AlertComponent } from './_components';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component'
-import { InstrumentsComponent, OverviewDialog } from './instruments/instruments.component';
+import { InstrumentsComponent, OverviewDialog, InstrumentAssignDialog } from './instruments/instruments.component';
 import { UniformsComponent } from './uniforms/uniforms.component';
 import { DashboardEnsemblesComponent, DashEnsembleAddDialog } from './dashboard-ensembles/dashboard-ensembles.component';
 import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.component';
 import { AssignStudentsComponent } from './ensemble-detail/assign-students/assign-students.component';
+import { StudentPageComponent } from './student-page/student-page.component';
 
 @NgModule({
     imports: [
@@ -43,12 +44,15 @@ import { AssignStudentsComponent } from './ensemble-detail/assign-students/assig
         EnsembleDetailComponent,
         UniformsComponent,
         DashEnsembleAddDialog,
-        AssignStudentsComponent
+        AssignStudentsComponent,
+        InstrumentAssignDialog,
+        StudentPageComponent,
     ],
     entryComponents: [
         OverviewDialog,
         DashEnsembleAddDialog,
-        AssignStudentsComponent
+        AssignStudentsComponent,
+        InstrumentAssignDialog
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

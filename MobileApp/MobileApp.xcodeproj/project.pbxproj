@@ -19,9 +19,6 @@
 		132C83B222DE5E7F009C82CA /* AdminDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132C83B122DE5E7F009C82CA /* AdminDashboardVC.swift */; };
 		13367F0D22E909B900A73503 /* InstrumentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13367F0C22E909B900A73503 /* InstrumentListVC.swift */; };
 		1339A5AC22EBD97D00AF9675 /* Enrollment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339A5AB22EBD97D00AF9675 /* Enrollment.swift */; };
-		1339A5AE22EBF0F600AF9675 /* InstrumentCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339A5AD22EBF0F600AF9675 /* InstrumentCreateVC.swift */; };
-		1339A5B022EBF17300AF9675 /* UniformCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339A5AF22EBF17300AF9675 /* UniformCreateVC.swift */; };
-		1339A5B222EBF18B00AF9675 /* EnsembleCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339A5B122EBF18B00AF9675 /* EnsembleCreateVC.swift */; };
 		133C329C22C95336007412CF /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133C329B22C95336007412CF /* AuthService.swift */; };
 		134DB16B2298510700B119C4 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134DB16A2298510700B119C4 /* Student.swift */; };
 		13609A4D22D8D897000BCA99 /* MoyaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13609A4C22D8D897000BCA99 /* MoyaResponse.swift */; };
@@ -84,9 +81,6 @@
 		132C83B122DE5E7F009C82CA /* AdminDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminDashboardVC.swift; sourceTree = "<group>"; };
 		13367F0C22E909B900A73503 /* InstrumentListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentListVC.swift; sourceTree = "<group>"; };
 		1339A5AB22EBD97D00AF9675 /* Enrollment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enrollment.swift; sourceTree = "<group>"; };
-		1339A5AD22EBF0F600AF9675 /* InstrumentCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentCreateVC.swift; sourceTree = "<group>"; };
-		1339A5AF22EBF17300AF9675 /* UniformCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformCreateVC.swift; sourceTree = "<group>"; };
-		1339A5B122EBF18B00AF9675 /* EnsembleCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnsembleCreateVC.swift; sourceTree = "<group>"; };
 		133C329B22C95336007412CF /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		134DB16A2298510700B119C4 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		13609A4C22D8D897000BCA99 /* MoyaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaResponse.swift; sourceTree = "<group>"; };
@@ -180,7 +174,6 @@
 				13A7DFAB22E798A000591405 /* UniformListVC.swift */,
 				13AA4BD322E8A42200FF7473 /* UniformCellVC.swift */,
 				13AA4BD522E8A48E00FF7473 /* UniformCell.xib */,
-				1339A5AF22EBF17300AF9675 /* UniformCreateVC.swift */,
 			);
 			path = Uniforms;
 			sourceTree = "<group>";
@@ -222,7 +215,6 @@
 				13F0B5C422E7D9C100CE565E /* InstrumentCellVC.swift */,
 				13F0B5C622E7D9F100CE565E /* InstrumentCell.xib */,
 				13F0B5CD22E7F05100CE565E /* InstrumentDetailsVC.swift */,
-				1339A5AD22EBF0F600AF9675 /* InstrumentCreateVC.swift */,
 			);
 			path = Instruments;
 			sourceTree = "<group>";
@@ -234,7 +226,6 @@
 				91A5783222EBCF6600C23E78 /* EnsembleCellVC.swift */,
 				91A5782E22EBC16C00C23E78 /* EnsembleDetailsVC.swift */,
 				91A5783022EBC5E900C23E78 /* EnsembleCell.xib */,
-				1339A5B122EBF18B00AF9675 /* EnsembleCreateVC.swift */,
 			);
 			path = Ensembles;
 			sourceTree = "<group>";
@@ -519,7 +510,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				136EBE4022CA5AF0004A97D8 /* UniformPiece.swift in Sources */,
-				1339A5AE22EBF0F600AF9675 /* InstrumentCreateVC.swift in Sources */,
 				131AAB1222C9B06D003E0B5B /* Instrument.swift in Sources */,
 				132C83B222DE5E7F009C82CA /* AdminDashboardVC.swift in Sources */,
 				13A7DFAC22E798A000591405 /* UniformListVC.swift in Sources */,
@@ -543,13 +533,11 @@
 				13AA4BD222E8A29800FF7473 /* UniformDetailsVC.swift in Sources */,
 				1365461A22C92143008C8DC1 /* User.swift in Sources */,
 				91A5782722E8A26800C23E78 /* Ensemble.swift in Sources */,
-				1339A5B222EBF18B00AF9675 /* EnsembleCreateVC.swift in Sources */,
 				B5D68D1322983DD200600B76 /* AppDelegate.swift in Sources */,
 				1365461822C91C37008C8DC1 /* StudentService.swift in Sources */,
 				13367F0D22E909B900A73503 /* InstrumentListVC.swift in Sources */,
 				13076A8E22D7F0ED00A3CB74 /* AuthToken.swift in Sources */,
 				91A5782522E7E5EA00C23E78 /* EnsembleService.swift in Sources */,
-				1339A5B022EBF17300AF9675 /* UniformCreateVC.swift in Sources */,
 				13E6FBA022CBEA4200C8A61C /* SampleDatabasePopulation.swift in Sources */,
 				13E6FBA222CBF63200C8A61C /* InstrumentService.swift in Sources */,
 				133C329C22C95336007412CF /* AuthService.swift in Sources */,

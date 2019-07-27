@@ -56,7 +56,8 @@ class InstrumentListVC: UIViewController  {
     }
     
     @IBAction func addInstrumentPressed(_ sender: Any) {
-        performSegue(withIdentifier: "toCreateInstrument", sender: nil)
+        selectedInstrument = nil
+        performSegue(withIdentifier: "toInstrumentDetails", sender: nil)
     }
 
 }

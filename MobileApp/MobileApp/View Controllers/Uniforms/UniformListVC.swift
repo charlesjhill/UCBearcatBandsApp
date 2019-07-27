@@ -55,6 +55,10 @@ class UniformListVC: UIViewController {
         }
     }
     
+    @IBAction func addUniformPressed(_ sender: Any) {
+        performSegue(withIdentifier: "toCreateUniform", sender: nil)
+    }
+    
 }
 
 extension UniformListVC: ListViewControllerDelegate {

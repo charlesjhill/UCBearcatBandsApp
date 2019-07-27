@@ -55,6 +55,10 @@ class EnsembleListVC: UIViewController {
         }
     }
     
+    @IBAction func addEnsemblePressed(_ sender: Any) {
+        performSegue(withIdentifier: "toCreateEnsemble", sender: nil)
+    }
+    
 }
 
 extension EnsembleListVC: ListViewControllerDelegate {

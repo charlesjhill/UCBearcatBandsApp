@@ -1,4 +1,5 @@
-import { Student, Enrollment } from './Student';
+import { Student, Enrollment } from '.';
+
 export class Ensemble {
     id: number;
     name: string;

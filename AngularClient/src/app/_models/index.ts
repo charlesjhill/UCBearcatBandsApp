@@ -7,3 +7,4 @@ export * from './Ensemble';
 export * from './Instrument';
 export * from './Uniform';
 export * from './Assignment';
+export * from './Enrollment';

@@ -88,7 +88,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="995.65217391304361" y="1476.5625"/>
+            <point key="canvasLocation" x="1657" y="20"/>
         </scene>
         <!--Student Navigation-->
         <scene sceneID="BYl-Rv-FPr">
@@ -108,7 +108,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d7M-HF-Qnj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="996" y="750"/>
+            <point key="canvasLocation" x="680" y="20"/>
         </scene>
         <!--AdminPortalVC-->
         <scene sceneID="ROl-pD-TlU">
@@ -136,17 +136,20 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jlt-AQ-Mv8">
                                 <rect key="frame" x="302" y="7" width="92" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Log Out"/>
+                                <state key="normal" title="Log Out">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="LogoutPressed:" destination="wCO-cc-T7m" eventType="touchUpInside" id="xtG-4L-5YH"/>
                                 </connections>
                             </button>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O0d-MX-P6O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3429" y="2207"/>
+            <point key="canvasLocation" x="-2971" y="2231"/>
         </scene>
         <!--UniformListVC-->
         <scene sceneID="oO2-Ur-8Vl">
@@ -171,15 +174,23 @@
                         <viewLayoutGuide key="safeArea" id="fc0-nH-olj"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Uniforms" image="icons8-school-uniform-64" id="IUy-Bf-MsY"/>
-                    <navigationItem key="navigationItem" title="Uniforms" id="M5e-Xp-skz"/>
+                    <navigationItem key="navigationItem" title="Uniforms" id="M5e-Xp-skz">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="Pyv-pt-27i">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addUniformPressed:" destination="ffw-tp-O4e" id="Oan-oj-10t"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="ListView" destination="aUw-LP-2GX" id="c5U-jv-tDb"/>
                         <segue destination="ETn-kU-uz1" kind="show" identifier="toUniformDetails" id="N3Y-VE-gO9"/>
+                        <segue destination="d8Z-Dr-UdJ" kind="show" identifier="toCreateUniform" id="748-5t-Dmt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FzR-3Z-3Vg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1661" y="2207"/>
+            <point key="canvasLocation" x="772" y="2229"/>
         </scene>
         <!--Uniform Navigation-->
         <scene sceneID="eFh-b1-K5i">
@@ -197,7 +208,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MMB-cX-79a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1661" y="1477"/>
+            <point key="canvasLocation" x="772" y="1499"/>
         </scene>
         <!--Ensembles-->
         <scene sceneID="c8F-ZB-nVo">
@@ -224,18 +235,23 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xsj-pZ-RAh"/>
                     </view>
-<<<<<<< Updated upstream
-                    <navigationItem key="navigationItem" title="Ensembles" id="oog-Pj-VOr"/>
-=======
-                    <navigationItem key="navigationItem" id="oog-Pj-VOr"/>
+                    <navigationItem key="navigationItem" title="Ensembles" id="oog-Pj-VOr">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="2Op-LR-rz4">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addEnsemblePressed:" destination="0U7-k5-SjY" id="hat-JT-1mX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="ListView" destination="2AT-LV-uA7" id="Nlc-NM-T74"/>
+                        <segue destination="ewN-zx-Mag" kind="show" identifier="toEnsembleDetails" id="cd4-4T-G9l"/>
+                        <segue destination="7UI-Qh-bPb" kind="show" identifier="toCreateEnsemble" id="676-LQ-8hr"/>
                     </connections>
->>>>>>> Stashed changes
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jhn-GG-s84" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-777" y="2207"/>
+            <point key="canvasLocation" x="2787" y="2231"/>
         </scene>
         <!--Ensemble Navigation-->
         <scene sceneID="xHK-nY-uID">
@@ -253,7 +269,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LVS-yC-ram" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-777" y="1477"/>
+            <point key="canvasLocation" x="2787" y="1507"/>
         </scene>
         <!--Dashboard-->
         <scene sceneID="tpr-gb-sJd">
@@ -271,7 +287,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jKP-00-0e8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3429" y="1477"/>
+            <point key="canvasLocation" x="-2971" y="1501"/>
         </scene>
         <!--Instruments Navigation-->
         <scene sceneID="zEQ-Q9-fbI">
@@ -289,45 +305,34 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BtX-ZW-rHj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2571" y="1477"/>
+            <point key="canvasLocation" x="-1391" y="1499"/>
         </scene>
         <!--InstrumentListVC-->
         <scene sceneID="gDR-Np-J9H">
             <objects>
                 <viewController id="XlT-Jy-0uH" userLabel="InstrumentListVC" customClass="InstrumentListVC" customModule="MobileApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="A6V-ir-E3N">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LVU-4t-vnP">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="LVU-4t-vnP" firstAttribute="centerY" secondItem="B1f-vi-rKL" secondAttribute="centerY" id="gLr-M0-yXI"/>
-                            <constraint firstItem="LVU-4t-vnP" firstAttribute="centerX" secondItem="B1f-vi-rKL" secondAttribute="centerX" id="nPe-Az-TAs"/>
-                            <constraint firstItem="LVU-4t-vnP" firstAttribute="width" secondItem="B1f-vi-rKL" secondAttribute="width" id="pHy-LL-Gpz"/>
-                            <constraint firstItem="LVU-4t-vnP" firstAttribute="height" secondItem="B1f-vi-rKL" secondAttribute="height" id="zeK-zC-Q0z"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="B1f-vi-rKL"/>
-                    </view>
                     <tabBarItem key="tabBarItem" title="Instruments" image="icons8-jazz-50" id="nO3-gx-UJn"/>
-                    <navigationItem key="navigationItem" title="Instruments" id="aY7-SB-4TH"/>
+                    <navigationItem key="navigationItem" title="Instruments" id="aY7-SB-4TH">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="cND-Co-GQO">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addInstrumentPressed:" destination="XlT-Jy-0uH" id="zbb-3f-x64"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="ListView" destination="LVU-4t-vnP" id="KVJ-t4-fW1"/>
                         <segue destination="HIb-se-H9c" kind="show" identifier="toInstrumentDetails" id="F7u-rX-v0u"/>
+                        <segue destination="TA4-d5-clS" kind="show" identifier="toCreateInstrument" id="R9E-D3-E0d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="spm-Yx-kZd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2571" y="2207"/>
+            <point key="canvasLocation" x="-1391" y="2229"/>
         </scene>
-        <!--Instrument DetailsVC-->
+        <!--InstrumentDetailsVC-->
         <scene sceneID="AIp-VG-Wto">
             <objects>
-                <viewController id="HIb-se-H9c" customClass="InstrumentDetailsVC" customModule="MobileApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="HIb-se-H9c" userLabel="InstrumentDetailsVC" customClass="InstrumentDetailsVC" customModule="MobileApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Djw-Uw-WPS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -346,7 +351,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GVw-dT-WY2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2571" y="2921"/>
+            <point key="canvasLocation" x="-1852" y="2958"/>
+        </scene>
+        <!--InstrumentCreateVC-->
+        <scene sceneID="P6Q-8S-AiB">
+            <objects>
+                <viewController id="TA4-d5-clS" userLabel="InstrumentCreateVC" customClass="InstrumentCreateVC" customModule="MobileApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="J1q-DG-EWa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="sgR-hF-dMM"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="clb-dw-Zfa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-932" y="2958"/>
         </scene>
         <!--UniformDetailsVC-->
         <scene sceneID="82S-0O-OTH">
@@ -370,14 +390,29 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pzw-b2-OC5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1661" y="2920"/>
+            <point key="canvasLocation" x="262" y="2958"/>
         </scene>
-        <!--View Controller-->
+        <!--Uniform CreateVC-->
+        <scene sceneID="uP9-te-cAd">
+            <objects>
+                <viewController id="d8Z-Dr-UdJ" customClass="UniformCreateVC" customModule="MobileApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MBt-4F-Cjh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="LGy-wJ-2xV"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h5t-gd-9dc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1142" y="2958"/>
+        </scene>
+        <!--EnsembleDetailsVC-->
         <scene sceneID="3sS-zj-OsU">
             <objects>
-                <viewController id="ewN-zx-Mag" sceneMemberID="viewController">
+                <viewController id="ewN-zx-Mag" userLabel="EnsembleDetailsVC" customClass="EnsembleDetailsVC" customModule="MobileApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KAI-xR-WUd">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="CAU-Qd-ckC"/>
@@ -385,7 +420,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hRn-Cn-3n0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-778" y="2920"/>
+            <point key="canvasLocation" x="2328" y="2958"/>
+        </scene>
+        <!--EnsembleCreateVC-->
+        <scene sceneID="qrv-sV-Pc7">
+            <objects>
+                <viewController id="7UI-Qh-bPb" userLabel="EnsembleCreateVC" customClass="EnsembleCreateVC" customModule="MobileApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ro9-Rs-S6B">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="BxG-Dr-GSa"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fdW-zl-7o7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3278" y="2958"/>
         </scene>
         <!--AdminTabController-->
         <scene sceneID="rbi-Jj-fHw">
@@ -411,7 +461,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SBr-b2-gtq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2103" y="750"/>
+            <point key="canvasLocation" x="-367" y="775"/>
         </scene>
         <!--LoginVC-->
         <scene sceneID="YBr-dH-Bi7">
@@ -457,7 +507,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UC-Bearcat-Bands" translatesAutoresizingMaskIntoConstraints="NO" id="JdC-to-Arl" customClass="UCBBpng">
-                                <rect key="frame" x="70.5" y="162" width="273" height="126"/>
+                                <rect key="frame" x="70.5" y="162" width="273.00000000000023" height="126"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="126" id="PqU-Qg-qwa"/>
                                     <constraint firstAttribute="width" constant="273" id="mqC-fD-EuV"/>

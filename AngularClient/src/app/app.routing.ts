@@ -1,7 +1,7 @@
+import { StudentPageComponent } from './student-page/student-page.component';
 import { DashboardEnsemblesComponent } from './dashboard-ensembles/dashboard-ensembles.component';
 import { AdminGuard } from './_helpers/admin.guard';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { AuthGuard } from './_helpers';
@@ -12,8 +12,7 @@ import { UniformsComponent } from './uniforms/uniforms.component';
 import { StudentPageComponent } from './student-page/student-page.component';
 
 const routes: Routes = [
-  // { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: '', component: StudentPageComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+    { path: '', component: StudentPageComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'dashboard',

@@ -11,4 +11,5 @@ import UIKit
 class EnsembleDetailsVC: UIViewController {
     
     var ensemble: Ensemble? = nil
+    
 }

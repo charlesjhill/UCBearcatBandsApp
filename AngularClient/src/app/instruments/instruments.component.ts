@@ -181,7 +181,7 @@ export class InstrumentsComponent implements OnInit {
     //create enrollment
     let enrollment = new Enrollment;
     enrollment.ensemble = ensemble.id;
-    enrollment.student = student.user.pk;
+    enrollment.student = student.user.id;
 
     this.enrollmentService.addEnrollment(enrollment).pipe().subscribe(
       data => {
@@ -222,7 +222,7 @@ export class InstrumentsComponent implements OnInit {
   selector: 'OverviewDialog',
   templateUrl: 'dialog.html',
 })
-export class OverviewDialog {
+export class OverviewDialog implements OnInit {
   form: FormGroup;
   kind: string;
   make: string;
@@ -312,7 +312,7 @@ export class InstrumentAssignDialog {
   }
 
   public getEnsembles() {
-    this.ensembleService.list().subscribe(
+    this.ensembleService.currentEnsembles.subscribe(
       // the first argument is a function which runs on success
       data => {
         this.ensembles = data;

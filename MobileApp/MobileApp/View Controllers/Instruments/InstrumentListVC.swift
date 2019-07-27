@@ -55,6 +55,10 @@ class InstrumentListVC: UIViewController  {
         }
     }
     
+    @IBAction func addInstrumentPressed(_ sender: Any) {
+        performSegue(withIdentifier: "toCreateInstrument", sender: nil)
+    }
+
 }
 
 extension InstrumentListVC: ListViewControllerDelegate {

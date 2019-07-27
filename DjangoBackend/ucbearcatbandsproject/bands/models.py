@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from polymorphic.models import PolymorphicModel
 from ..settings import AUTH_USER_MODEL
 
 
@@ -78,7 +79,7 @@ class Enrollment(models.Model):
 
 # Consider looking at using django-polymorphic/django-rest-polymorphic to allow for returning instances of base classes
 # (i.e. calling Asset.objects.all() yields <Instrument> AND <UniformPiece> objects)
-class Asset(models.Model):
+class Asset(PolymorphicModel):
     """
     Model representing any asset that should be tracked
     """

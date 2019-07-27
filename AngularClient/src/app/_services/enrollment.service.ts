@@ -4,7 +4,7 @@ import { UserService } from './user.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Enrollment } from '../_models';
+import { Enrollment, PostEnrollment } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class EnrollmentService {
@@ -33,7 +33,7 @@ export class EnrollmentService {
   }
 
   //Creates assignments
-  addEnrollment(enrollment: Enrollment): Observable<Enrollment> {
+  addEnrollment(enrollment: PostEnrollment): Observable<Enrollment> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

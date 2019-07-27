@@ -26,7 +26,7 @@ protocol ListViewControllerDelegate: AnyObject {
 
 extension ListViewControllerDelegate {
     
-    func listViewController(_ list: ListViewController, didSelect item: UIViewController, at indexPath: Int) -> ListSelectionResponse {
+    func listViewController(_ list: ListViewController, didSelect item: UIViewController, at indexPath: IndexPath) -> ListSelectionResponse {
         return [.deselect]
     }
     
@@ -130,7 +130,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = content[indexPath.row]
         
-        let response = listDelegate?.listViewController(self, didSelect: row, at: indexPath.row) ?? [.deselect]
+        let response = listDelegate?.listViewController(self, didSelect: row, at: indexPath) ?? [.deselect]
         
         if response.contains(.deselect) {
             tableView.deselectRow(at: indexPath, animated: true)

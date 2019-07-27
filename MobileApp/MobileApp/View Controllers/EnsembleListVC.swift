@@ -16,7 +16,7 @@ class EnsembleListVC: UIViewController {
         didSet {
             var content: Array<EnsembleCellVC> = []
             if ensembles != nil {
-                for i in ensembles! { content.appred(EnsembleListVC(i))}
+                for i in ensembles! { content.append(EnsembleCellVC(i))}
             }
             EnsembleList.content = content
         }
@@ -55,14 +55,49 @@ class EnsembleListVC: UIViewController {
         }
     }
     
+    @IBAction func addEnsemblePressed(_ sender: Any) {
+        performSegue(withIdentifier: "toCreateEnsemble", sender: nil)
+    }
+    
 }
 
 extension EnsembleListVC: ListViewControllerDelegate {
-    
-    func listViewController(_ list: ListViewController, didSelect item: UIViewController, at index: Int) -> ListSelectionResponse {
-        selectedEnsemble = ensembles![index]
+
+    func listViewController(_ list: ListViewController, didSelect item: UIViewController, at indexPath: IndexPath) -> ListSelectionResponse {
+        selectedEnsemble = ensembles![indexPath.row]
         performSegue(withIdentifier: "toEnsembleDetails", sender: nil)
         return [.deselect]
     }
+    
+    func listViewController(_ list: ListViewController, swipeConfigurationFor item: UIViewController, at indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        return nil
+    }
+    
+    func listViewController(_ list: ListViewController, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let ensembleToEdit = ensembles![indexPath.row]
+        if (editingStyle == .delete) {
+            // We'll double check with the user that they actually want to delete things
+            let refreshAlert = UIAlertController(title: "Are you sure?",
+                                                 message: "You will not be able to recover \(ensembleToEdit.name).",
+                preferredStyle: UIAlertController.Style.alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { (action: UIAlertAction!) in
+                // Actually perform the deletion
+                self.provider.request(.deleteEnsemble(id: ensembleToEdit.id)) { result in
+                    switch result {
+                    case let .success(moyaResponse):
+                        if moyaResponse.statusCode == 204 {
+                            self.ensembles!.remove(at: indexPath.row)
+                        }
+                    case let .failure(error):
+                        print(error)
+                    }
+                }
+            }))
+            refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            present(refreshAlert, animated: true, completion: nil)
+        }
+    }
+    
 }
 

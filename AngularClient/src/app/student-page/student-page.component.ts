@@ -1,9 +1,7 @@
-import { Student, Enrollment } from './../_models/Student';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-
-import { User, Instrument, Ensemble, Uniform } from '../_models';
+import { User, Instrument, Ensemble, Uniform, Enrollment, Student } from '../_models';
 import { UserService, AuthenticationService, AlertService, EnsembleService, InstrumentsService, UniformsService, EnrollmentService, AssignmentService } from '../_services';
 import { RegisterComponent } from '../register';
 

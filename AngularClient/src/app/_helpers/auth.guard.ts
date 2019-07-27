@@ -14,7 +14,6 @@ export class AuthGuard implements CanActivate {
         const currentUser = this.authenticationService.currentUserValue;
         if (currentUser) {
           if (currentUser.is_student) {
-            this.router.navigate([''], { queryParams: { returnUrl: state.url } });
                 return true;
             } else {
                 // Authorised, but not a student.

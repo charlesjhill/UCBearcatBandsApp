@@ -9,7 +9,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
 import { UniformsComponent } from './uniforms/uniforms.component';
-import { StudentPageComponent } from './student-page/student-page.component';
 
 const routes: Routes = [
     { path: '', component: StudentPageComponent, canActivate: [AuthGuard] },
@@ -26,8 +25,6 @@ const routes: Routes = [
         //   { path: 'students', component: DashboardStudentComponent }
       ]
     },
-    //{ path: 'student_page', component: StudentPageComponent },
-  {},
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

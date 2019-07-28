@@ -46,7 +46,7 @@ import { StudentPageComponent } from './student-page/student-page.component';
         DashEnsembleAddDialog,
         AssignStudentsComponent,
         InstrumentAssignDialog,
-        StudentPageComponent,
+        StudentPageComponent
     ],
     entryComponents: [
         OverviewDialog,

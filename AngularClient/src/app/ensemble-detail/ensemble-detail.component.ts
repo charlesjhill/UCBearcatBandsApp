@@ -1,10 +1,9 @@
-import { Ensemble } from '../_models';
-import { EnsembleService } from './../_services/ensemble.service';
-import { StudentService, AlertService } from '../_services';
-
-import { Component, OnInit, Input } from '@angular/core';
-import { MatSlideToggleChange, MatDialog } from '@angular/material';
+import { Ensemble, Enrollment } from '../_models';
+import { AlertService, EnrollmentService, EnsembleService } from '../_services';
 import { AssignStudentsComponent } from './assign-students/assign-students.component';
+
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { MatSlideToggleChange, MatDialog, MatTableDataSource, MatSort, Sort, fadeInItems } from '@angular/material';
 
 @Component({
   selector: 'app-ensemble-detail',
@@ -14,15 +13,32 @@ import { AssignStudentsComponent } from './assign-students/assign-students.compo
 export class EnsembleDetailComponent implements OnInit {
 
   constructor(private ensembleService: EnsembleService,
-              private alertService: AlertService,
+              private enrollmentService: EnrollmentService,
               public dialog: MatDialog) { }
 
-  @Input() ensemble: Ensemble;
-  @Input() isOpen: boolean;
-  public enableDangerZone: boolean;
+    @Input() ensemble: Ensemble;
+    public enableDangerZone: boolean;
+    dataSource: MatTableDataSource<Enrollment>;
+    sortedData: Enrollment[];
+
+    columnsToDisplay = ['name', 'instruments', 'otherAssets', 'actions'];
+    @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   ngOnInit() {
     this.enableDangerZone = false;
+    this.sortedData = this.ensemble.enrollments.slice();
+    this.dataSource = new MatTableDataSource(this.sortedData);
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'name': return item.student.user.full_name;
+        case 'instruments': {
+          const insts = item.assets.filter(val => val.resourcetype === 'Instrument');
+          return (insts ? insts[0].name : '');
+        }
+        default: return item[property];
+      }
+    };
+    this.dataSource.sort = this.sort;
   }
 
   toggleDangerZone(event: MatSlideToggleChange) {
@@ -44,6 +60,17 @@ export class EnsembleDetailComponent implements OnInit {
         this.ensembleService.update();
       }
     });
+  }
+
+  removeStudent(enrollmentId: number) {
+    console.log(`deleting enrollment ${enrollmentId}`);
+    this.enrollmentService.deleteEnrollment(enrollmentId).subscribe(
+      result => {
+        // We should update just the affected ensemble, in the future
+        this.ensembleService.update();
+      },
+      error => { console.log(error); }
+    );
   }
 
   deleteEnsemble(): void {

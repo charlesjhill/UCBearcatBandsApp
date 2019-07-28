@@ -2,7 +2,11 @@
 <div mat-dialog-content [formGroup]="form">
   <p>Input data into the fields to create an instrument</p>
   <mat-form-field>
-    <input matInput formControlName="kind" placeholder="Kind">
+    <mat-select formControlName="kind" placeholder="Kind">
+      <mat-option *ngFor="let kind of kinds">
+        {{kind}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
   <mat-form-field>
     <input matInput formControlName="size" placeholder="Size">
@@ -11,7 +15,11 @@
     <input matInput formControlName="number" placeholder="Number">
   </mat-form-field>
   <mat-form-field>
-    <input matInput formControlName="condition" placeholder="Condition">
+    <mat-select formControlName="condition" placeholder="Condition">
+      <mat-option *ngFor="let condition of conditions">
+        {{condition}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
 </div>

@@ -47,7 +47,7 @@ export class UniformsComponent implements OnInit {
   openForm(): void {
     let is_closed = false;
 
-    const dialogRef = this.dialog.open(OverviewDialog, {
+    const dialogRef = this.dialog.open(UniformAssignDialog, {
       data: {
         condition: this.condition,
         kind: this.kind,
@@ -95,7 +95,7 @@ export class UniformsComponent implements OnInit {
   editForm(uniform: Uniform, id): void {
     let is_closed = false;
 
-    const dialogRef = this.dialog.open(OverviewDialog, {
+    const dialogRef = this.dialog.open(UniformAssignDialog, {
       data: {
         condition: uniform.condition,
         kind: uniform.kind,
@@ -116,7 +116,7 @@ export class UniformsComponent implements OnInit {
   viewForm(uniform: Uniform): void {
     let is_closed = false;
 
-    const dialogRef = this.dialog.open(OverviewDialog, {
+    const dialogRef = this.dialog.open(UniformAssignDialog, {
       data: {
         condition: uniform.condition,
         kind: uniform.kind,
@@ -128,20 +128,22 @@ export class UniformsComponent implements OnInit {
 }
 
 @Component({
-  selector: 'OverviewDialog',
+  selector: 'UniformAssignDialog',
   templateUrl: 'dialog.html',
 })
-export class OverviewDialog {
+export class UniformAssignDialog {
   form: FormGroup;
   kind: string;
   condition: string;
   size: string;
   number: string;
+  conditions: string[] = ["new", "good", "fair", "poor", "bad", "unusable"];
+  kinds: string[] = ["jacket", "pants"];
 
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<OverviewDialog>,
+    public dialogRef: MatDialogRef<UniformAssignDialog>,
     @Inject(MAT_DIALOG_DATA) data) {
     this.kind = data.kind;
     this.condition = data.condition;
@@ -152,7 +154,7 @@ export class OverviewDialog {
   onNoClick() {
     // Could we add the instrument service call here?
     this.dialogRef.close();
-  }
+  } 
 
   save() {
     this.dialogRef.close(this.form.value);

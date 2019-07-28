@@ -231,7 +231,9 @@ export class OverviewDialog implements OnInit {
   uc_tag_number: string;
   uc_asset_number: any;
   condition: string;
-
+  conditions: string[] = ["new", "good", "fair", "poor", "bad", "unusable"];
+  kinds: string[] = ["Flute", "Piccolo", "Clarinet", "Alto Saxaphone", "Tenor Saxaphoe", "Baritone Saxaphone", "Oboe", "Trumpet", "Mellophone", "Baritone", "Trombone", "French Horn", "Tuba",
+    "Sousaphone", "Snare Drum", "Bass Drum", "Tenor Drum", "Marimba"];
 
   constructor(
     private fb: FormBuilder,

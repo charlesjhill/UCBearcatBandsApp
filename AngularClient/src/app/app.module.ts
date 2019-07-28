@@ -15,7 +15,7 @@ import { AlertComponent } from './_components';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component'
 import { InstrumentsComponent, OverviewDialog, InstrumentAssignDialog } from './instruments/instruments.component';
-import { UniformsComponent } from './uniforms/uniforms.component';
+import { UniformsComponent, UniformAssignDialog } from './uniforms/uniforms.component';
 import { DashboardEnsemblesComponent, DashEnsembleAddDialog } from './dashboard-ensembles/dashboard-ensembles.component';
 import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.component';
 import { AssignStudentsComponent } from './ensemble-detail/assign-students/assign-students.component';
@@ -46,13 +46,15 @@ import { StudentPageComponent } from './student-page/student-page.component';
         DashEnsembleAddDialog,
         AssignStudentsComponent,
         InstrumentAssignDialog,
-        StudentPageComponent
+        StudentPageComponent,
+        UniformAssignDialog,
     ],
     entryComponents: [
         OverviewDialog,
         DashEnsembleAddDialog,
         AssignStudentsComponent,
-        InstrumentAssignDialog
+        InstrumentAssignDialog,
+        UniformAssignDialog
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

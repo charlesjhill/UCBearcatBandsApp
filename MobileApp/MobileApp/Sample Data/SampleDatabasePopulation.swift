@@ -17,7 +17,7 @@ class SampleDatabasePopulation {
     private var sUniform: MoyaProvider<UniformService> = MoyaProvider<UniformService>()
     private var sEnsemble: MoyaProvider<EnsembleService> = MoyaProvider<EnsembleService>()
     
-    public func populate(_ n: Int = 10) {
+    public func populate(_ n: Int = 200) {
         for _ in 1...n { makeSampleStudent() }
         for _ in 1...n { makeSampleInstrument() }
         for _ in 1...n { makeSampleUniform() }
@@ -61,7 +61,6 @@ class SampleDatabasePopulation {
                                 name: "Ensemble \(generateRandomDigits(3))",
                                 term: "FS19",
                                 isActive: true,
-                                members: [],
                                 enrollments: [])
         sEnsemble.request(.addEnsemble(ensemble), completion: handler)
     }

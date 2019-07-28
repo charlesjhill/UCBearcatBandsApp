@@ -12,4 +12,8 @@ class EnsembleDetailsVC: UIViewController {
     
     var ensemble: Ensemble? = nil
     
+    override func viewDidLoad() {
+        print(ensemble)
+    }
+    
 }

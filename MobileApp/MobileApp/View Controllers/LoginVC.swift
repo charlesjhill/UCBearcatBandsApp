@@ -59,6 +59,10 @@ class LoginVC: UIViewController {
         }
     }
     
+    @IBAction func RegisterPressed(_ sender: Any) {
+        performSegue(withIdentifier: "toRegisterAccount", sender: nil)
+    }
+    
     lazy var userDetailsHandler: Completion = { result in
         switch result {
         case let .success(moyaResponse):

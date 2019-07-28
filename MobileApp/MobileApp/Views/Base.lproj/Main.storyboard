@@ -672,7 +672,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Created by the UC Bearcat Bands App Dev Team" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="had-yN-Pz9">
-                                <rect key="frame" x="0.0" y="825" width="414" height="17"/>
+                                <rect key="frame" x="0.0" y="774" width="414" height="68"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="textColor"/>
@@ -680,26 +680,47 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UC-Bearcat-Bands" translatesAutoresizingMaskIntoConstraints="NO" id="JdC-to-Arl" customClass="UCBBpng">
-                                <rect key="frame" x="70.5" y="162" width="273" height="126"/>
+                                <rect key="frame" x="70.5" y="162" width="273.00000000000023" height="126"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="126" id="PqU-Qg-qwa"/>
                                     <constraint firstAttribute="width" constant="273" id="mqC-fD-EuV"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ykl-Fv-0ty" customClass="RegisterButton">
+                                <rect key="frame" x="62" y="438" width="290" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Register">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="7Q9-24-fgG" kind="show" id="hVG-ej-3B6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="EVp-K5-eyB" firstAttribute="top" secondItem="JdC-to-Arl" secondAttribute="bottom" constant="30" id="2E1-8j-Dtu"/>
                             <constraint firstItem="K4t-Ph-Fa3" firstAttribute="top" secondItem="EVp-K5-eyB" secondAttribute="bottom" constant="30" id="2nM-l8-OU9"/>
+                            <constraint firstItem="ykl-Fv-0ty" firstAttribute="top" secondItem="t3w-AN-2fw" secondAttribute="top" id="4OL-Vq-1zv"/>
                             <constraint firstItem="0kM-A6-EO6" firstAttribute="bottom" secondItem="had-yN-Pz9" secondAttribute="bottom" constant="20" id="765-ZZ-6Yg"/>
+                            <constraint firstItem="ykl-Fv-0ty" firstAttribute="width" secondItem="bRV-0A-BNM" secondAttribute="width" multiplier="0.7" id="7mh-f9-5dg"/>
                             <constraint firstItem="EVp-K5-eyB" firstAttribute="centerX" secondItem="0kM-A6-EO6" secondAttribute="centerX" id="CdE-de-bjQ"/>
                             <constraint firstItem="JdC-to-Arl" firstAttribute="centerX" secondItem="0kM-A6-EO6" secondAttribute="centerX" id="NeW-6e-9VV"/>
                             <constraint firstItem="K4t-Ph-Fa3" firstAttribute="centerX" secondItem="0kM-A6-EO6" secondAttribute="centerX" id="PHt-X0-Zi8"/>
+                            <constraint firstItem="ykl-Fv-0ty" firstAttribute="centerX" secondItem="0kM-A6-EO6" secondAttribute="centerX" id="PuM-6W-rPR"/>
                             <constraint firstItem="had-yN-Pz9" firstAttribute="width" secondItem="bRV-0A-BNM" secondAttribute="width" id="Q51-u9-qNx"/>
                             <constraint firstItem="t3w-AN-2fw" firstAttribute="width" secondItem="bRV-0A-BNM" secondAttribute="width" multiplier="0.7" id="R4B-Xx-aBn"/>
+                            <constraint firstItem="had-yN-Pz9" firstAttribute="top" secondItem="ykl-Fv-0ty" secondAttribute="bottom" constant="306" id="RhI-DR-YMY"/>
+                            <constraint firstItem="ykl-Fv-0ty" firstAttribute="centerY" secondItem="0kM-A6-EO6" secondAttribute="centerY" id="UYr-tq-Imc"/>
                             <constraint firstItem="had-yN-Pz9" firstAttribute="centerX" secondItem="0kM-A6-EO6" secondAttribute="centerX" id="UwH-3t-Jrt"/>
                             <constraint firstItem="K4t-Ph-Fa3" firstAttribute="width" secondItem="bRV-0A-BNM" secondAttribute="width" multiplier="0.7" id="jat-Mp-h6I"/>
                             <constraint firstItem="t3w-AN-2fw" firstAttribute="centerX" secondItem="0kM-A6-EO6" secondAttribute="centerX" id="krl-QG-BSI"/>
+                            <constraint firstItem="ykl-Fv-0ty" firstAttribute="top" secondItem="t3w-AN-2fw" secondAttribute="bottom" constant="-30" id="pQD-B8-aaq"/>
                             <constraint firstItem="EVp-K5-eyB" firstAttribute="width" secondItem="bRV-0A-BNM" secondAttribute="width" multiplier="0.7" id="qRE-5M-zzD"/>
                             <constraint firstItem="t3w-AN-2fw" firstAttribute="centerY" secondItem="0kM-A6-EO6" secondAttribute="centerY" id="tg2-ol-YB0"/>
                             <constraint firstItem="t3w-AN-2fw" firstAttribute="top" secondItem="K4t-Ph-Fa3" secondAttribute="bottom" constant="30" id="xfw-FN-pxm"/>
@@ -721,6 +742,73 @@
             </objects>
             <point key="canvasLocation" x="-366.66666666666669" y="20.089285714285712"/>
         </scene>
+        <!--RegisterVC-->
+        <scene sceneID="Kd7-Wp-40X">
+            <objects>
+                <viewController id="7Q9-24-fgG" customClass="RegisterVC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mPf-lA-vaa" customClass="VIew">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Register an Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3u-6S-iNm">
+                                <rect key="frame" x="91" y="104" width="234" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Email" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xJc-uh-hRJ">
+                                <rect key="frame" x="90" y="203" width="234" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Password" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jez-k6-Egk">
+                                <rect key="frame" x="90" y="299" width="234" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Confirm Password" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wXK-Zs-bhQ">
+                                <rect key="frame" x="90" y="394" width="234" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Student Name" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8oQ-BP-VUn">
+                                <rect key="frame" x="90" y="492" width="234" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="M-Number" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="keI-jh-DRu">
+                                <rect key="frame" x="90" y="582" width="234" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lg1-Qq-e4t">
+                                <rect key="frame" x="184" y="620" width="46" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="RegisterPressed:" destination="7Q9-24-fgG" eventType="touchUpInside" id="z1Z-DU-aag"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="qgs-3r-iEB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bax-Bd-33N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="492.75362318840581" y="21.428571428571427"/>
+        </scene>
     </scenes>
     <resources>
         <image name="UC-Bearcat-Bands" width="834" height="385"/>
@@ -732,5 +820,4 @@
         <image name="person-icon" width="25" height="25"/>
         <image name="uniform-icon" width="32" height="32"/>
     </resources>
-    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

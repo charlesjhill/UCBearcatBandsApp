@@ -4,4 +4,6 @@ export class Uniform {
   condition: string;
   size: string;
   number: string;
+  name: string;
+  locker: any; // Locker or number
 }

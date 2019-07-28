@@ -1,7 +1,7 @@
 export class Enrollment {
     id: number;
     ensemble: number;
-    student: number;
+    student: number | any;
     assets: any[];
 }
 

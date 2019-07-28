@@ -7,4 +7,6 @@ export class Instrument {
   uc_tag_number: string;
   uc_asset_number: string;
   condition: string;
+  name: string;
+  locker: any; // number of locker instance
 }

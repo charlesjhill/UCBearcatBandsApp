@@ -22,6 +22,7 @@ protocol ListViewControllerDelegate: AnyObject {
     func listViewController(_ list: ListViewController, swipeConfigurationFor item: UIViewController, at indexPath: IndexPath) -> UISwipeActionsConfiguration?
     func listViewController(_ list: ListViewController, canEditRowAt indexPath: IndexPath) -> Bool
     func listViewController(_ list: ListViewController, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath)
+    func refreshContents(of list: ListViewController)
 }
 
 extension ListViewControllerDelegate {
@@ -39,6 +40,10 @@ extension ListViewControllerDelegate {
     }
 
     func listViewController(_ list: ListViewController, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        return
+    }
+    
+    func refreshContents(of list: ListViewController) {
         return
     }
     
@@ -78,6 +83,8 @@ class ListViewController: UIViewController {
         tableView.dataSource = self
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl!.addTarget(self, action: #selector(refreshContents), for: .valueChanged)
         reloadContent(oldContent: [], newContent: content)
     }
     
@@ -153,6 +160,11 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         listDelegate?.listViewController(self, commit: editingStyle, forRowAt: indexPath)
+    }
+    
+    @objc func refreshContents(refreshControl: UIRefreshControl) {
+        listDelegate?.refreshContents(of: self)
+        refreshControl.endRefreshing()
     }
     
 }

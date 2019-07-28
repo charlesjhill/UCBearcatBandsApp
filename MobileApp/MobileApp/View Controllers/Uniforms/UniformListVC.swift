@@ -35,14 +35,7 @@ class UniformListVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        provider.request(.showUniforms) { result in
-            switch result {
-            case let .success(moyaResponse):
-                self.uniforms = moyaResponse.parseJsonResponse(response: moyaResponse)
-            case let .failure(error):
-                print(error)
-            }
-        }
+        loadUniforms()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -55,8 +48,20 @@ class UniformListVC: UIViewController {
         }
     }
     
+    func loadUniforms() {
+        provider.request(.showUniforms) { result in
+            switch result {
+            case let .success(moyaResponse):
+                self.uniforms = moyaResponse.parseJsonResponse(response: moyaResponse)
+            case let .failure(error):
+                print(error)
+            }
+        }
+    }
+    
     @IBAction func addUniformPressed(_ sender: Any) {
-        performSegue(withIdentifier: "toCreateUniform", sender: nil)
+        selectedUniform = nil
+        performSegue(withIdentifier: "toUniformDetails", sender: nil)
     }
     
 }
@@ -97,6 +102,10 @@ extension UniformListVC: ListViewControllerDelegate {
             refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             present(refreshAlert, animated: true, completion: nil)
         }
+    }
+    
+    func refreshContents(of list: ListViewController) {
+        loadUniforms()
     }
     
 }

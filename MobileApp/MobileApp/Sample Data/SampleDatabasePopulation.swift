@@ -15,11 +15,13 @@ class SampleDatabasePopulation {
     private var sAuth: MoyaProvider<AuthService> = MoyaProvider<AuthService>()
     private var sInstrument: MoyaProvider<InstrumentService> = MoyaProvider<InstrumentService>()
     private var sUniform: MoyaProvider<UniformService> = MoyaProvider<UniformService>()
+    private var sEnsemble: MoyaProvider<EnsembleService> = MoyaProvider<EnsembleService>()
     
     public func populate(_ n: Int = 200) {
         for _ in 1...n { makeSampleStudent() }
         for _ in 1...n { makeSampleInstrument() }
         for _ in 1...n { makeSampleUniform() }
+        for _ in 1...n { makeSampleEnsemble() }
     }
     
     private func makeSampleStudent() {
@@ -52,6 +54,15 @@ class SampleDatabasePopulation {
                                    size: "Size",
                                    number: generateRandomDigits(8))
         sUniform.request(.addUniform(uniform), completion: handler)
+    }
+    
+    private func makeSampleEnsemble() {
+        let ensemble = Ensemble(id: 1,
+                                name: "Ensemble \(generateRandomDigits(3))",
+                                term: "FS19",
+                                isActive: true,
+                                enrollments: [])
+        sEnsemble.request(.addEnsemble(ensemble), completion: handler)
     }
     
     private func generateRandomDigits(_ digitNumber: Int) -> String {

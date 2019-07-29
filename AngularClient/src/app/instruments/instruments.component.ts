@@ -3,8 +3,9 @@ import { InstrumentsService, AlertService, EnsembleService, UserService, Assignm
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Instrument, Ensemble, Assignment, Enrollment, User, Student } from '../_models';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { MatSnackBarRef, MatSnackBar } from '@angular/material';
+import { concatMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-instruments',
@@ -28,9 +29,7 @@ export class InstrumentsComponent implements OnInit {
   // An object representing the data in the 'add' form
   public new_instrument: Instrument;
 
-  displayedColumns: string[] = ['tag_number', 'kind', 'condition',
-    // "assign",
-    'actions'];
+  displayedColumns: string[] = ['tag_number', 'kind', 'condition', 'assign', 'actions'];
   registerForm: FormGroup;
 
   public condition: any;
@@ -46,23 +45,55 @@ export class InstrumentsComponent implements OnInit {
   enrollment: Enrollment;
   assignment: Assignment;
   assigned: Student[];
+  assigned_String: string[] = ['', '', '', '', ''];
 
   public getInstruments() {
     this.instrumentService.currentInstruments.subscribe(
       // the first argument is a function which runs on success
       data => {
         this.inventory = data;
-        console.log(this.inventory);
-        for (let i = 0; i < this.inventory.length; i++) {
-          this.showAssigned(this.inventory[i].id);
-        }
-        console.log(this.assigned_String);
+        this.sendInstruments(this.inventory);
       },
       // the second argument is a function which runs on error
       err => console.error(err),
       // the third argument is a function which runs on completion
       () => console.log('done loading')
     );
+  }
+
+  public sendInstruments(instruments: Instrument[]) {
+    from(instruments).pipe(
+      concatMap(instrument => {
+        let names: string;
+        //let name = this.showAssigned(instrument.id);
+
+        this.instrumentService.getStudentsAssigned(instrument.id).pipe(tap(data => {
+          console.log(data);
+          this.assigned = data;
+        }));
+
+        console.log(this.assigned);
+
+        if (this.assigned == null) {
+          this.assigned_String[instrument.id] = "None"
+        }
+        else {
+          for (let i = 0; i < this.assigned.length; i++) {
+            names += this.assigned[i].user.full_name + ',';
+          }
+          this.assigned_String[instrument.id] = names;
+        }
+       // this.assigned_String[instrument.id] = this.showAssigned(instrument.id);
+
+        console.log(this.assigned_String[instrument.id]);
+
+
+
+        return this.assigned_String;
+      })
+    ).subscribe(
+      data => { console.log("Got Assignments")}
+    )
   }
 
   private openSnackBar(message: string): MatSnackBarRef<any> {
@@ -103,7 +134,7 @@ export class InstrumentsComponent implements OnInit {
     this.instrumentService.addInstrument(this.new_instrument).subscribe(
       data => {
         // TODO: Consider shifting this to a snackbar
-        this.openSnackBar('Instrument Added');
+        //this.openSnackBar('Instrument Added');
       }, error => {
         this.alertService.error(error);
       });
@@ -112,7 +143,7 @@ export class InstrumentsComponent implements OnInit {
   onDelete(id: number) {
     this.instrumentService.deleteInstrument(id).subscribe(
       data => {
-        this.openSnackBar('Instrument Deleted');
+        //this.openSnackBar('Instrument Deleted');
       }, error => {
         this.alertService.error(error);
       });
@@ -121,7 +152,7 @@ export class InstrumentsComponent implements OnInit {
   onEdit(instrument: Instrument, id: number) {
     this.instrumentService.updateInstrument(instrument, id).subscribe(
       data => {
-        this.openSnackBar('Instrument Updated');
+        //this.openSnackBar('Instrument Updated');
       }, error => {
         this.alertService.error(error);
       });
@@ -173,32 +204,33 @@ export class InstrumentsComponent implements OnInit {
     });
   }
 
-  assigned_String: string[];
-
-  public showAssigned(id) {
+  public showAssigned(id): string {
     //hit /instruments/{{id}}/students
     //return student name
+    let names: string;
     this.instrumentService.getStudentsAssigned(id).subscribe(
       // the first argument is a function which runs on success
       data => {
         this.assigned = data;
         console.log(this.assigned);
 
-        let names: string;
+
 
         for (let i = 0; i < this.assigned.length; i++) {
           console.log(this.assigned[i].user.full_name);
-          names += this.assigned[i].user.full_name + ",";
+          names = this.assigned[i].user.full_name + ",";
         }
 
-        console.log(names);
-        this.assigned_String[id] = names;
+        
+        return names;
       },
       // the second argument is a function which runs on error
       err => console.error(err),
       // the third argument is a function which runs on completion
       () => console.log('done loading')
     );
+
+    return names;
   }
 
   Assign(id: number, student: Student, ensemble: Ensemble) {

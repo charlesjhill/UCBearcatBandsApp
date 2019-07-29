@@ -16,7 +16,7 @@ struct Enrollment: DjangoModel {
     
     let student: Student
     
-    let assets: [Int]
+    let assets: [GenericAsset]
     
 }
 
@@ -25,6 +25,17 @@ extension Enrollment: Codable {
     
     enum CodingKeys: String, CodingKey {
         case id, ensemble, student, assets
+    }
+    
+}
+
+extension Array where Element == Enrollment {
+    
+    func allStudents() -> [Student] {
+        if self.count == 0 { return [] }
+        var students = Array<Student>()
+        for enrollment in self { students.append(enrollment.student) }
+        return students
     }
     
 }

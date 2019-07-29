@@ -17,7 +17,7 @@ class SampleDatabasePopulation {
     private var sUniform: MoyaProvider<UniformService> = MoyaProvider<UniformService>()
     private var sEnsemble: MoyaProvider<EnsembleService> = MoyaProvider<EnsembleService>()
     
-    public func populate(_ n: Int = 200) {
+    public func populate(_ n: Int = 5) {
         for _ in 1...n { makeSampleStudent() }
         for _ in 1...n { makeSampleInstrument() }
         for _ in 1...n { makeSampleUniform() }
@@ -27,7 +27,7 @@ class SampleDatabasePopulation {
     private func makeSampleStudent() {
         let email = "sampleEmail\(currentIdx)@gmail.com"
         let pwd = "ucbearcatbands"
-        let name = "SampleStudent\(currentIdx)"
+        let name = "Test Student \(currentIdx)"
         let number = "M\(generateRandomDigits(8))"
         sAuth.request(.registerStudent(email: email, password: pwd, fullName: name, mNumber: number), completion: handler)
         currentIdx += 1

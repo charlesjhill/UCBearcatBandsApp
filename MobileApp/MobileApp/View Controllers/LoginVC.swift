@@ -51,7 +51,7 @@ class LoginVC: UIViewController {
         provider.request(.login(email: EmailField.text!, password: PasswordField.text!)) { result in
             switch result {
             case let .success(moyaResponse):
-                self.token = moyaResponse.parseJsonResponse(response: moyaResponse)
+                self.token = moyaResponse.parseJsonResponse()
             case let .failure(error):
                 // TODO: Tell user login failed?
                 print(error)
@@ -66,7 +66,7 @@ class LoginVC: UIViewController {
     lazy var userDetailsHandler: Completion = { result in
         switch result {
         case let .success(moyaResponse):
-            self.user = moyaResponse.parseJsonResponse(response: moyaResponse)
+            self.user = moyaResponse.parseJsonResponse()
         case let .failure(error):
             // This would be odd; login worked but can't get user details?
             print(error)

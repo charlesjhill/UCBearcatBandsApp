@@ -16,6 +16,8 @@
 		131AAB1922C9C598003E0B5B /* GenericAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131AAB1822C9C598003E0B5B /* GenericAsset.swift */; };
 		131AAB1B22C9C65F003E0B5B /* Locker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131AAB1A22C9C65F003E0B5B /* Locker.swift */; };
 		131AAB1D22C9C838003E0B5B /* MaintenanceReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131AAB1C22C9C838003E0B5B /* MaintenanceReport.swift */; };
+		1322A8A522EF3FD800E6C122 /* AssignedStudentCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1322A8A422EF3FD800E6C122 /* AssignedStudentCellVC.swift */; };
+		1322A8A722EF3FE700E6C122 /* AssignedStudentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1322A8A622EF3FE700E6C122 /* AssignedStudentCell.xib */; };
 		132C83B222DE5E7F009C82CA /* AdminDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132C83B122DE5E7F009C82CA /* AdminDashboardVC.swift */; };
 		13367F0D22E909B900A73503 /* InstrumentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13367F0C22E909B900A73503 /* InstrumentListVC.swift */; };
 		1339A5AC22EBD97D00AF9675 /* Enrollment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1339A5AB22EBD97D00AF9675 /* Enrollment.swift */; };
@@ -32,7 +34,9 @@
 		13AA4BD422E8A42200FF7473 /* UniformCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AA4BD322E8A42200FF7473 /* UniformCellVC.swift */; };
 		13AA4BD622E8A48E00FF7473 /* UniformCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13AA4BD522E8A48E00FF7473 /* UniformCell.xib */; };
 		13AA4BD922E8AB9D00FF7473 /* EnsembleListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AA4BD822E8AB9D00FF7473 /* EnsembleListVC.swift */; };
+		13AF7ED022EF5DDC00EB3933 /* StudentAssignVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AF7ECF22EF5DDC00EB3933 /* StudentAssignVC.swift */; };
 		13D0A5AD229DCEE600FDB509 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D0A5AC229DCEE600FDB509 /* URL.swift */; };
+		13E1C73022EFA54F00C6A9B6 /* EnrollmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E1C72F22EFA54F00C6A9B6 /* EnrollmentService.swift */; };
 		13E6FBA022CBEA4200C8A61C /* SampleDatabasePopulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6FB9F22CBEA4200C8A61C /* SampleDatabasePopulation.swift */; };
 		13E6FBA222CBF63200C8A61C /* InstrumentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6FBA122CBF63200C8A61C /* InstrumentService.swift */; };
 		13F0B5B922E7D20700CE565E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F0B5B822E7D20700CE565E /* ContainerViewController.swift */; };
@@ -79,6 +83,8 @@
 		131AAB1822C9C598003E0B5B /* GenericAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericAsset.swift; sourceTree = "<group>"; };
 		131AAB1A22C9C65F003E0B5B /* Locker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locker.swift; sourceTree = "<group>"; };
 		131AAB1C22C9C838003E0B5B /* MaintenanceReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceReport.swift; sourceTree = "<group>"; };
+		1322A8A422EF3FD800E6C122 /* AssignedStudentCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignedStudentCellVC.swift; sourceTree = "<group>"; };
+		1322A8A622EF3FE700E6C122 /* AssignedStudentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignedStudentCell.xib; sourceTree = "<group>"; };
 		132C83B122DE5E7F009C82CA /* AdminDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminDashboardVC.swift; sourceTree = "<group>"; };
 		13367F0C22E909B900A73503 /* InstrumentListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentListVC.swift; sourceTree = "<group>"; };
 		1339A5AB22EBD97D00AF9675 /* Enrollment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enrollment.swift; sourceTree = "<group>"; };
@@ -95,7 +101,9 @@
 		13AA4BD322E8A42200FF7473 /* UniformCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformCellVC.swift; sourceTree = "<group>"; };
 		13AA4BD522E8A48E00FF7473 /* UniformCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UniformCell.xib; sourceTree = "<group>"; };
 		13AA4BD822E8AB9D00FF7473 /* EnsembleListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnsembleListVC.swift; path = ../EnsembleListVC.swift; sourceTree = "<group>"; };
+		13AF7ECF22EF5DDC00EB3933 /* StudentAssignVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentAssignVC.swift; sourceTree = "<group>"; };
 		13D0A5AC229DCEE600FDB509 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		13E1C72F22EFA54F00C6A9B6 /* EnrollmentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentService.swift; sourceTree = "<group>"; };
 		13E6FB9F22CBEA4200C8A61C /* SampleDatabasePopulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDatabasePopulation.swift; sourceTree = "<group>"; };
 		13E6FBA122CBF63200C8A61C /* InstrumentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentService.swift; sourceTree = "<group>"; };
 		13F0B5B822E7D20700CE565E /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
@@ -157,6 +165,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		1322A8A322EF3FC200E6C122 /* Enrollments */ = {
+			isa = PBXGroup;
+			children = (
+				1322A8A422EF3FD800E6C122 /* AssignedStudentCellVC.swift */,
+				1322A8A622EF3FE700E6C122 /* AssignedStudentCell.xib */,
+				13AF7ECF22EF5DDC00EB3933 /* StudentAssignVC.swift */,
+			);
+			path = Enrollments;
+			sourceTree = "<group>";
+		};
 		1365461622C91C17008C8DC1 /* API Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +183,7 @@
 				13E6FBA122CBF63200C8A61C /* InstrumentService.swift */,
 				91758BC822CC0FF200960548 /* UniformService.swift */,
 				91A5782422E7E5EA00C23E78 /* EnsembleService.swift */,
+				13E1C72F22EFA54F00C6A9B6 /* EnrollmentService.swift */,
 			);
 			path = "API Services";
 			sourceTree = "<group>";
@@ -224,6 +243,7 @@
 		91A5782B22EBB37900C23E78 /* Ensembles */ = {
 			isa = PBXGroup;
 			children = (
+				1322A8A322EF3FC200E6C122 /* Enrollments */,
 				13AA4BD822E8AB9D00FF7473 /* EnsembleListVC.swift */,
 				91A5783222EBCF6600C23E78 /* EnsembleCellVC.swift */,
 				91A5782E22EBC16C00C23E78 /* EnsembleDetailsVC.swift */,
@@ -416,6 +436,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1322A8A722EF3FE700E6C122 /* AssignedStudentCell.xib in Resources */,
 				13F0B5C722E7D9F100CE565E /* InstrumentCell.xib in Resources */,
 				13A07B5122E7A1E3001759C2 /* Main.storyboard in Resources */,
 				13AA4BD622E8A48E00FF7473 /* UniformCell.xib in Resources */,
@@ -516,6 +537,7 @@
 				131AAB1222C9B06D003E0B5B /* Instrument.swift in Sources */,
 				132C83B222DE5E7F009C82CA /* AdminDashboardVC.swift in Sources */,
 				13A7DFAC22E798A000591405 /* UniformListVC.swift in Sources */,
+				1322A8A522EF3FD800E6C122 /* AssignedStudentCellVC.swift in Sources */,
 				1339A5AC22EBD97D00AF9675 /* Enrollment.swift in Sources */,
 				91A5782F22EBC16C00C23E78 /* EnsembleDetailsVC.swift in Sources */,
 				91758BC922CC0FF200960548 /* UniformService.swift in Sources */,
@@ -541,6 +563,7 @@
 				1365461822C91C37008C8DC1 /* StudentService.swift in Sources */,
 				13367F0D22E909B900A73503 /* InstrumentListVC.swift in Sources */,
 				13076A8E22D7F0ED00A3CB74 /* AuthToken.swift in Sources */,
+				13E1C73022EFA54F00C6A9B6 /* EnrollmentService.swift in Sources */,
 				91A5782522E7E5EA00C23E78 /* EnsembleService.swift in Sources */,
 				13E6FBA022CBEA4200C8A61C /* SampleDatabasePopulation.swift in Sources */,
 				13E6FBA222CBF63200C8A61C /* InstrumentService.swift in Sources */,
@@ -549,6 +572,7 @@
 				13F0B5CE22E7F05100CE565E /* InstrumentDetailsVC.swift in Sources */,
 				13F0B5B922E7D20700CE565E /* ContainerViewController.swift in Sources */,
 				13F0B5C122E7D38700CE565E /* UITableViewCell.swift in Sources */,
+				13AF7ED022EF5DDC00EB3933 /* StudentAssignVC.swift in Sources */,
 				131AAB1022C9A91B003E0B5B /* Encodable.swift in Sources */,
 				13F0B5BB22E7D24000CE565E /* ListViewController.swift in Sources */,
 				131AAB1D22C9C838003E0B5B /* MaintenanceReport.swift in Sources */,

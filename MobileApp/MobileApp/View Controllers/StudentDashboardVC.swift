@@ -23,7 +23,7 @@ class StudentDashboardVC: UIViewController {
             service.request(.showStudent(id: user.id)) { result in
                 switch result {
                 case let .success(moyaResponse):
-                    self.student = moyaResponse.parseJsonResponse(response: moyaResponse)
+                    self.student = moyaResponse.parseJsonResponse()
                 case let .failure(error):
                     print(error)
                 }

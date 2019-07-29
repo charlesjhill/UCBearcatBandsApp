@@ -52,7 +52,7 @@ class UniformListVC: UIViewController {
         provider.request(.showUniforms) { result in
             switch result {
             case let .success(moyaResponse):
-                self.uniforms = moyaResponse.parseJsonResponse(response: moyaResponse)
+                self.uniforms = moyaResponse.parseJsonResponse()
             case let .failure(error):
                 print(error)
             }

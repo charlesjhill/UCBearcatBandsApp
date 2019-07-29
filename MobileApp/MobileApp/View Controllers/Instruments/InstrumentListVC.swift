@@ -52,7 +52,7 @@ class InstrumentListVC: UIViewController  {
         provider.request(.showInstruments) { result in
             switch result {
             case let .success(moyaResponse):
-                self.instruments = moyaResponse.parseJsonResponse(response: moyaResponse)
+                self.instruments = moyaResponse.parseJsonResponse()
             case let .failure(error):
                 print(error)
             }

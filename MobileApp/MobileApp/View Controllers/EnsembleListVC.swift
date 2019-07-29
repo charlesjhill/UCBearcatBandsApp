@@ -32,19 +32,23 @@ class EnsembleListVC: UIViewController {
         embedChild(ListViewContainer, in: ListView)
         ListViewContainer.content = EnsembleList
         EnsembleList.listDelegate = self
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        loadEnsembles()
+    }
+    
+    func loadEnsembles() {
         provider.request(.showEnsembles) { result in
             switch result {
             case let .success(moyaResponse):
-                self.ensembles = moyaResponse.parseJsonResponse(response: moyaResponse)
+                self.ensembles = moyaResponse.parseJsonResponse()
             case let .failure(error):
                 print(error)
             }
         }
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier{
         case "toEnsembleDetails":
@@ -98,6 +102,10 @@ extension EnsembleListVC: ListViewControllerDelegate {
             refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             present(refreshAlert, animated: true, completion: nil)
         }
+    }
+    
+    func refreshContents(of list: ListViewController) {
+        loadEnsembles()
     }
     
 }

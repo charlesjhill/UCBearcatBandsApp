@@ -18,13 +18,13 @@ extension Moya.Response {
     ///
     /// - Returns:
     ///   - A Codable deserialized from JSON data if possible; nil otherwise
-    func parseJsonResponse<T: Codable>(response: Moya.Response) -> T? {
-        let data = response.data
+    func parseJsonResponse<T: Codable>() -> T? {
+        let data = self.data
         var maybeUser: T? = nil
         do {
             maybeUser = try JSONDecoder().decode(T.self, from: data)
         } catch {
-            print(response.statusCode)
+            print(self.statusCode)
             print("JSON erorr: \(error)")
         }
         return maybeUser

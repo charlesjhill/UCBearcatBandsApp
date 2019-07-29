@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>Add Instrument</h1>
+<h1 mat-dialog-title>{{ title | titlecase }}</h1>
 <div mat-dialog-content [formGroup]="form">
-  <p>Input data into the fields to create an instrument</p>
+  <p>{{ detail }}</p>
   <mat-form-field>
     <mat-select formControlName="kind" placeholder="Kind">
-      <mat-option *ngFor="let kind of kinds">
-        {{kind}}
+      <mat-option *ngFor="let kind of kinds" [value]="kind">
+        {{ kind | titlecase }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -16,14 +16,14 @@
   </mat-form-field>
   <mat-form-field>
     <mat-select formControlName="condition" placeholder="Condition">
-      <mat-option *ngFor="let condition of conditions">
-        {{condition}}
+      <mat-option *ngFor="let condition of conditions" [value]="condition">
+        {{ condition | titlecase }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="save()">Add Instrument</button>
+  <button mat-button (click)="save()">Save</button>
   <button mat-button (click)="onNoClick()">Cancel</button>
 </div>

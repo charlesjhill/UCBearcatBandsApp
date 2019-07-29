@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { UserService } from './user.service';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { catchError, first, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-//import 'rxjs/add/operator/mapTo';
-
-export interface Uniform {
-  kind: string;
-  condition: string;
-  size: string;
-  number: string;
-}
+import { Uniform } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class UniformsService {
 
-  constructor(private __http: HttpClient, private _userService: UserService) { }
+  constructor(private __http: HttpClient) {
+    this.currentUniformsSubject = new BehaviorSubject([]);
+    this.currentUniforms = this.currentUniformsSubject.asObservable();
+    this.update();
+   }
+
+  private currentUniformsSubject: BehaviorSubject<Uniform[]>;
+  public currentUniforms: Observable<Uniform[]>;
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -32,37 +31,50 @@ export class UniformsService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  };
+  }
 
   // Uses http.get() to Load data from single API endpoint
-  list(): Observable<Uniform[]> {
-    return this.__http.get<Uniform[]>(`${environment.apiUrl}/uniforms/`);
+  private list(): Observable<Uniform[]> {
+    return this.__http.get<Uniform[]>(`${environment.apiUrl}/uniforms/`).pipe(first());
+  }
+
+  public update(): void {
+    console.log('updating list of instruments');
+    this.list().subscribe(data => {
+      this.currentUniformsSubject.next(data);
+    });
   }
 
   addUniform(uniform: Uniform): Observable<Uniform> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-    return this.__http.post<Uniform>(`${environment.apiUrl}/uniforms/`, uniform, httpOptions)
-      .pipe(catchError(this.handleError));
+    return this.__http.post<Uniform>(`${environment.apiUrl}/uniforms/`, uniform)
+      .pipe(
+        first(),
+        map(u => {
+          this.update();
+          return u;
+        }),
+        catchError(this.handleError));
   }
 
-  deleteUniform(id): Observable<any> {
+  deleteUniform(id: number): Observable<any> {
     return this.__http.delete(`${environment.apiUrl}/uniforms/` + id + '/')
-      .pipe(catchError(this.handleError));
+      .pipe(
+        first(),
+        map(u => {
+          this.update();
+          return u;
+        }),
+        catchError(this.handleError));
   }
 
-  updateUniform(uniform: Uniform, id): Observable<Uniform> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-    return this.__http.put<Uniform>(`${environment.apiUrl}/uniforms/` + id + '/', uniform, httpOptions)
-      .pipe(catchError(this.handleError));
+  updateUniform(uniform: Uniform, id: number): Observable<Uniform> {
+    return this.__http.put<Uniform>(`${environment.apiUrl}/uniforms/` + id + '/', uniform)
+      .pipe(
+        first(),
+        map(u => {
+          this.update();
+          return u;
+        }),
+        catchError(this.handleError));
   }
 }

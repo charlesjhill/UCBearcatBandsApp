@@ -1,15 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UserService } from './user.service';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { catchError, first, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Instrument, Student } from '../_models';
+import { Instrument, Student, Ensemble } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class InstrumentsService {
 
-  constructor(private __http: HttpClient, private _userService: UserService) { }
+  constructor(private __http: HttpClient) {
+    this.currentInstrumentsSubject = new BehaviorSubject([]);
+    this.currentInstruments = this.currentInstrumentsSubject.asObservable();
+    this.update();
+  }
+
+  private currentInstrumentsSubject: BehaviorSubject<Instrument[]>;
+  public currentInstruments: Observable<Instrument[]>;
+
+  public update(): void {
+    console.log('updating list of instruments');
+    this.list().subscribe(data => {
+      this.currentInstrumentsSubject.next(data);
+    });
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -27,44 +41,47 @@ export class InstrumentsService {
       'Something bad happened; please try again later.');
   }
 
-  // Uses http.get() to Load data from single API endpoint
-  list(): Observable<Instrument[]> {
-    return this.__http.get<Instrument[]>(`${environment.apiUrl}/instruments/`);
+  private list(): Observable<Instrument[]> {
+    return this.__http.get<Instrument[]>(`${environment.apiUrl}/instruments/`).pipe(first());
   }
 
-  addInstrument (instrument: Instrument): Observable<Instrument> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })};
-    return this.__http.post<Instrument>(`${environment.apiUrl}/instruments/`, instrument, httpOptions)
-      .pipe(catchError(this.handleError));
+  public addInstrument(instrument: Instrument): Observable<Instrument> {
+    return this.__http.post<Instrument>(`${environment.apiUrl}/instruments/`, instrument)
+      .pipe(
+        first(),
+        map(i => {
+          this.update();
+          return i;
+        }),
+        catchError(this.handleError),
+      );
   }
 
-  deleteInstrument(id): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
+  public deleteInstrument(id: number): Observable<any> {
     return this.__http.delete(`${environment.apiUrl}/instruments/` + id + '/')
-      .pipe(catchError(this.handleError));
+      .pipe(
+        first(),
+        map(x => {
+          this.update();
+          return x;
+        }),
+        catchError(this.handleError)
+      );
   }
 
-  updateInstrument(instrument: Instrument, id): Observable<Instrument> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-    return this.__http.put<Instrument>(`${environment.apiUrl}/instruments/`+ id + '/', instrument, httpOptions)
-      .pipe(catchError(this.handleError));
+  // TODO: We can just use an instrument object, since it contains the id
+  public updateInstrument(instrument: Instrument, id: number): Observable<Instrument> {
+    return this.__http.put<Instrument>(`${environment.apiUrl}/instruments/` + id + '/', instrument)
+      .pipe(
+        first(),
+        map(x => {
+          this.update();
+          return x;
+        }),
+        catchError(this.handleError));
   }
 
-  getStudentsAssigned(id): Observable<Student[]> {
-    return this.__http.get<Student[]>(`${environment.apiUrl}/instruments/`+ id + '/students/');
+  public getStudentsAssigned(id: number): Observable<Student[]> {
+    return this.__http.get<Student[]>(`${environment.apiUrl}/instruments/` + id + '/students/').pipe(first(), catchError(this.handleError));
   }
 }

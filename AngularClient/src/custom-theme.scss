@@ -1,0 +1,32 @@
+@import '../node_modules/@angular/material/theming';
+@include mat-core();
+
+$uc-red: (
+  100: #ff544c,
+  500: #e00122,
+  700: #a50000,
+  contrast: (
+    100: $dark-primary-text,
+    500: $light-primary-text,
+    700: $light-primary-text,
+  )
+);
+
+$uc-dark: (
+  100: #484848,
+  500: #212121,
+  700: #000000,
+  contrast: (
+    100: $light-primary-text,
+    500: $light-primary-text,
+    700: $light-primary-text,
+  )
+);
+
+$custom-primary: mat-palette($uc-red);
+$custom-accent: mat-palette($uc-dark);
+$custom-warn: mat-palette($mat-amber);
+
+$app-theme: mat-light-theme($custom-primary, $custom-accent, $custom-warn);
+
+@include angular-material-theme($app-theme);

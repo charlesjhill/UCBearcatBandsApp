@@ -3,7 +3,7 @@
   <p>Input data into the fields to create an instrument</p>
   <mat-form-field>
     <mat-select formControlName="kind" placeholder="Kind">
-      <mat-option *ngFor="let kind of kinds">
+      <mat-option *ngFor="let kind of kinds" [value]="kind">
         {{kind}}
       </mat-option>
     </mat-select>
@@ -16,7 +16,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-select formControlName="condition" placeholder="Condition">
-      <mat-option *ngFor="let condition of conditions">
+      <mat-option *ngFor="let condition of conditions" [value]="condition">
         {{condition}}
       </mat-option>
     </mat-select>

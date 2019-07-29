@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { UniformsService, AlertService } from '../_services';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Uniform } from '../_models';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 
 @Component({
   selector: 'app-uniforms',
@@ -11,19 +12,30 @@ import { Uniform } from '../_models';
 })
 export class UniformsComponent implements OnInit {
 
-  public inventory
-  public new_asset: any;
-  displayedColumns: string[] = ["number", "kind", "size", "condition", "assign", "actions"];
-
   constructor(
     private uniformService: UniformsService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
     private alertService: AlertService,
+    private _snackBar: MatSnackBar
   ) { }
 
+  public inventory: Uniform[];
+  public new_asset: any;
+  displayedColumns: string[] = ['number', 'kind', 'size', 'condition', 'assign', 'actions'];
+
+  public condition: any;
+  public kind: any;
+  public size: any;
+  public number: any;
+
+  ngOnInit() {
+    this.getUniforms();
+  }
+
+
   public getUniforms() {
-    this.uniformService.list().subscribe(
+    this.uniformService.currentUniforms.subscribe(
       // the first argument is a function which runs on success
       data => {
         this.inventory = data;
@@ -35,14 +47,12 @@ export class UniformsComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-    this.getUniforms();
+  private openSnackBar(message: string): MatSnackBarRef<any> {
+    return this._snackBar.open(message, '', {
+      duration: 2000
+    });
   }
 
-  public condition: any;
-  public kind: any;
-  public size: any;
-  public number: any;
 
   openForm(): void {
     let is_closed = false;
@@ -68,28 +78,28 @@ export class UniformsComponent implements OnInit {
   onAdd() {
     this.uniformService.addUniform(this.new_asset).pipe().subscribe(
       data => {
-        this.alertService.success('Registration successful', true);
+        this.openSnackBar('Registration successful');
       }, error => {
         this.alertService.error(error);
-      })
+      });
   }
 
   onDelete(id) {
     this.uniformService.deleteUniform(id).pipe().subscribe(
       data => {
-        this.alertService.success('Deletion successful', true);
+        this.openSnackBar('Deletion successful');
       }, error => {
         this.alertService.error(error);
-      })
+      });
   }
 
   onEdit(uniform, id) {
     this.uniformService.updateUniform(uniform, id).pipe().subscribe(
       data => {
-        this.alertService.success('Updating successful', true);
+        this.openSnackBar('Updating successful');
       }, error => {
         this.alertService.error(error);
-      })
+      });
   }
 
   editForm(uniform: Uniform, id): void {
@@ -100,7 +110,10 @@ export class UniformsComponent implements OnInit {
         condition: uniform.condition,
         kind: uniform.kind,
         size: uniform.size,
-        number: uniform.number
+        number: uniform.number,
+        title: 'Edit Uniform',
+        detail: 'Change any desired fields',
+        readonly: false
       }
     });
 
@@ -121,7 +134,10 @@ export class UniformsComponent implements OnInit {
         condition: uniform.condition,
         kind: uniform.kind,
         size: uniform.size,
-        number: uniform.number
+        number: uniform.number,
+        title: 'Uniform details',
+        detail: ' ',
+        readonly: true
       }
     });
   }
@@ -131,30 +147,39 @@ export class UniformsComponent implements OnInit {
   selector: 'UniformAssignDialog',
   templateUrl: 'dialog.html',
 })
-export class UniformAssignDialog {
+export class UniformAssignDialog implements OnInit {
   form: FormGroup;
   kind: string;
   condition: string;
   size: string;
   number: string;
-  conditions: string[] = ["new", "good", "fair", "poor", "bad", "unusable"];
-  kinds: string[] = ["jacket", "pants"];
+  title: string;
+  detail: string;
+  readonly: boolean;
+
+  conditions: string[] = ['new', 'good', 'fair', 'poor', 'bad', 'unusable'];
+  kinds: string[] = ['jacket', 'pants'];
 
 
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<UniformAssignDialog>,
-    @Inject(MAT_DIALOG_DATA) data) {
+    @Inject(MAT_DIALOG_DATA) data)
+  {
     this.kind = data.kind;
     this.condition = data.condition;
     this.size = data.size;
     this.number = data.number;
+    this.title = data.title || 'Add Uniform';
+    this.detail = data.detail || 'Input data into the fields to create a uniform';
+    this.readonly = data.readonly || false;
+
   }
 
   onNoClick() {
     // Could we add the instrument service call here?
     this.dialogRef.close();
-  } 
+  }
 
   save() {
     this.dialogRef.close(this.form.value);
@@ -162,10 +187,10 @@ export class UniformAssignDialog {
 
   ngOnInit() {
     this.form = this.fb.group({
-      kind: [this.kind, []],
-      condition: [this.condition, []],
-      size: [this.size, []],
-      number: [this.number, []]
+      kind: [{ value: this.kind, disabled: this.readonly }, []],
+      condition: [{ value: this.condition, disabled: this.readonly }, []],
+      size: [{ value: this.size, disabled: this.readonly }, []],
+      number: [{ value: this.number, disabled: this.readonly }, []]
     });
   }
 

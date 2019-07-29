@@ -1,31 +1,31 @@
-<h1 mat-dialog-title>Add Instrument</h1>
+<h1 mat-dialog-title>{{ title | titlecase }}</h1>
 <div mat-dialog-content [formGroup]="form">
-  <p>Input data into the fields to create an instrument</p>
+  <p>{{ detail }}</p>
   <mat-form-field>
     <mat-select formControlName="kind" placeholder="Kind">
       <mat-option *ngFor="let kind of kinds" [value]="kind">
-        {{kind}}
+        {{kind | titlecase}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field>
-    <input matInput formControlName="make" placeholder="Make">
+    <input matInput formControlName="make" placeholder="Make" >
   </mat-form-field>
   <mat-form-field>
-    <input matInput formControlName="model" placeholder="Model">
+    <input matInput formControlName="model" placeholder="Model" >
   </mat-form-field>
   <mat-form-field>
     <mat-select formControlName="condition" placeholder="Condition">
       <mat-option *ngFor="let condition of conditions" [value]="condition">
-        {{condition}}
+        {{condition | titlecase}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field>
-    <input matInput formControlName= "serial_number" placeholder="Serial Number">
+    <input matInput formControlName= "serial_number" placeholder="Serial Number" >
   </mat-form-field>
   <mat-form-field>
-    <input matInput formControlName="uc_tag_number" placeholder="Tag Number">
+    <input matInput formControlName="uc_tag_number" placeholder="Tag Number" >
   </mat-form-field>
   <mat-form-field>
     <input matInput formControlName="uc_asset_number" placeholder="Asset Number">

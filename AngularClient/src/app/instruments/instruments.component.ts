@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Instrument, Ensemble, Assignment, Enrollment, User, Student } from '../_models';
 import { Observable } from 'rxjs';
+import { MatSnackBarRef, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-instruments',
@@ -11,17 +12,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./instruments.component.css']
 })
 export class InstrumentsComponent implements OnInit {
-
-  // An array of all instrument objects from API
-  public inventory;
-
-  // An object representing the data in the 'add' form
-  public new_instrument: Instrument;
-
-  displayedColumns: string[] = ["tag_number", "kind", "condition",
-    //"assign",
-    "actions"];
-  registerForm: FormGroup;
   constructor(
     private instrumentService: InstrumentsService,
     private formBuilder: FormBuilder,
@@ -29,10 +19,36 @@ export class InstrumentsComponent implements OnInit {
     private alertService: AlertService,
     private enrollmentService: EnrollmentService,
     private assignmentService: AssignmentService,
+    private _snackBar: MatSnackBar
   ) { }
 
+  // An array of all instrument objects from API
+  public inventory;
+
+  // An object representing the data in the 'add' form
+  public new_instrument: Instrument;
+
+  displayedColumns: string[] = ['tag_number', 'kind', 'condition',
+    // "assign",
+    'actions'];
+  registerForm: FormGroup;
+
+  public condition: any;
+  public kind: any;
+  public make: any;
+  public model: any;
+  public serial_number: any;
+  public uc_tag_number: any;
+  public uc_asset_number: any;
+
+  student: Student;
+  ensemble: Ensemble;
+  enrollment: Enrollment;
+  assignment: Assignment;
+  assigned: Student[];
+
   public getInstruments() {
-    this.instrumentService.list().subscribe(
+    this.instrumentService.currentInstruments.subscribe(
       // the first argument is a function which runs on success
       data => {
         this.inventory = data;
@@ -44,17 +60,15 @@ export class InstrumentsComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-    this.getInstruments()
+  private openSnackBar(message: string): MatSnackBarRef<any> {
+    return this._snackBar.open(message, '', {
+      duration: 2000
+    });
   }
 
-  public condition: any;
-  public kind: any;
-  public make: any;
-  public model: any;
-  public serial_number: any;
-  public uc_tag_number: any;
-  public uc_asset_number: any;
+  ngOnInit() {
+    this.getInstruments();
+  }
 
   openForm(): void {
     let is_closed = false;
@@ -71,40 +85,41 @@ export class InstrumentsComponent implements OnInit {
       }
     });
 
-      dialogRef.afterClosed().subscribe(data => {
+    dialogRef.afterClosed().subscribe(data => {
           if (data != null) {
             this.new_instrument = data;
             console.log(this.new_instrument);
-              this.onAdd();
+            this.onAdd();
           }
       });
   }
 
   onAdd() {
-    this.instrumentService.addInstrument(this.new_instrument).pipe().subscribe(
+    this.instrumentService.addInstrument(this.new_instrument).subscribe(
       data => {
-        this.alertService.success('Registration successful', true);
+        // TODO: Consider shifting this to a snackbar
+        this.openSnackBar('Instrument Added');
       }, error => {
         this.alertService.error(error);
-      })
+      });
   }
 
-  onDelete(id) {
-    this.instrumentService.deleteInstrument(id).pipe().subscribe(
+  onDelete(id: number) {
+    this.instrumentService.deleteInstrument(id).subscribe(
       data => {
-        this.alertService.success('Deletion successful', true);
+        this.openSnackBar('Instrument Deleted');
       }, error => {
         this.alertService.error(error);
-      })
+      });
   }
 
-  onEdit(instrument, id) {
-    this.instrumentService.updateInstrument(instrument,id).pipe().subscribe(
+  onEdit(instrument: Instrument, id: number) {
+    this.instrumentService.updateInstrument(instrument, id).subscribe(
       data => {
-        this.alertService.success('Updating successful', true);
+        this.openSnackBar('Instrument Updated');
       }, error => {
         this.alertService.error(error);
-      })
+      });
   }
 
   editForm(instrument: Instrument, id): void {
@@ -118,7 +133,10 @@ export class InstrumentsComponent implements OnInit {
         model: instrument.model,
         serial_number: instrument.serial_number,
         uc_tag_number: instrument.uc_tag_number,
-        uc_asset_number: instrument.uc_asset_number
+        uc_asset_number: instrument.uc_asset_number,
+        title: 'Edit Instrument',
+        detail: 'Change any desired fields',
+        readonly: false
       }
     });
 
@@ -142,20 +160,17 @@ export class InstrumentsComponent implements OnInit {
         model: instrument.model,
         serial_number: instrument.serial_number,
         uc_tag_number: instrument.uc_tag_number,
-        uc_asset_number: instrument.uc_asset_number
+        uc_asset_number: instrument.uc_asset_number,
+        title: 'Instrument Details',
+        detail: ' ',
+        readonly: true
       }
     });
   }
 
-  student: Student;
-  ensemble: Ensemble;
-  enrollment: Enrollment;
-  assignment: Assignment;
-  assigned: Student[];
-
-  showAssigned(id): string {
-    //hit /instruments/{{id}}/students
-    //return student name
+  showAssigned(id: number): string {
+    // hit /instruments/{{id}}/students
+    // return student name
     this.instrumentService.getStudentsAssigned(id).subscribe(
       // the first argument is a function which runs on success
       data => {
@@ -170,40 +185,41 @@ export class InstrumentsComponent implements OnInit {
 
     let names: string;
 
-    //for (let i = 0; i = this.assigned.length; i++) {
-      //names += this.assigned[i].user.full_name + ",";
-    //}
+    // for (let i = 0; i = this.assigned.length; i++) {
+      // names += this.assigned[i].user.full_name + ",";
+    // }
 
     return names;
   }
 
-  Assign(id, student: Student, ensemble: Ensemble) {
-    //create enrollment
-    let enrollment = new Enrollment;
+  Assign(id: number, student: Student, ensemble: Ensemble) {
+    // create enrollment
+    // TODO: We should check if an enrollment exists first
+    const enrollment = new Enrollment();
     enrollment.ensemble = ensemble.id;
     enrollment.student = student.user.id;
 
-    this.enrollmentService.addEnrollment(enrollment).pipe().subscribe(
+    this.enrollmentService.addEnrollment(enrollment).subscribe(
       data => {
-        this.alertService.success('Updating successful', true);
+        this.openSnackBar('Enrollment Added/Updated!');
       }, error => {
         this.alertService.error(error);
-      })
+      });
 
-    //creat assignment
-    let assignment = new Assignment;
+    // create assignment
+    const assignment = new Assignment();
     assignment.enrollment = enrollment.id;
     assignment.asset = id;
 
-    this.assignmentService.addAssigment(assignment).pipe().subscribe(
+    this.assignmentService.addAssigment(assignment).subscribe(
       data => {
-        this.alertService.success('Updating successful', true);
+        this.openSnackBar('Instrument Assigned!');
       }, error => {
         this.alertService.error(error);
-      })
+      });
   }
 
-  assignForm(instrument: Instrument, id): void {
+  assignForm(instrument: Instrument, id: number): void {
     let is_closed = false;
 
     const dialogRef = this.dialog.open(InstrumentAssignDialog, {
@@ -231,14 +247,19 @@ export class OverviewDialog implements OnInit {
   uc_tag_number: string;
   uc_asset_number: any;
   condition: string;
-  conditions: string[] = ["new", "good", "fair", "poor", "bad", "unusable"];
-  kinds: string[] = ["Flute", "Piccolo", "Clarinet", "Alto Saxaphone", "Tenor Saxaphoe", "Baritone Saxaphone", "Oboe", "Trumpet", "Mellophone", "Baritone", "Trombone", "French Horn", "Tuba",
-    "Sousaphone", "Snare Drum", "Bass Drum", "Tenor Drum", "Marimba"];
+  readonly: boolean;
+  title: string;
+  detail: string;
+
+  conditions: string[] = ['new', 'good', 'fair', 'poor', 'bad', 'unusable'];
+  kinds: string[] = ['Flute', 'Piccolo', 'Clarinet', 'Alto Saxaphone', 'Tenor Saxaphoe', 'Baritone Saxaphone', 'Oboe', 'Trumpet', 'Mellophone', 'Baritone', 'Trombone', 'French Horn', 'Tuba',
+    'Sousaphone', 'Snare Drum', 'Bass Drum', 'Tenor Drum', 'Marimba'];
 
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<OverviewDialog>,
-    @Inject(MAT_DIALOG_DATA) data) {
+    @Inject(MAT_DIALOG_DATA) data)
+  {
     this.kind = data.kind;
     this.make = data.make;
     this.model = data.model;
@@ -246,6 +267,10 @@ export class OverviewDialog implements OnInit {
     this.uc_tag_number = data.uc_tag_number;
     this.uc_asset_number = data.uc_asset_number;
     this.condition = data.condition;
+
+    this.readonly = data.readonly || false;
+    this.title = data.title || 'Add Instrument';
+    this.detail = data.detail || 'Input data into the fileds to create an Instrument';
   }
 
   onNoClick() {
@@ -259,13 +284,13 @@ export class OverviewDialog implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      kind: [this.kind, []],
-        make: [this.make, []],
-      model: [this.model, []],
-      condition: [this.condition, []],
-      uc_asset_number: [this.uc_asset_number, []],
-      serial_number: [this.serial_number, []],
-      uc_tag_number: [this.uc_tag_number, []]
+      kind: [{value: this.kind, disabled: this.readonly}, []],
+        make: [{value: this.make, disabled: this.readonly}, []],
+      model: [{value: this.model, disabled: this.readonly}, []],
+      condition: [{value: this.condition, disabled: this.readonly}, []],
+      uc_asset_number: [{value: this.uc_asset_number, disabled: this.readonly}, []],
+      serial_number: [{value: this.serial_number, disabled: this.readonly}, []],
+      uc_tag_number: [{value: this.uc_tag_number, disabled: this.readonly}, []]
     });
   }
 
@@ -275,7 +300,7 @@ export class OverviewDialog implements OnInit {
   selector: 'InstrumnetAssignDialog',
   templateUrl: 'assigndialog.html',
 })
-export class InstrumentAssignDialog {
+export class InstrumentAssignDialog implements OnInit {
 
   assignForm: FormGroup;
   ensembles: Ensemble[];

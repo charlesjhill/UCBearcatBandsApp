@@ -2,10 +2,11 @@ import { AlertService } from './../_services/alert.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Ensemble } from './../_models/Ensemble';
 import { EnsembleService } from './../_services/ensemble.service';
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
 
 export interface DialogData {
   name: string;
@@ -20,9 +21,13 @@ export interface DialogData {
 })
 export class DashboardEnsemblesComponent implements OnInit, OnDestroy {
 
+  ensembles$: Observable<Ensemble[]>;
   ensembles: Ensemble[];
+  dataSource: MatTableDataSource<Ensemble>;
   currentEnsemble: Ensemble;
-  subscription: Subscription;
+  ensSubscription: Subscription;
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private alertService: AlertService,
               private ensembleService: EnsembleService,
@@ -30,9 +35,14 @@ export class DashboardEnsemblesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Get the ensembles from our ensembleService
-    this.subscription = this.ensembleService.currentEnsembles.subscribe(data => {
-      this.ensembles = data;
-    });
+    this.ensSubscription = this.ensembleService.currentEnsembles.subscribe(
+      data => {
+        this.ensembles = data;
+        this.dataSource = new MatTableDataSource(this.ensembles);
+        this.dataSource.paginator = this.paginator;
+        this.ensembles$ = this.dataSource.connect();
+      }
+    );
 
     // Force an update on the ensembleService (in case we never called it before)
     this.ensembleService.update();
@@ -40,9 +50,9 @@ export class DashboardEnsemblesComponent implements OnInit, OnDestroy {
     this.currentEnsemble = new Ensemble();
   }
 
-  ngOnDestroy() {
-    // If we subscribe in OnInit, we should unsubscribe on destroy
-    this.subscription.unsubscribe();
+  ngOnDestroy(): void {
+    if (this.dataSource) { this.dataSource.disconnect(); }
+    if (this.ensSubscription) { this.ensSubscription.unsubscribe(); }
   }
 
   addEnsemble() {

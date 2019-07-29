@@ -3,7 +3,8 @@ import { UniformsService, AlertService } from '../_services';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Uniform } from '../_models';
-import { MatSnackBar, MatSnackBarRef, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatSnackBarRef, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { SnackBarService } from '../_services/snackbar.service';
 
 @Component({
   selector: 'app-uniforms',
@@ -14,10 +15,9 @@ export class UniformsComponent implements OnInit {
 
   constructor(
     private uniformService: UniformsService,
-    private formBuilder: FormBuilder,
     private dialog: MatDialog,
     private alertService: AlertService,
-    private _snackBar: MatSnackBar
+    private snackBarService: SnackBarService
   ) { }
 
   public inventory: Uniform[];
@@ -53,13 +53,6 @@ export class UniformsComponent implements OnInit {
     );
   }
 
-  private openSnackBar(message: string): MatSnackBarRef<any> {
-    return this._snackBar.open(message, '', {
-      duration: 2000
-    });
-  }
-
-
   openForm(): void {
     let is_closed = false;
 
@@ -82,33 +75,37 @@ export class UniformsComponent implements OnInit {
   }
 
   onAdd() {
-    this.uniformService.addUniform(this.new_asset).pipe().subscribe(
+    this.uniformService.addUniform(this.new_asset).subscribe(
       data => {
-        this.openSnackBar('Registration successful');
+        this.snackBarService.openSnackBar('Registration successful');
       }, error => {
         this.alertService.error(error);
       });
   }
 
-  onDelete(id) {
-    this.uniformService.deleteUniform(id).pipe().subscribe(
+  onDelete(id: number) {
+    const bar = this.snackBarService.openSnackBar('Are you sure?', 'DELETE', 5000);
+    bar.onAction().subscribe(() => {
+      this.uniformService.deleteUniform(id).subscribe(
+        data => {
+          this.snackBarService.openSnackBar('Deletion successful');
+        }, error => {
+          this.alertService.error(error);
+        }
+      );
+    });
+  }
+
+  onEdit(uniform: Uniform, id: number) {
+    this.uniformService.updateUniform(uniform, id).subscribe(
       data => {
-        this.openSnackBar('Deletion successful');
+        this.snackBarService.openSnackBar('Updating successful');
       }, error => {
         this.alertService.error(error);
       });
   }
 
-  onEdit(uniform, id) {
-    this.uniformService.updateUniform(uniform, id).pipe().subscribe(
-      data => {
-        this.openSnackBar('Updating successful');
-      }, error => {
-        this.alertService.error(error);
-      });
-  }
-
-  editForm(uniform: Uniform, id): void {
+  editForm(uniform: Uniform, id: number): void {
     let is_closed = false;
 
     const dialogRef = this.dialog.open(UniformAssignDialog, {
@@ -179,7 +176,6 @@ export class UniformAssignDialog implements OnInit {
     this.title = data.title || 'Add Uniform';
     this.detail = data.detail || 'Input data into the fields to create a uniform';
     this.readonly = data.readonly || false;
-
   }
 
   onNoClick() {

@@ -4,9 +4,9 @@ import { Ensemble } from './../_models/Ensemble';
 import { EnsembleService } from './../_services/ensemble.service';
 import { Component, OnInit, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
 import { Subscription, Observable } from 'rxjs';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSnackBarRef } from '@angular/material';
+import { SnackBarService } from '../_services/snackbar.service';
 
 export interface DialogData {
   name: string;
@@ -31,7 +31,8 @@ export class DashboardEnsemblesComponent implements OnInit, OnDestroy {
 
   constructor(private alertService: AlertService,
               private ensembleService: EnsembleService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private snackBarService: SnackBarService) { }
 
   ngOnInit() {
     // Get the ensembles from our ensembleService
@@ -70,17 +71,15 @@ export class DashboardEnsemblesComponent implements OnInit, OnDestroy {
       console.log('Add Ensemble dialog closed');
       if (result) {
         this.ensembleService.add(result)
-        .pipe(first())
         .subscribe(
           data => {
-            this.alertService.success('Ensemble Added', true);
+            this.snackBarService.openSnackBar('Ensemble Added');
           }, error => {
             this.alertService.error(error);
           }
         )
         ;
       }
-
     });
   }
 }

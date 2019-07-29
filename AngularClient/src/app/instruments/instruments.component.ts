@@ -2,9 +2,9 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { InstrumentsService, AlertService, EnsembleService, UserService, AssignmentService, EnrollmentService } from '../_services';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Instrument, Ensemble, Assignment, Enrollment, User, Student } from '../_models';
-import { Observable } from 'rxjs';
-import { MatSnackBarRef, MatSnackBar, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { Instrument, Ensemble, Assignment, Enrollment, Student } from '../_models';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { SnackBarService } from '../_services/snackbar.service';
 
 @Component({
   selector: 'app-instruments',
@@ -20,7 +20,7 @@ export class InstrumentsComponent implements OnInit {
     private alertService: AlertService,
     private enrollmentService: EnrollmentService,
     private assignmentService: AssignmentService,
-    private _snackBar: MatSnackBar
+    private snackBarService: SnackBarService
   ) { }
 
   // An array of all instrument objects from API
@@ -78,12 +78,6 @@ export class InstrumentsComponent implements OnInit {
     );
   }
 
-  private openSnackBar(message: string): MatSnackBarRef<any> {
-    return this._snackBar.open(message, '', {
-      duration: 2000
-    });
-  }
-
   ngOnInit() {
     this.getInstruments();
   }
@@ -115,27 +109,25 @@ export class InstrumentsComponent implements OnInit {
 
   onAdd() {
     this.instrumentService.addInstrument(this.new_instrument).subscribe(
-      data => {
-        // TODO: Consider shifting this to a snackbar
-        this.openSnackBar('Instrument Added');
-      }, error => {
-        this.alertService.error(error);
-      });
+      data => { this.snackBarService.openSnackBar('Instrument Added'); },
+      error => { this.alertService.error(error); }
+    );
   }
 
   onDelete(id: number) {
-    this.instrumentService.deleteInstrument(id).subscribe(
-      data => {
-        this.openSnackBar('Instrument Deleted');
-      }, error => {
-        this.alertService.error(error);
-      });
+    const bar = this.snackBarService.openSnackBar('Are you sure?', 'DELETE', 10000);
+    bar.onAction().subscribe(() => {
+      this.instrumentService.deleteInstrument(id).subscribe(
+        data => { this.snackBarService.openSnackBar('Instrument Deleted'); },
+        error => { this.alertService.error(error); }
+      );
+    });
   }
 
   onEdit(instrument: Instrument, id: number) {
     this.instrumentService.updateInstrument(instrument, id).subscribe(
       data => {
-        this.openSnackBar('Instrument Updated');
+        this.snackBarService.openSnackBar('Instrument Updated');
       }, error => {
         this.alertService.error(error);
       });
@@ -222,7 +214,7 @@ export class InstrumentsComponent implements OnInit {
 
     this.enrollmentService.addEnrollment(enrollment).subscribe(
       data => {
-        this.openSnackBar('Enrollment Added/Updated!');
+        this.snackBarService.openSnackBar('Enrollment Added/Updated!');
       }, error => {
         this.alertService.error(error);
       });
@@ -234,7 +226,7 @@ export class InstrumentsComponent implements OnInit {
 
     this.assignmentService.addAssigment(assignment).subscribe(
       data => {
-        this.openSnackBar('Instrument Assigned!');
+        this.snackBarService.openSnackBar('Instrument Assigned!');
       }, error => {
         this.alertService.error(error);
       });

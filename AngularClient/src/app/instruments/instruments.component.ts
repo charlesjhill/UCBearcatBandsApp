@@ -1,11 +1,13 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { InstrumentsService, AlertService, EnsembleService, UserService, AssignmentService, EnrollmentService } from '../_services';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Instrument, Ensemble, Assignment, Enrollment, User, Student } from '../_models';
 import { Observable, from } from 'rxjs';
 import { MatSnackBarRef, MatSnackBar } from '@angular/material';
 import { concatMap, tap } from 'rxjs/operators';
+import { Instrument, Ensemble, Assignment, Enrollment, Student } from '../_models';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { SnackBarService } from '../_services/snackbar.service';
 
 @Component({
   selector: 'app-instruments',
@@ -13,6 +15,7 @@ import { concatMap, tap } from 'rxjs/operators';
   styleUrls: ['./instruments.component.css']
 })
 export class InstrumentsComponent implements OnInit {
+
   constructor(
     private instrumentService: InstrumentsService,
     private formBuilder: FormBuilder,
@@ -20,11 +23,12 @@ export class InstrumentsComponent implements OnInit {
     private alertService: AlertService,
     private enrollmentService: EnrollmentService,
     private assignmentService: AssignmentService,
-    private _snackBar: MatSnackBar
+    private snackBarService: SnackBarService
   ) { }
 
   // An array of all instrument objects from API
   public inventory;
+  public dataSource: MatTableDataSource<Instrument>;
 
   // An object representing the data in the 'add' form
   public new_instrument: Instrument;
@@ -45,14 +49,24 @@ export class InstrumentsComponent implements OnInit {
   enrollment: Enrollment;
   assignment: Assignment;
   assigned: Student[];
-  assigned_String: string[] = ['', '', '', '', ''];
+  assigned_String: string[] = [];
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   public getInstruments() {
     this.instrumentService.currentInstruments.subscribe(
       // the first argument is a function which runs on success
       data => {
         this.inventory = data;
-        this.sendInstruments(this.inventory);
+        this.dataSource = new MatTableDataSource(this.inventory);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        console.log(this.inventory);
+        for (const instrument of this.inventory) {
+          this.showAssigned(instrument.id);
+        }
+        console.log(this.assigned_String);
       },
       // the second argument is a function which runs on error
       err => console.error(err),
@@ -96,16 +110,11 @@ export class InstrumentsComponent implements OnInit {
     )
   }
 
-  private openSnackBar(message: string): MatSnackBarRef<any> {
-    return this._snackBar.open(message, '', {
-      duration: 2000
-    });
-  }
-
   ngOnInit() {
     this.getInstruments();
   }
 
+  // TODO: Descriptive function naming
   openForm(): void {
     let is_closed = false;
 
@@ -132,27 +141,25 @@ export class InstrumentsComponent implements OnInit {
 
   onAdd() {
     this.instrumentService.addInstrument(this.new_instrument).subscribe(
-      data => {
-        // TODO: Consider shifting this to a snackbar
-        //this.openSnackBar('Instrument Added');
-      }, error => {
-        this.alertService.error(error);
-      });
+      data => { this.snackBarService.openSnackBar('Instrument Added'); },
+      error => { this.alertService.error(error); }
+    );
   }
 
   onDelete(id: number) {
-    this.instrumentService.deleteInstrument(id).subscribe(
-      data => {
-        //this.openSnackBar('Instrument Deleted');
-      }, error => {
-        this.alertService.error(error);
-      });
+    const bar = this.snackBarService.openSnackBar('Are you sure?', 'DELETE', 10000);
+    bar.onAction().subscribe(() => {
+      this.instrumentService.deleteInstrument(id).subscribe(
+        data => { this.snackBarService.openSnackBar('Instrument Deleted'); },
+        error => { this.alertService.error(error); }
+      );
+    });
   }
 
   onEdit(instrument: Instrument, id: number) {
     this.instrumentService.updateInstrument(instrument, id).subscribe(
       data => {
-        //this.openSnackBar('Instrument Updated');
+        this.snackBarService.openSnackBar('Instrument Updated');
       }, error => {
         this.alertService.error(error);
       });
@@ -242,7 +249,7 @@ export class InstrumentsComponent implements OnInit {
 
     this.enrollmentService.addEnrollment(enrollment).subscribe(
       data => {
-        this.openSnackBar('Enrollment Added/Updated!');
+        this.snackBarService.openSnackBar('Enrollment Added/Updated!');
       }, error => {
         this.alertService.error(error);
       });
@@ -254,7 +261,7 @@ export class InstrumentsComponent implements OnInit {
 
     this.assignmentService.addAssigment(assignment).subscribe(
       data => {
-        this.openSnackBar('Instrument Assigned!');
+        this.snackBarService.openSnackBar('Instrument Assigned!');
       }, error => {
         this.alertService.error(error);
       });
@@ -390,6 +397,7 @@ export class InstrumentAssignDialog implements OnInit {
       // the third argument is a function which runs on completion
       () => console.log('Ensembles done loading')
     );
+    this.ensembleService.update();
   }
 
  public getStudents() {

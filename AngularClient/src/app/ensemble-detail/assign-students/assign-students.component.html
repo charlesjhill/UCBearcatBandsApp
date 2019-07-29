@@ -1,10 +1,14 @@
-<p>Select Students to Assign</p>
-<!-- Add filtering up here-->
-<mat-selection-list #studentList>
-    <ng-container *ngFor="let student of students$ | async">
-        <mat-list-option [value]="student.user.id">
-            {{ student.user.full_name }}
-        </mat-list-option>
-    </ng-container>
-</mat-selection-list>
-<button mat-button type="submit" (click)="saveEnrollments(studentList.selectedOptions.selected)">SAVE</button>
+<h3 mat-dialog-title>Select Students to Assign</h3>
+<mat-dialog-content>
+    <!-- Add filtering up here-->
+    <mat-selection-list #studentList>
+        <ng-container *ngFor="let student of students$ | async">
+            <mat-list-option [value]="student.user.id">
+                {{ student.user.full_name }}
+            </mat-list-option>
+        </ng-container>
+    </mat-selection-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button type="submit" (click)="saveEnrollments(studentList.selectedOptions.selected)">SAVE</button>
+</mat-dialog-actions>

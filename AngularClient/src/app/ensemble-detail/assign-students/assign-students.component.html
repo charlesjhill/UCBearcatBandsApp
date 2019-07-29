@@ -7,10 +7,4 @@
         </mat-list-option>
     </ng-container>
 </mat-selection-list>
-<p>Selected: </p>
-<ul>
-    <li *ngFor="let i of studentList.selectedOptions.selected">
-        {{ i.value }}
-    </li>
-</ul>
 <button mat-button type="submit" (click)="saveEnrollments(studentList.selectedOptions.selected)">SAVE</button>

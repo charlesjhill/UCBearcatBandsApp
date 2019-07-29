@@ -13,14 +13,12 @@ import { Observable } from 'rxjs';
 export class InstrumentsComponent implements OnInit {
 
   // An array of all instrument objects from API
-  public inventory;
+  public inventory: any[];
 
   // An object representing the data in the 'add' form
   public new_instrument: Instrument;
 
-  displayedColumns: string[] = ["tag_number", "kind", "condition",
-    //"assign",
-    "actions"];
+  displayedColumns: string[] = ["tag_number", "kind", "condition", "assign", "actions"];
   registerForm: FormGroup;
   constructor(
     private instrumentService: InstrumentsService,
@@ -36,6 +34,11 @@ export class InstrumentsComponent implements OnInit {
       // the first argument is a function which runs on success
       data => {
         this.inventory = data;
+        console.log(this.inventory);
+        for (let i = 0; i < this.inventory.length; i++) {
+          this.showAssigned(this.inventory[i].id);
+        }
+        console.log(this.assigned_String);
       },
       // the second argument is a function which runs on error
       err => console.error(err),
@@ -152,8 +155,9 @@ export class InstrumentsComponent implements OnInit {
   enrollment: Enrollment;
   assignment: Assignment;
   assigned: Student[];
+  assigned_String: string[];
 
-  showAssigned(id): string {
+  public showAssigned(id) {
     //hit /instruments/{{id}}/students
     //return student name
     this.instrumentService.getStudentsAssigned(id).subscribe(
@@ -161,6 +165,16 @@ export class InstrumentsComponent implements OnInit {
       data => {
         this.assigned = data;
         console.log(this.assigned);
+
+        let names: string;
+
+        for (let i = 0; i < this.assigned.length; i++) {
+          console.log(this.assigned[i].user.full_name);
+          names += this.assigned[i].user.full_name + ",";
+        }
+
+        console.log(names);
+        this.assigned_String[id] = names;
       },
       // the second argument is a function which runs on error
       err => console.error(err),
@@ -168,13 +182,6 @@ export class InstrumentsComponent implements OnInit {
       () => console.log('done loading')
     );
 
-    let names: string;
-
-    //for (let i = 0; i = this.assigned.length; i++) {
-      //names += this.assigned[i].user.full_name + ",";
-    //}
-
-    return names;
   }
 
   Assign(id, student: Student, ensemble: Ensemble) {
@@ -338,5 +345,4 @@ export class InstrumentAssignDialog {
       () => console.log('Students done loading')
     );
   }
-
 }

@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { UniformsService, AlertService } from '../_services';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Uniform } from '../_models';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material';
+import { MatSnackBar, MatSnackBarRef, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-uniforms',
@@ -21,6 +21,7 @@ export class UniformsComponent implements OnInit {
   ) { }
 
   public inventory: Uniform[];
+  public dataSource: MatTableDataSource<Uniform>;
   public new_asset: any;
   displayedColumns: string[] = ['number', 'kind', 'size', 'condition', 'assign', 'actions'];
 
@@ -29,16 +30,21 @@ export class UniformsComponent implements OnInit {
   public size: any;
   public number: any;
 
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
   ngOnInit() {
     this.getUniforms();
   }
-
 
   public getUniforms() {
     this.uniformService.currentUniforms.subscribe(
       // the first argument is a function which runs on success
       data => {
         this.inventory = data;
+        this.dataSource = new MatTableDataSource(this.inventory);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
       // the second argument is a function which runs on error
       err => console.error(err),

@@ -5,7 +5,7 @@ import { EnsembleService } from './../_services/ensemble.service';
 import { Component, OnInit, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
-import { MatTableDataSource, MatPaginator, MatSnackBarRef } from '@angular/material';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { SnackBarService } from '../_services/snackbar.service';
 
 export interface DialogData {

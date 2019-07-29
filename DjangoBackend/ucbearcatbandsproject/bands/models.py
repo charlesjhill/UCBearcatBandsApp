@@ -24,6 +24,9 @@ class Student(models.Model):
 
     def __str__(self):
         return '{} [{}]'.format(self.user.full_name, self.m_number)
+		
+    class Meta:
+        ordering = ['user__full_name']
 
 
 class Ensemble(models.Model):
@@ -45,6 +48,7 @@ class Ensemble(models.Model):
             # Ensure an ensemble must have a unique name/term combination
             models.UniqueConstraint(fields=['name', 'term'], name='unique_ensemble')
         ]
+        ordering = ['term', 'name']
 
 
 class Enrollment(models.Model):
@@ -73,6 +77,7 @@ class Enrollment(models.Model):
             # Ensure a student isn't enrolled more than once per ensemble
             models.UniqueConstraint(fields=['ensemble', 'student'], name='unique_enrollment')
         ]
+        ordering = ['student__user__full_name']
 
 
 # Assets and Stuff

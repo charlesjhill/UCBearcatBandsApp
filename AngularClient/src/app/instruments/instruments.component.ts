@@ -165,7 +165,7 @@ export class InstrumentsComponent implements OnInit {
       });
   }
 
-  editForm(instrument: Instrument, id): void {
+  editForm(instrument: Instrument, id: number): void {
     let is_closed = false;
 
     const dialogRef = this.dialog.open(OverviewDialog, {
@@ -345,7 +345,7 @@ export class OverviewDialog implements OnInit {
 }
 
 @Component({
-  selector: 'InstrumnetAssignDialog',
+  selector: 'InstrumentAssignDialog',
   templateUrl: 'assigndialog.html',
 })
 export class InstrumentAssignDialog implements OnInit {

@@ -1,10 +1,10 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { InstrumentsService, AlertService, EnsembleService, UserService, AssignmentService, EnrollmentService } from '../_services';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Instrument, Ensemble, Assignment, Enrollment, User, Student } from '../_models';
 import { Observable } from 'rxjs';
-import { MatSnackBarRef, MatSnackBar } from '@angular/material';
+import { MatSnackBarRef, MatSnackBar, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-instruments',
@@ -12,6 +12,7 @@ import { MatSnackBarRef, MatSnackBar } from '@angular/material';
   styleUrls: ['./instruments.component.css']
 })
 export class InstrumentsComponent implements OnInit {
+
   constructor(
     private instrumentService: InstrumentsService,
     private formBuilder: FormBuilder,
@@ -24,13 +25,18 @@ export class InstrumentsComponent implements OnInit {
 
   // An array of all instrument objects from API
   public inventory;
+  public dataSource: MatTableDataSource<Instrument>;
 
   // An object representing the data in the 'add' form
   public new_instrument: Instrument;
 
-  displayedColumns: string[] = ['tag_number', 'kind', 'condition',
+  displayedColumns: string[] = [
+    'uc_tag_number',
+    'kind',
+    'condition',
     // "assign",
-    'actions'];
+    'actions'
+  ];
   registerForm: FormGroup;
 
   public condition: any;
@@ -46,15 +52,22 @@ export class InstrumentsComponent implements OnInit {
   enrollment: Enrollment;
   assignment: Assignment;
   assigned: Student[];
+  assigned_String: string[] = [];
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   public getInstruments() {
     this.instrumentService.currentInstruments.subscribe(
       // the first argument is a function which runs on success
       data => {
         this.inventory = data;
+        this.dataSource = new MatTableDataSource(this.inventory);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         console.log(this.inventory);
-        for (let i = 0; i < this.inventory.length; i++) {
-          this.showAssigned(this.inventory[i].id);
+        for (const instrument of this.inventory) {
+          this.showAssigned(instrument.id);
         }
         console.log(this.assigned_String);
       },
@@ -75,6 +88,7 @@ export class InstrumentsComponent implements OnInit {
     this.getInstruments();
   }
 
+  // TODO: Descriptive function naming
   openForm(): void {
     let is_closed = false;
 
@@ -173,9 +187,7 @@ export class InstrumentsComponent implements OnInit {
     });
   }
 
-  assigned_String: string[];
-
-  public showAssigned(id) {
+  public showAssigned(id: number) {
     //hit /instruments/{{id}}/students
     //return student name
     this.instrumentService.getStudentsAssigned(id).subscribe(
@@ -358,6 +370,7 @@ export class InstrumentAssignDialog implements OnInit {
       // the third argument is a function which runs on completion
       () => console.log('Ensembles done loading')
     );
+    this.ensembleService.update();
   }
 
  public getStudents() {

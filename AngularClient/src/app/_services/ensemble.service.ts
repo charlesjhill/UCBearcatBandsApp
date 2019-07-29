@@ -22,6 +22,7 @@ export class EnsembleService {
   private list(): Observable<Ensemble[]> {
     return this.http.get<Ensemble[]>(this.baseURL).pipe(first());
   }
+
   public update(): void {
     console.log('updating list of ensembles');
     this.list().subscribe(data => {
@@ -52,7 +53,10 @@ export class EnsembleService {
     );
   }
 
-  getEnsemble(id): Observable<Ensemble> {
-    return this.http.get<Ensemble>(this.baseURL + id + '/');
+  getEnsemble(id: number): Observable<Ensemble> {
+    // notice no first() since we aren't hitting the web api
+    return this.currentEnsembles.pipe(map(ens => {
+      return ens.find(e => e.id === id);
+    }));
   }
 }

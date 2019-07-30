@@ -3,7 +3,7 @@ import { EnrollmentService, EnsembleService } from '../_services';
 import { AssignStudentsComponent } from './assign-students/assign-students.component';
 
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { MatSlideToggleChange, MatDialog, MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { MatSlideToggleChange, MatDialog, MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
 import { SnackBarService } from '../_services/snackbar.service';
 
 @Component({
@@ -68,18 +68,22 @@ export class EnsembleDetailComponent implements OnInit {
   }
 
   removeStudent(enrollmentId: number) {
-    console.log(`deleting enrollment ${enrollmentId}`);
-    this.enrollmentService.deleteEnrollment(enrollmentId).subscribe(
-      result => {
-        // We should update just the affected ensemble, in the future
-        this.ensembleService.update();
-      },
-      error => { console.log(error); }
-    );
+    const bar = this.snackBarService.openDeleteSnackBar('Are you sure?', 'DELETE', 6000);
+    bar.onAction().subscribe(() => {
+      console.log(`deleting enrollment ${enrollmentId}`);
+      this.enrollmentService.deleteEnrollment(enrollmentId).subscribe(
+        result => {
+          // We should update just the affected ensemble, in the future
+          this.ensembleService.update();
+        },
+        error => { console.log(error); }
+      );
+      this.snackBarService.openSnackBar('Enrollment Deleted');
+    });
   }
 
   deleteEnsemble(): void {
-    const bar = this.snackBarService.openSnackBar('Are you sure?', 'DELETE', 10000);
+    const bar = this.snackBarService.openDeleteSnackBar('Are you sure?', 'DELETE', 6000);
     bar.onAction().subscribe(() => {
       console.log('deleting ensemble ' + this.ensemble.id);
       this.snackBarService.openSnackBar('Ensemble Deleted');

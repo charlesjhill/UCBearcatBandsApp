@@ -84,7 +84,7 @@ export class UniformsComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    const bar = this.snackBarService.openSnackBar('Are you sure?', 'DELETE', 5000);
+    const bar = this.snackBarService.openDeleteSnackBar('Are you sure?', 'DELETE', 5000);
     bar.onAction().subscribe(() => {
       this.uniformService.deleteUniform(id).subscribe(
         data => {

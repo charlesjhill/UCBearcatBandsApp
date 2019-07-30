@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, first, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Uniform } from '../_models';
+import { Uniform, Student } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class UniformsService {
@@ -76,5 +76,9 @@ export class UniformsService {
           return u;
         }),
         catchError(this.handleError));
+  }
+
+  public getStudentsAssigned(id: number): Observable<Student[]> {
+    return this.__http.get<Student[]>(`${environment.apiUrl}/uniforms/` + id + '/students/').pipe(first(), catchError(this.handleError));
   }
 }

@@ -11,7 +11,7 @@
       <mat-card class="mb-1">
         <mat-card-title>Instruments</mat-card-title>
         <mat-list>
-          <mat-list-item *ngFor="let instrument of instruments">  
+          <mat-list-item *ngFor="let instrument of ensInstruments[ensemble.id]">  
             {{ instrument.name }}<span *ngIf="instrument.locker"> - Locker: {{instrument.locker.number}} | {{instrument.locker.combination}}</span>
           </mat-list-item>
         </mat-list>
@@ -19,7 +19,7 @@
       <mat-card>
         <mat-card-title>Other Assets</mat-card-title>
         <mat-list>
-          <mat-list-item *ngFor="let uniform of uniforms">
+          <mat-list-item *ngFor="let uniform of ensUniforms[ensemble.id]">
               {{uniform.name | titlecase}} <span *ngIf="uniform.locker"> - Locker: {{uniform.locker.number}} | {{uniform.locker.combination}}</span>
           </mat-list-item>
         </mat-list>

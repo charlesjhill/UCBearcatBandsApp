@@ -1,10 +1,14 @@
+import { InstrumentAssignDialog } from './../instruments/instruments.component';
+import { EnrollmentService } from 'src/app/_services/enrollment.service';
+import { AssignmentService } from './../_services/assignments.service';
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { UniformsService, AlertService } from '../_services';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Uniform } from '../_models';
+import { Uniform, Student, Ensemble, Enrollment, Assignment } from '../_models';
 import { MatSnackBarRef, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { SnackBarService } from '../_services/snackbar.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-uniforms',
@@ -17,7 +21,9 @@ export class UniformsComponent implements OnInit {
     private uniformService: UniformsService,
     private dialog: MatDialog,
     private alertService: AlertService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private assignmentService: AssignmentService,
+    private enrollmentService: EnrollmentService
   ) { }
 
   public inventory: Uniform[];
@@ -29,6 +35,7 @@ export class UniformsComponent implements OnInit {
   public kind: any;
   public size: any;
   public number: any;
+  assignedString: string[] = [];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -45,6 +52,9 @@ export class UniformsComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.inventory);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        for (const inst of this.inventory) {
+          this.getAssigned(inst.id);
+        }
       },
       // the second argument is a function which runs on error
       err => console.error(err),
@@ -141,6 +151,78 @@ export class UniformsComponent implements OnInit {
         title: 'Uniform details',
         detail: ' ',
         readonly: true
+      }
+    });
+  }
+
+  public getAssigned(id: number): void {
+    // hit /instruments/{{id}}/students
+    // return student name
+    let names = '';
+    this.uniformService.getStudentsAssigned(id).subscribe(
+      // the first argument is a function which runs on success
+      data => {
+        data.forEach(student => {
+          names += (student.user.full_name + ', ');
+        });
+        this.assignedString[id] = names;
+      },
+      // the second argument is a function which runs on error
+      err => console.error(err),
+      // the third argument is a function which runs on completion
+      () => console.log('done loading')
+    );
+  }
+
+  private getEnrollment(student: Student, ensemble: Ensemble): Observable<Enrollment> {
+    // Check if the enrollment alreday exists
+    for (const enr of ensemble.enrollments) {
+      if (enr.student.m_number === student.m_number) {
+        console.log('found enrollment');
+        return of(enr);
+      }
+    }
+
+    // If we make it here, there is no matching enrollment, so we have to make one
+    console.log('creating enrollment');
+    const newEnr = new Enrollment();
+    newEnr.student = student.user.id;
+    newEnr.ensemble = ensemble.id;
+    return this.enrollmentService.addEnrollment(newEnr);
+  }
+
+  private Assign(id: number, student: Student, ensemble: Ensemble): void {
+    // create enrollment
+    this.getEnrollment(student, ensemble).subscribe(
+      enr => {
+        // Check if assignment already exists
+        console.log('creating assignment');
+        const newAsm = new Assignment();
+        newAsm.enrollment = enr.id;
+        newAsm.asset = id;
+        this.assignmentService.addAssigment(newAsm).subscribe(
+          data => {
+            this.snackBarService.openSnackBar('Instrument Assigned!');
+            this.uniformService.update();
+          },
+          err => { console.log(err); }
+        );
+      },
+      err => { console.log(err); }
+    );
+  }
+
+  public assignForm(uniform: Uniform, id: number): void {
+    let is_closed = false;
+
+    const dialogRef = this.dialog.open(InstrumentAssignDialog, {
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (data != null) {
+        console.log(data);
+        this.Assign(id, data.student, data.ensemble);
       }
     });
   }

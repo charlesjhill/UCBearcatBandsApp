@@ -28,12 +28,13 @@
       
       <ng-container matColumnDef="assign">
         <th mat-header-cell *matHeaderCellDef> Assigned To </th>
-        <td mat-cell *matCellDef="let uniform"> Me </td>
+        <td mat-cell *matCellDef="let uniform"> {{ assignedString[uniform.id] }} </td>
       </ng-container>
       
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let uniform">
+          <button mat-button (click)="assignForm(uniform, uniform.id)">Assign</button>
           <button mat-button (click)="viewForm(uniform)">Details</button>
           <button mat-button (click)="editForm(uniform, uniform.id)">Edit</button>
           <button mat-button (click)="onDelete(uniform.id)">Delete</button>

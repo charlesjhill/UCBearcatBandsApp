@@ -2,7 +2,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { mergeMap } from 'rxjs/operators';
 import { User, Instrument, Ensemble, Uniform, Enrollment, Student } from '../_models';
-import { UserService, AuthenticationService, AlertService, EnsembleService, InstrumentsService, UniformsService, EnrollmentService, AssignmentService } from '../_services';
+import { UserService, AuthenticationService, AlertService, EnsembleService, AssignmentService } from '../_services';
 import { from } from 'rxjs';
 
 @Component({
@@ -19,6 +19,8 @@ export class StudentPageComponent implements OnInit {
   instruments: Instrument[] = [];
   uniforms: Uniform[] = [];
   enrollments: Enrollment[] = [];
+  ensInstruments: any[] = [];
+  ensUniforms: any[] = [];
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -58,10 +60,16 @@ export class StudentPageComponent implements OnInit {
         enrollment.assets.forEach(asset => {
           switch (asset.resourcetype) {
             case 'Instrument':
-              this.instruments.push(asset as Instrument);
+              if (!this.ensInstruments[enrollment.ensemble]) {
+                this.ensInstruments[enrollment.ensemble] = [];
+              }
+              this.ensInstruments[enrollment.ensemble].push(asset as Instrument);
               break;
             case 'UniformPiece':
-              this.uniforms.push(asset as Uniform);
+              if (!this.ensUniforms[enrollment.ensemble]) {
+                this.ensUniforms[enrollment.ensemble] = [];
+              }
+              this.ensUniforms[enrollment.ensemble].push(asset as Uniform);
               break;
             default:
               break;

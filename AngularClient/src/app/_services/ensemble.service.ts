@@ -13,6 +13,7 @@ export class EnsembleService {
   constructor(private http: HttpClient) {
     this.currentEnsemblesSubject = new BehaviorSubject([]);
     this.currentEnsembles = this.currentEnsemblesSubject.asObservable();
+    this.update();
   }
 
   private baseURL = `${environment.apiUrl}/ensembles/`;
@@ -40,7 +41,6 @@ export class EnsembleService {
     );
   }
 
-
   delete(id: number): Observable<any> {
     console.log('Pre delete call');
     return this.http.delete<any>(this.baseURL + id + '/').pipe(
@@ -54,9 +54,8 @@ export class EnsembleService {
   }
 
   getEnsemble(id: number): Observable<Ensemble> {
-    // notice no first() since we aren't hitting the web api
-    return this.currentEnsembles.pipe(map(ens => {
-      return ens.find(e => e.id === id);
-    }));
+    return this.http.get<Ensemble>(this.baseURL + id + '/').pipe(
+      first()
+    );
   }
 }

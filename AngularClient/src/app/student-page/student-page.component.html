@@ -1,22 +1,29 @@
-<h1>Welcome {{currentUser.full_name}}</h1>
+<div class="mat-app-background">
+  <h1>Welcome {{currentUser.full_name}}</h1>
 
-<h2> Your ensembles! </h2>
-<ul>
-  <li *ngFor="let ensemble of ensembles">
-    {{ensemble.term}} - {{ensemble.name}}
-  </li>
-</ul>
-
-<h2> Instruments </h2>
-<ul>
-  <li *ngFor="let instrument of instruments">
-    {{instrument.uc_tag_number}} ({{instrument.make}} {{instrument.model}}) - Locker: {{instrument.locker}}
-  </li>
-</ul>
-
-<h2> Uniform </h2>
-<ul>
-  <li *ngFor="let uniform of uniforms">
-    {{uniform.name}} - Locker: {{uniform.locker}}
-  </li>
-</ul>
+  <h3> Your ensembles</h3>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let ensemble of ensembles">
+      <mat-expansion-panel-header>
+        {{ ensemble.name }} {{ ensemble.term }}
+      </mat-expansion-panel-header>
+      <!-- Content -->
+      <mat-card class="mb-1">
+        <mat-card-title>Instruments</mat-card-title>
+        <mat-list>
+          <mat-list-item *ngFor="let instrument of instruments">  
+            {{ instrument.name }}<span *ngIf="instrument.locker"> - Locker: {{instrument.locker.number}} | {{instrument.locker.combination}}</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
+      <mat-card>
+        <mat-card-title>Other Assets</mat-card-title>
+        <mat-list>
+          <mat-list-item *ngFor="let uniform of uniforms">
+              {{uniform.name | titlecase}} <span *ngIf="uniform.locker"> - Locker: {{uniform.locker.number}} | {{uniform.locker.combination}}</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

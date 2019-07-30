@@ -109,7 +109,7 @@ extension EnsembleDetailsVC: ListViewControllerDelegate {
                                                  message: "You will not be able to undo this action.",
                 preferredStyle: UIAlertController.Style.alert)
             
-            refreshAlert.addAction(UIAlertAction(title: "Unenroll", style: .default, handler: { (action: UIAlertAction!) in
+            refreshAlert.addAction(UIAlertAction(title: "Remove", style: .default, handler: { (action: UIAlertAction!) in
                 // Actually perform the deletion
                 let p = MoyaProvider<EnrollmentService>()
                 p.request(.deleteEnrollment(id: enrollmentToEdit.id)) { result in

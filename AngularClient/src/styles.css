@@ -6,3 +6,8 @@
 .mat-content > mat-panel-title, .mat-content > mat-panel-description {
   flex: 0 0 auto;
 }
+
+.myapp-danger-background-snackbar {
+  color: black;
+  background: #ffc107;
+}

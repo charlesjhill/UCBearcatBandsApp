@@ -1,4 +1,5 @@
 export class Instrument {
+  [x: string]: any; // added to do some hacky shit disregard this
   id: number;
   kind: string;
   make: string;

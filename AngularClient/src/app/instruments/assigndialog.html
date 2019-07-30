@@ -2,7 +2,7 @@
 <div mat-dialog-content [formGroup]="assignForm">
   <mat-form-field>
     <mat-label>Choose Ensemble</mat-label>
-    <mat-select formControlName="choosen_ensemble">
+    <mat-select formControlName="ensemble">
       <mat-option  *ngFor="let ensemble of ensembles" [value]="ensemble">
         {{ensemble.name}}
       </mat-option>
@@ -10,7 +10,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Choose Student</mat-label>
-    <mat-select formControlName="choosen_student">
+    <mat-select formControlName="student">
       <mat-option  *ngFor="let student of students" [value]="student">
         {{student.user.full_name}}
       </mat-option>

@@ -2,9 +2,7 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { InstrumentsService, AlertService, EnsembleService, UserService, AssignmentService, EnrollmentService } from '../_services';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable, from } from 'rxjs';
-import { MatSnackBarRef, MatSnackBar } from '@angular/material';
-import { concatMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { Instrument, Ensemble, Assignment, Enrollment, Student } from '../_models';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { SnackBarService } from '../_services/snackbar.service';
@@ -27,15 +25,16 @@ export class InstrumentsComponent implements OnInit {
   ) { }
 
   // An array of all instrument objects from API
-  public inventory;
-  public dataSource: MatTableDataSource<Instrument>;
+  public inventory: any[] = [];
+  public dataSource: MatTableDataSource<any>;
+  displayedColumns: string[] = ['uc_tag_number', 'kind', 'condition', 'assign', 'actions'];
 
-  // An object representing the data in the 'add' form
-  public new_instrument: Instrument;
-
-  displayedColumns: string[] = ['tag_number', 'kind', 'condition', 'assign', 'actions'];
+  // TODO: What's this do?
   registerForm: FormGroup;
 
+  // An object representing the data in the 'add' form
+  // TODO: What are all these properties? Cull those we don't need
+  public new_instrument: Instrument;
   public condition: any;
   public kind: any;
   public make: any;
@@ -43,13 +42,11 @@ export class InstrumentsComponent implements OnInit {
   public serial_number: any;
   public uc_tag_number: any;
   public uc_asset_number: any;
-
   student: Student;
   ensemble: Ensemble;
   enrollment: Enrollment;
   assignment: Assignment;
-  assigned: Student[];
-  assigned_String: string[] = [];
+  assignedString: string[] = [];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -62,52 +59,15 @@ export class InstrumentsComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.inventory);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        console.log(this.inventory);
-        for (const instrument of this.inventory) {
-          this.showAssigned(instrument.id);
+        for (const inst of this.inventory) {
+          this.getAssigned(inst.id);
         }
-        console.log(this.assigned_String);
       },
       // the second argument is a function which runs on error
       err => console.error(err),
       // the third argument is a function which runs on completion
       () => console.log('done loading')
     );
-  }
-
-  public sendInstruments(instruments: Instrument[]) {
-    from(instruments).pipe(
-      concatMap(instrument => {
-        let names: string;
-        //let name = this.showAssigned(instrument.id);
-
-        this.instrumentService.getStudentsAssigned(instrument.id).pipe(tap(data => {
-          console.log(data);
-          this.assigned = data;
-        }));
-
-        console.log(this.assigned);
-
-        if (this.assigned == null) {
-          this.assigned_String[instrument.id] = "None"
-        }
-        else {
-          for (let i = 0; i < this.assigned.length; i++) {
-            names += this.assigned[i].user.full_name + ',';
-          }
-          this.assigned_String[instrument.id] = names;
-        }
-       // this.assigned_String[instrument.id] = this.showAssigned(instrument.id);
-
-        console.log(this.assigned_String[instrument.id]);
-
-
-
-        return this.assigned_String;
-      })
-    ).subscribe(
-      data => { console.log("Got Assignments")}
-    )
   }
 
   ngOnInit() {
@@ -147,22 +107,13 @@ export class InstrumentsComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    const bar = this.snackBarService.openSnackBar('Are you sure?', 'DELETE', 10000);
+    const bar = this.snackBarService.openDeleteSnackBar('Are you sure?', 'DELETE', 10000);
     bar.onAction().subscribe(() => {
       this.instrumentService.deleteInstrument(id).subscribe(
         data => { this.snackBarService.openSnackBar('Instrument Deleted'); },
         error => { this.alertService.error(error); }
       );
     });
-  }
-
-  onEdit(instrument: Instrument, id: number) {
-    this.instrumentService.updateInstrument(instrument, id).subscribe(
-      data => {
-        this.snackBarService.openSnackBar('Instrument Updated');
-      }, error => {
-        this.alertService.error(error);
-      });
   }
 
   editForm(instrument: Instrument, id: number): void {
@@ -192,6 +143,15 @@ export class InstrumentsComponent implements OnInit {
     });
   }
 
+  onEdit(instrument: Instrument, id: number) {
+    this.instrumentService.updateInstrument(instrument, id).subscribe(
+      data => {
+        this.snackBarService.openSnackBar('Instrument Updated');
+      }, error => {
+        this.alertService.error(error);
+      });
+  }
+
   viewForm(instrument: Instrument): void {
     let is_closed = false;
 
@@ -211,63 +171,65 @@ export class InstrumentsComponent implements OnInit {
     });
   }
 
-  public showAssigned(id): string {
-    //hit /instruments/{{id}}/students
-    //return student name
-    let names: string;
+
+  public getAssigned(id: number): void {
+    // hit /instruments/{{id}}/students
+    // return student name
+    let names = '';
     this.instrumentService.getStudentsAssigned(id).subscribe(
       // the first argument is a function which runs on success
       data => {
-        this.assigned = data;
-        console.log(this.assigned);
-
-
-
-        for (let i = 0; i < this.assigned.length; i++) {
-          console.log(this.assigned[i].user.full_name);
-          names = this.assigned[i].user.full_name + ",";
-        }
-
-        
-        return names;
+        data.forEach(student => {
+          names += (student.user.full_name + ', ');
+        });
+        this.assignedString[id] = names;
       },
       // the second argument is a function which runs on error
       err => console.error(err),
       // the third argument is a function which runs on completion
       () => console.log('done loading')
     );
-
-    return names;
   }
 
-  Assign(id: number, student: Student, ensemble: Ensemble) {
+  private getEnrollment(student: Student, ensemble: Ensemble): Observable<Enrollment> {
+    // Check if the enrollment alreday exists
+    for (const enr of ensemble.enrollments) {
+      if (enr.student.m_number === student.m_number) {
+        console.log('found enrollment');
+        return of(enr);
+      }
+    }
+
+    // If we make it here, there is no matching enrollment, so we have to make one
+    console.log('creating enrollment');
+    const newEnr = new Enrollment();
+    newEnr.student = student.user.id;
+    newEnr.ensemble = ensemble.id;
+    return this.enrollmentService.addEnrollment(newEnr);
+  }
+
+  private Assign(id: number, student: Student, ensemble: Ensemble): void {
     // create enrollment
-    // TODO: We should check if an enrollment exists first
-    const enrollment = new Enrollment();
-    enrollment.ensemble = ensemble.id;
-    enrollment.student = student.user.id;
-
-    this.enrollmentService.addEnrollment(enrollment).subscribe(
-      data => {
-        this.snackBarService.openSnackBar('Enrollment Added/Updated!');
-      }, error => {
-        this.alertService.error(error);
-      });
-
-    // create assignment
-    const assignment = new Assignment();
-    assignment.enrollment = enrollment.id;
-    assignment.asset = id;
-
-    this.assignmentService.addAssigment(assignment).subscribe(
-      data => {
-        this.snackBarService.openSnackBar('Instrument Assigned!');
-      }, error => {
-        this.alertService.error(error);
-      });
+    this.getEnrollment(student, ensemble).subscribe(
+      enr => {
+        // Check if assignment already exists
+        console.log('creating assignment');
+        const newAsm = new Assignment();
+        newAsm.enrollment = enr.id;
+        newAsm.asset = id;
+        this.assignmentService.addAssigment(newAsm).subscribe(
+          data => {
+            this.snackBarService.openSnackBar('Instrument Assigned!');
+            this.instrumentService.update();
+          },
+          err => { console.log(err); }
+        );
+      },
+      err => { console.log(err); }
+    );
   }
 
-  assignForm(instrument: Instrument, id: number): void {
+  public assignForm(instrument: Instrument, id: number): void {
     let is_closed = false;
 
     const dialogRef = this.dialog.open(InstrumentAssignDialog, {
@@ -277,6 +239,7 @@ export class InstrumentsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(data => {
       if (data != null) {
         console.log(data);
+        this.Assign(id, data.student, data.ensemble);
       }
     });
   }
@@ -353,23 +316,21 @@ export class InstrumentAssignDialog implements OnInit {
   assignForm: FormGroup;
   ensembles: Ensemble[];
   students: Student[];
-  choosen_ensemble: Ensemble;
-  choosen_student: Student;
+  chosen_ensemble: Ensemble;
+  chosen_student: Student;
 
   constructor(
     private fb: FormBuilder,
     private ensembleService: EnsembleService,
     private userService: UserService,
     public dialogRef: MatDialogRef<InstrumentAssignDialog>,
-    @Inject(MAT_DIALOG_DATA) data) {
-
-    this.choosen_ensemble = data.ensemble;
-    this.choosen_student = data.student;
-
+    @Inject(MAT_DIALOG_DATA) data)
+  {
+    this.chosen_ensemble = data.ensemble;
+    this.chosen_student = data.student;
   }
 
   onNoClick() {
-    // Could we add the instrument service call here?
     this.dialogRef.close();
   }
 
@@ -381,8 +342,8 @@ export class InstrumentAssignDialog implements OnInit {
     this.getEnsembles();
     this.getStudents();
     this.assignForm = this.fb.group({
-      choosen_ensemble: [this.choosen_ensemble, []],
-      choosen_student: [this.choosen_student, []],
+      ensemble: [this.chosen_ensemble, []],
+      student: [this.chosen_student, []],
     });
   }
 

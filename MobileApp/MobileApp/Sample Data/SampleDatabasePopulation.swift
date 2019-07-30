@@ -17,15 +17,15 @@ class SampleDatabasePopulation {
     private var sUniform: MoyaProvider<UniformService> = MoyaProvider<UniformService>()
     private var sEnsemble: MoyaProvider<EnsembleService> = MoyaProvider<EnsembleService>()
     
-    public func populate(_ n: Int = 5) {
+    public func populate(_ n: Int = 15) {
         for _ in 1...n { makeSampleStudent() }
         for _ in 1...n { makeSampleInstrument() }
         for _ in 1...n { makeSampleUniform() }
-        for _ in 1...n { makeSampleEnsemble() }
+        for _ in 1...5 { makeSampleEnsemble() }
     }
     
     private func makeSampleStudent() {
-        let email = "sampleEmail\(currentIdx)@gmail.com"
+        let email = "sampleEmail\(currentIdx)@example.com"
         let pwd = "ucbearcatbands"
         let name = "Test Student \(currentIdx)"
         let number = "M\(generateRandomDigits(8))"
@@ -38,7 +38,7 @@ class SampleDatabasePopulation {
                                     name: "",
                                     condition: AssetCondition.allCases.randomElement()!,
                                     kind: InstrumentKind.allCases.randomElement()!,
-                                    make: "Yamaha",
+                                    make: "Make",
                                     model: "Model",
                                     serialNumber: generateRandomDigits(8),
                                     ucTagNumber: "T\(generateRandomDigits(4))",
@@ -52,7 +52,7 @@ class SampleDatabasePopulation {
                                    condition: AssetCondition.allCases.randomElement()!,
                                    kind: UniformKind.allCases.randomElement()!,
                                    size: "Size",
-                                   number: generateRandomDigits(8))
+                                   number: generateRandomDigits(3))
         sUniform.request(.addUniform(uniform), completion: handler)
     }
     

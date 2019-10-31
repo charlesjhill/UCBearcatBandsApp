@@ -162,9 +162,7 @@ export class UniformsComponent implements OnInit {
     this.uniformService.getStudentsAssigned(id).subscribe(
       // the first argument is a function which runs on success
       data => {
-        data.forEach(student => {
-          names += (student.user.full_name + ', ');
-        });
+        names = data.map(d => d.user.full_name).join(', ');
         this.assignedString[id] = names;
       },
       // the second argument is a function which runs on error

@@ -179,9 +179,8 @@ export class InstrumentsComponent implements OnInit {
     this.instrumentService.getStudentsAssigned(id).subscribe(
       // the first argument is a function which runs on success
       data => {
-        data.forEach(student => {
-          names += (student.user.full_name + ', ');
-        });
+        names = data.map(s => s.user.full_name).join(', ');
+
         this.assignedString[id] = names;
       },
       // the second argument is a function which runs on error

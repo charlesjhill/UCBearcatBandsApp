@@ -1,3 +1,4 @@
+import { SidebarService } from './../_services/sidebar.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -8,7 +9,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  public sidebarOpen = true;
+
+  constructor(private router: Router, private sidebarService: SidebarService) {
+    this.sidebarService.sidebarToggled$.subscribe(_ => {
+      this.sidebarOpen = !this.sidebarOpen;
+    });
+  }
 
   ngOnInit() {
   }

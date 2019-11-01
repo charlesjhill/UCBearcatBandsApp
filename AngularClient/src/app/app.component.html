@@ -2,7 +2,7 @@
     <mat-toolbar-row *ngIf="currentUser">
         <button mat-icon-button>
             <!-- We need to fix this; One way would be to put the topbar and sidebar in the same place? -->
-            <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+            <mat-icon (click)="toggleSidebar()">menu</mat-icon>
         </button>
         <mat-divider [vertical]="true"></mat-divider>
         <div>

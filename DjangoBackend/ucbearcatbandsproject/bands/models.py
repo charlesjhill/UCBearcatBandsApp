@@ -165,7 +165,60 @@ class Instrument(Asset):
     """
     Model representing any instrument the band owns
     """
-    kind = models.CharField(max_length=255)  # TODO: Make enum
+    altoClarinet = 'Alto Clarinet'
+    altoSaxophone = 'Alto Saxophone'
+    bariSaxophone = 'Baritone Saxophone'
+    baritone = 'Baritone'
+    bassClarinet = 'Bass Clarinet'
+    bassTrombone = 'Bass Trombone'
+    bassoon = 'Bassoon'
+    clarinet = 'Clarinet'
+    cornet = 'Cornet'
+    eFlatClarinet = 'Eb Clarinet'
+    electricPiano = 'Electric Piano'
+    electricViolin = 'Electric Violin'
+    euphonium = 'Euphonium'
+    flute = 'Flute'
+    frenchHorn = 'French Horn'
+    marchingHorn = 'Marching Horn'
+    mellophone = 'Mellophone'
+    oboe = 'Oboe'
+    piano = 'Piano'
+    piccolo = 'Piccolo'
+    sopranoSaxophone = 'Soprano Saxophone'
+    sousaphone = 'Sousaphone'
+    tenorSaxophone = 'Tenor Saxophone'
+    trombone = 'Trombone'
+    trumpet = 'Trumpet'
+    tuba = 'Tuba'
+    INSTRUMENT_CHOICES = ((altoClarinet, 'ALTOCLARINET'),
+                          (altoSaxophone, 'ALTOSAXOPHONE'),
+                          (bariSaxophone, 'BARISAXOPHONE'),
+                          (baritone, 'BARITONE'),
+                          (bassClarinet, 'BASSCLARINET'),
+                          (bassTrombone, 'BASSTROMBONE'),
+                          (bassoon, 'BASSOON'),
+                          (clarinet, 'CLARINET'),
+                          (cornet, 'CORNET'),
+                          (eFlatClarinet, 'EFLATCLARINET'),
+                          (electricPiano, 'ELECTRICPIANO'),
+                          (electricViolin, 'ELECTRICVIOLIN'),
+                          (euphonium, 'EUPHONIUM'),
+                          (flute, 'FLUTE'),
+                          (frenchHorn, 'FRENCHHORN'),
+                          (marchingHorn, 'MARCHINGBAND'),
+                          (mellophone, 'MELLOPHONE'),
+                          (oboe, 'OBOE'), 
+                          (piano, 'PIANO'),
+                          (piccolo, 'PICCOLO'),
+                          (sopranoSaxophone, 'SOPRANOSAXOPHONE'),
+                          (sousaphone, 'SOUSAPHONE'),
+                          (tenorSaxophone, 'TENORSAXOPHONE'),
+                          (trombone, 'TROMBONE'),
+                          (trumpet, 'TRUMPET'),
+                          (tuba, 'TUBA'))
+
+    kind = models.CharField(max_length=100, choices=INSTRUMENT_CHOICES, default=altoClarinet)
     make = models.CharField(max_length=255)
     model = models.CharField(max_length=255)
     serial_number = models.CharField(max_length=255)

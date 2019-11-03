@@ -8,38 +8,6 @@
 
 import Foundation
 
-/// An enumeration of kinds of Instruments owned by the UC Bearcat Bands
-enum InstrumentKind: String, Codable, CaseIterable {
-    
-    case altoClarinet
-    case altoSaxophone
-    case bariSaxophone
-    case baritone
-    case bassClarinet
-    case bassTrombone
-    case bassoon
-    case clarinet
-    case cornet
-    case eFlatClarinet
-    case electricPiano
-    case electricViolin
-    case euphonium
-    case flute
-    case frenchHorn
-    case marchingHorn // apparently different enough from mellophone
-    case mellophone
-    case oboe
-    case piano
-    case piccolo
-    case sopranoSaxophone
-    case sousaphone
-    case tenorSaxophone
-    case trombone
-    case trumpet
-    case tuba
-    
-}
-
 /// An Instrument owned by the UC Bearcat Bands
 struct Instrument: Asset {
     

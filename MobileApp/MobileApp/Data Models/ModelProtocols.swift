@@ -18,7 +18,7 @@ import Foundation
 // "Honey" in their response.
 
 /// A mirror of the relevant properties of the Django "models.Model" class
-protocol DjangoModel: Codable {
+protocol DjangoModel: Codable, Identifiable {
     
     /// The unique database ID of the object
     var id: Int { get }

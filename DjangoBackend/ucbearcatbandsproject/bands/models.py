@@ -206,7 +206,7 @@ class Instrument(Asset):
                           (euphonium, 'EUPHONIUM'),
                           (flute, 'FLUTE'),
                           (frenchHorn, 'FRENCHHORN'),
-                          (marchingHorn, 'MARCHINGBAND'),
+                          (marchingHorn, 'MARCHINGHORN'),
                           (mellophone, 'MELLOPHONE'),
                           (oboe, 'OBOE'), 
                           (piano, 'PIANO'),

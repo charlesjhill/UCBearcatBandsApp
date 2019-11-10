@@ -1,4 +1,35 @@
 export class Instrument {
+
+  public static possibleKinds: string[] = [
+    'Alto Clarinet',
+    'Alto Saxophone',
+    'Baritone Saxophone',
+    'Baritone',
+    'Bass Clarinet',
+    'Bass Trombone',
+    'Bassoon',
+    'Clarinet',
+    'Cornet',
+    'Eb Clarinet',
+    'Electric Piano',
+    'Electric Violin',
+    'Euphonium',
+    'Flute',
+    'French Horn',
+    'Marching Horn',
+    'Mellophone',
+    'Oboe',
+    'Piano',
+    'Piccolo',
+    'Soprano Saxophone',
+    'Sousaphone',
+    'Tenor Saxophone',
+    'Trombone',
+    'Trumpet',
+    'Tuba'
+  ];
+
+
   [x: string]: any; // added to do some hacky shit disregard this
   id: number;
   kind: string;

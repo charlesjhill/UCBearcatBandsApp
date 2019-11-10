@@ -44,17 +44,20 @@ class InstrumentDetailsVC: UIViewController {
     
     private func constructInstrument() -> Instrument? {
         // TODO: Definitely going to need better handling of optional strings here
-        var id = 1
+        var id: Int = 1
         if instrument != nil { id = instrument!.id }
-        return Instrument(id: id,
-                          name: "",
-                          condition: AssetCondition(rawValue: conditionField!.text!)!,
-                          kind: InstrumentKind(rawValue: kindField!.text!)!,
-                          make: makeField!.text!,
-                          model: modelField!.text!,
-                          serialNumber: serialNumberField!.text!,
-                          ucTagNumber: tagNumberField!.text!,
-                          ucAssetNumber: assetNumberField!.text!)
+        if let kind = getInstrumentKind() {
+            return Instrument(id: id,
+                              name: "",
+                              condition: AssetCondition(rawValue: conditionField!.text!)!,
+                              kind: kind,
+                              make: makeField!.text!,
+                              model: modelField!.text!,
+                              serialNumber: serialNumberField!.text!,
+                              ucTagNumber: tagNumberField!.text!,
+                              ucAssetNumber: assetNumberField!.text!)
+        }
+        return nil
     }
     
     private func sendRequest() {
@@ -67,6 +70,10 @@ class InstrumentDetailsVC: UIViewController {
         default:
             break
         }
+    }
+    
+    private func getInstrumentKind() -> InstrumentKind? {
+        return InstrumentKind(rawValue: kindField!.text!)
     }
     
     @IBAction func requestButtonPressed(_ sender: Any) {

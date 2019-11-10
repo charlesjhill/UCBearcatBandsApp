@@ -35,7 +35,6 @@
 		13AA4BD622E8A48E00FF7473 /* UniformCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13AA4BD522E8A48E00FF7473 /* UniformCell.xib */; };
 		13AA4BD922E8AB9D00FF7473 /* EnsembleListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AA4BD822E8AB9D00FF7473 /* EnsembleListVC.swift */; };
 		13AF7ED022EF5DDC00EB3933 /* StudentAssignVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AF7ECF22EF5DDC00EB3933 /* StudentAssignVC.swift */; };
-		13BFF1012350244F008EB643 /* InstrumentKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BFF1002350244F008EB643 /* InstrumentKind.swift */; };
 		13D0A5AD229DCEE600FDB509 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D0A5AC229DCEE600FDB509 /* URL.swift */; };
 		13E1C73022EFA54F00C6A9B6 /* EnrollmentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E1C72F22EFA54F00C6A9B6 /* EnrollmentService.swift */; };
 		13E6FBA022CBEA4200C8A61C /* SampleDatabasePopulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6FB9F22CBEA4200C8A61C /* SampleDatabasePopulation.swift */; };
@@ -103,7 +102,6 @@
 		13AA4BD522E8A48E00FF7473 /* UniformCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UniformCell.xib; sourceTree = "<group>"; };
 		13AA4BD822E8AB9D00FF7473 /* EnsembleListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnsembleListVC.swift; path = ../EnsembleListVC.swift; sourceTree = "<group>"; };
 		13AF7ECF22EF5DDC00EB3933 /* StudentAssignVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentAssignVC.swift; sourceTree = "<group>"; };
-		13BFF1002350244F008EB643 /* InstrumentKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentKind.swift; sourceTree = "<group>"; };
 		13D0A5AC229DCEE600FDB509 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		13E1C72F22EFA54F00C6A9B6 /* EnrollmentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentService.swift; sourceTree = "<group>"; };
 		13E6FB9F22CBEA4200C8A61C /* SampleDatabasePopulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDatabasePopulation.swift; sourceTree = "<group>"; };
@@ -317,7 +315,6 @@
 				1365461922C92143008C8DC1 /* User.swift */,
 				131AAB0D22C9A86F003E0B5B /* ModelProtocols.swift */,
 				131AAB1122C9B06D003E0B5B /* Instrument.swift */,
-				13BFF1002350244F008EB643 /* InstrumentKind.swift */,
 				131AAB1622C9C1A0003E0B5B /* PurchaseInfo.swift */,
 				131AAB1822C9C598003E0B5B /* GenericAsset.swift */,
 				131AAB1A22C9C65F003E0B5B /* Locker.swift */,
@@ -546,7 +543,6 @@
 				91758BC922CC0FF200960548 /* UniformService.swift in Sources */,
 				13076A8C22D7EDF100A3CB74 /* LoginVC.swift in Sources */,
 				91A5783322EBCF6600C23E78 /* EnsembleCellVC.swift in Sources */,
-				13BFF1012350244F008EB643 /* InstrumentKind.swift in Sources */,
 				91DE314E22ED1AAC00E6CA88 /* RegisterVC.swift in Sources */,
 				13F0B5BD22E7D2B900CE565E /* UIView.swift in Sources */,
 				13AA4BD922E8AB9D00FF7473 /* EnsembleListVC.swift in Sources */,

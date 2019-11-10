@@ -21,7 +21,7 @@ struct InstrumentDetailView: View {
     var kinds: [String] = InstrumentKind.allCases.map { $0.rawValue }
     var conditions: [String] = AssetCondition.allCases.map { $0.rawValue }
     
-    init(_ instrument: Instrument?) {
+    init(_ instrument: Instrument? = nil) {
         self.instrument = instrument
         
         // If we got an instrument (i.e. we're modifying an existing asset), we should really make sure the state of this view matches the current information

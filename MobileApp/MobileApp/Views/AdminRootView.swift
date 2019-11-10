@@ -9,6 +9,14 @@
 import SwiftUI
 
 struct AdminRootView: View {
+    
+    init() {
+        // HACK: Because SwiftUI doesn't seem to furnish a good way of changing the tab color...
+        UITabBar.appearance().barTintColor = .red // TODO: Use UC red pantone
+        UITabBar.appearance().tintColor = .white
+        UITabBar.appearance().unselectedItemTintColor = .black
+    }
+    
     var body: some View {
         TabView {
             Text("Dashboard Placeholder")
@@ -36,6 +44,7 @@ struct AdminRootView: View {
                     Text("Ensembles")
                 })
         }
+        .accentColor(Color.white)
     }
 }
 

@@ -23,10 +23,7 @@ struct InstrumentListView: View {
                 // TODO: Pull to refresh appears to be unsupported in SwiftUI ScrollViews for the time being
                 // https://stackoverflow.com/questions/56493660/pull-down-to-refresh-data-in-swiftui=
             }
-            .navigationBarTitle(Text("Instruments"), displayMode: .inline)
-            .background(NavigationConfigurator { nc in
-                nc.navigationBar.barTintColor = .red // TODO: use proper UC pantone
-            })
+            .navigationBarTitle(Text("Instruments"))
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .onAppear(perform: viewModel.refreshData)

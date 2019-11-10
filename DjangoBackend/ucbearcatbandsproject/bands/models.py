@@ -94,12 +94,12 @@ class Asset(PolymorphicModel):
     POOR = 'poor'
     BAD = 'bad'
     UNUSABLE = 'unusable'
-    CONDITION_CHOICES = ((NEW, 'NEW'),
-                         (GOOD, 'GOOD'),
-                         (FAIR, 'FAIR'),
-                         (POOR, 'POOR'),
-                         (BAD, 'BAD'),
-                         (UNUSABLE, 'UNUSABLE'))
+    CONDITION_CHOICES = ((NEW, NEW),
+                         (GOOD, GOOD),
+                         (FAIR, FAIR),
+                         (POOR, POOR),
+                         (BAD, BAD),
+                         (UNUSABLE, UNUSABLE))
 
     # name *should* be automatically set by any subclass of Asset
     name = models.CharField(max_length=255, blank=True)
@@ -133,7 +133,7 @@ class AssetAssignment(models.Model):
         related_name="assignments"
     )
 
-    # Use an is_active flag to track current vs. previous assignments                              
+    # Use an is_active flag to track current vs. previous assignments
     is_active = models.BooleanField(default=True)
 
     def validate_unique(self, exclude=None):
@@ -165,7 +165,60 @@ class Instrument(Asset):
     """
     Model representing any instrument the band owns
     """
-    kind = models.CharField(max_length=255)  # TODO: Make enum
+    altoClarinet = 'Alto Clarinet'
+    altoSaxophone = 'Alto Saxophone'
+    bariSaxophone = 'Baritone Saxophone'
+    baritone = 'Baritone'
+    bassClarinet = 'Bass Clarinet'
+    bassTrombone = 'Bass Trombone'
+    bassoon = 'Bassoon'
+    clarinet = 'Clarinet'
+    cornet = 'Cornet'
+    eFlatClarinet = 'Eb Clarinet'
+    electricPiano = 'Electric Piano'
+    electricViolin = 'Electric Violin'
+    euphonium = 'Euphonium'
+    flute = 'Flute'
+    frenchHorn = 'French Horn'
+    marchingHorn = 'Marching Horn'
+    mellophone = 'Mellophone'
+    oboe = 'Oboe'
+    piano = 'Piano'
+    piccolo = 'Piccolo'
+    sopranoSaxophone = 'Soprano Saxophone'
+    sousaphone = 'Sousaphone'
+    tenorSaxophone = 'Tenor Saxophone'
+    trombone = 'Trombone'
+    trumpet = 'Trumpet'
+    tuba = 'Tuba'
+    INSTRUMENT_CHOICES = ((altoClarinet, altoClarinet),
+                          (altoSaxophone, altoSaxophone),
+                          (bariSaxophone, bariSaxophone),
+                          (baritone, baritone),
+                          (bassClarinet, bassClarinet),
+                          (bassTrombone, bassTrombone),
+                          (bassoon, bassoon),
+                          (clarinet, clarinet),
+                          (cornet, cornet),
+                          (eFlatClarinet, eFlatClarinet),
+                          (electricPiano, electricPiano),
+                          (electricViolin, electricViolin),
+                          (euphonium, euphonium),
+                          (flute, flute),
+                          (frenchHorn, frenchHorn),
+                          (marchingHorn, marchingHorn),
+                          (mellophone, mellophone),
+                          (oboe, oboe), 
+                          (piano, piano),
+                          (piccolo, piccolo),
+                          (sopranoSaxophone, sopranoSaxophone),
+                          (sousaphone, sousaphone),
+                          (tenorSaxophone, tenorSaxophone),
+                          (trombone, trombone),
+                          (trumpet, trumpet),
+                          (tuba, tuba))
+
+    kind = models.CharField(max_length=100, choices=INSTRUMENT_CHOICES, default=altoClarinet)
     make = models.CharField(max_length=255)
     model = models.CharField(max_length=255)
     serial_number = models.CharField(max_length=255)
@@ -200,8 +253,8 @@ class UniformPiece(Asset):
     """
     JACKET = 'jacket'
     PANTS = 'pants'
-    UNIFORM_PIECES = ((JACKET, 'JACKET'),
-                      (PANTS, 'PANTS'))
+    UNIFORM_PIECES = ((JACKET, JACKET),
+                      (PANTS, PANTS))
 
     kind = models.CharField(max_length=6, choices=UNIFORM_PIECES, default=JACKET)
     size = models.CharField(max_length=20)

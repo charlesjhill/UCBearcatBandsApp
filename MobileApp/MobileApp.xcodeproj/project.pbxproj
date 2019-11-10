@@ -11,7 +11,6 @@
 		13760C55236FA3EB00995D16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13760BF9236FA3EB00995D16 /* Assets.xcassets */; };
 		13760C56236FA3EB00995D16 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13760BFA236FA3EB00995D16 /* SceneDelegate.swift */; };
 		13760C57236FA3EB00995D16 /* ModelProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13760BFC236FA3EB00995D16 /* ModelProtocols.swift */; };
-		13760C58236FA3EB00995D16 /* GenericAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13760BFD236FA3EB00995D16 /* GenericAsset.swift */; };
 		13760C59236FA3EB00995D16 /* MaintenanceReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13760BFE236FA3EB00995D16 /* MaintenanceReport.swift */; };
 		13760C5A236FA3EB00995D16 /* UniformPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13760BFF236FA3EB00995D16 /* UniformPiece.swift */; };
 		13760C5B236FA3EB00995D16 /* PurchaseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13760C00236FA3EB00995D16 /* PurchaseInfo.swift */; };
@@ -46,6 +45,7 @@
 		13760C84236FA3EB00995D16 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13760C30236FA3EB00995D16 /* URL.swift */; };
 		13760C85236FA3EB00995D16 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13760C31236FA3EB00995D16 /* UIViewController.swift */; };
 		13760C87236FA3EB00995D16 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13760C36236FA3EB00995D16 /* Preview Assets.xcassets */; };
+		139EA8CD2378B14900A3ED7A /* GenericAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EA8CC2378B14900A3ED7A /* GenericAsset.swift */; };
 		13D93440236FADA700B5A912 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D9343F236FADA700B5A912 /* NavigationView.swift */; };
 		13E6FBA022CBEA4200C8A61C /* SampleDatabasePopulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6FB9F22CBEA4200C8A61C /* SampleDatabasePopulation.swift */; };
 		B5D68D1322983DD200600B76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D68D1222983DD200600B76 /* AppDelegate.swift */; };
@@ -66,7 +66,6 @@
 		13760BF9236FA3EB00995D16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13760BFA236FA3EB00995D16 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		13760BFC236FA3EB00995D16 /* ModelProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelProtocols.swift; sourceTree = "<group>"; };
-		13760BFD236FA3EB00995D16 /* GenericAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericAsset.swift; sourceTree = "<group>"; };
 		13760BFE236FA3EB00995D16 /* MaintenanceReport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaintenanceReport.swift; sourceTree = "<group>"; };
 		13760BFF236FA3EB00995D16 /* UniformPiece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniformPiece.swift; sourceTree = "<group>"; };
 		13760C00236FA3EB00995D16 /* PurchaseInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseInfo.swift; sourceTree = "<group>"; };
@@ -101,6 +100,7 @@
 		13760C30236FA3EB00995D16 /* URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		13760C31236FA3EB00995D16 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		13760C36236FA3EB00995D16 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		139EA8CC2378B14900A3ED7A /* GenericAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericAsset.swift; sourceTree = "<group>"; };
 		13D9343F236FADA700B5A912 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		13E6FB9F22CBEA4200C8A61C /* SampleDatabasePopulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDatabasePopulation.swift; sourceTree = "<group>"; };
 		B5D68D0F22983DD200600B76 /* MobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,7 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				13760BFC236FA3EB00995D16 /* ModelProtocols.swift */,
-				13760BFD236FA3EB00995D16 /* GenericAsset.swift */,
+				139EA8CC2378B14900A3ED7A /* GenericAsset.swift */,
 				13760BFE236FA3EB00995D16 /* MaintenanceReport.swift */,
 				13760BFF236FA3EB00995D16 /* UniformPiece.swift */,
 				13760C00236FA3EB00995D16 /* PurchaseInfo.swift */,
@@ -413,7 +413,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13760C58236FA3EB00995D16 /* GenericAsset.swift in Sources */,
 				13760C59236FA3EB00995D16 /* MaintenanceReport.swift in Sources */,
 				13760C80236FA3EB00995D16 /* UIView.swift in Sources */,
 				13760C85236FA3EB00995D16 /* UIViewController.swift in Sources */,
@@ -436,6 +435,7 @@
 				13760C56236FA3EB00995D16 /* SceneDelegate.swift in Sources */,
 				13760C83236FA3EB00995D16 /* UITableViewCell.swift in Sources */,
 				13D93440236FADA700B5A912 /* NavigationView.swift in Sources */,
+				139EA8CD2378B14900A3ED7A /* GenericAsset.swift in Sources */,
 				13760C75236FA3EB00995D16 /* EnsembleListVM.swift in Sources */,
 				13760C66236FA3EB00995D16 /* AuthService.swift in Sources */,
 				13760C5D236FA3EB00995D16 /* Instrument.swift in Sources */,

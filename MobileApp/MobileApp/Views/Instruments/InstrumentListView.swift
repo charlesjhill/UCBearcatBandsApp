@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct InstrumentListView: View {
-    @EnvironmentObject var viewModel: InstrumentListVM
+    @EnvironmentObject private var viewModel: InstrumentListVM
     
     var body: some View {
         NavigationView {
             List {
                 ForEach (viewModel.instruments) { instrument in
-                    NavigationLink(destination: InstrumentDetailView(instrument)) {
+                    NavigationLink(destination: InstrumentDetailView(instrument).environmentObject(self.viewModel)) {
                         InstrumentRow(instrument: instrument)
                     }
                 }
@@ -24,13 +24,19 @@ struct InstrumentListView: View {
                 // https://stackoverflow.com/questions/56493660/pull-down-to-refresh-data-in-swiftui=
             }
             .navigationBarTitle(Text("Instruments"))
+            .navigationBarItems(trailing:
+                NavigationLink(destination: InstrumentDetailView().environmentObject(self.viewModel)) {
+                    // BUG: Using this link then trying to return to this view causes a crash -- probable SwiftUI bug
+                    Text("+").fontWeight(.bold)
+                }
+            )
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .onAppear(perform: viewModel.refreshData)
     }
 }
 
-struct InstrumentRow: View {
+private struct InstrumentRow: View {
     let instrument: Instrument
     
     var body: some View {

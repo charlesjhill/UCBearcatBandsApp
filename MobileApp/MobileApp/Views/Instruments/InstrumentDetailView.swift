@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct InstrumentDetailView: View {
+    @EnvironmentObject private var viewModel: InstrumentListVM
+    
     @State private var kind: Int = 0
     @State private var condition: Int = 0
     @State private var make: String = ""
@@ -24,7 +26,8 @@ struct InstrumentDetailView: View {
     init(_ instrument: Instrument? = nil) {
         self.instrument = instrument
         
-        // If we got an instrument (i.e. we're modifying an existing asset), we should really make sure the state of this view matches the current information
+        // If we got an instrument (i.e. we're modifying an existing asset), we should really make sure the state of
+        // this view matches the current information
         guard let i = instrument else { return }
         _kind = State(initialValue: kinds.firstIndex(of: i.kind.rawValue) ?? 0)
         _condition = State(initialValue: conditions.firstIndex(of: i.condition.rawValue) ?? 0)
@@ -36,7 +39,7 @@ struct InstrumentDetailView: View {
     }
     
     var body: some View {
-        List {
+        Form {
             Section(header: Text("Description")) {
                 Picker(selection: $kind, label: Text("Kind")) {
                     ForEach(0 ..< kinds.count) {
@@ -90,7 +93,7 @@ struct InstrumentDetailView: View {
             }
             Button(action: constructInstrument) {
                 HStack {
-                    // This is the only way I could figure out how to center the text here
+                    // HACK: This is the only way I could figure out how to center the text here
                     Spacer()
                     Text("Submit")
                     Spacer()
@@ -99,10 +102,10 @@ struct InstrumentDetailView: View {
         }
         .padding(.top)
         .listStyle(GroupedListStyle())
-        .navigationBarTitle(Text(pageTitle))
+        .navigationBarTitle(Text(pageTitle), displayMode: .inline)
     }
     
-    func constructInstrument() {
+    private func constructInstrument() {
         let i = Instrument(id: instrument?.id ?? 0,
                            name: "",
                            condition: AssetCondition(rawValue: conditions[condition])!,
@@ -112,8 +115,11 @@ struct InstrumentDetailView: View {
                            serialNumber: !serialNumber.isEmpty ? serialNumber : instrument?.serialNumber ?? "",
                            ucTagNumber: !tagNumber.isEmpty ? tagNumber : instrument?.ucTagNumber ?? "",
                            ucAssetNumber: !assetNumber.isEmpty ? assetNumber : instrument?.ucAssetNumber ?? "")
-        print(i)
-        // TODO: Should actually make the appropriate API call -- perhaps we should be binding the InstrumentListVM to this view as well?
+        if instrument == nil {
+            viewModel.addInstrument(i)
+        } else {
+            viewModel.updateInstrument(i)
+        }
     }
     
 }
@@ -121,7 +127,7 @@ struct InstrumentDetailView: View {
 #if DEBUG
 struct InstrumentDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        InstrumentDetailView(nil)
+        InstrumentDetailView(nil).environmentObject(InstrumentListVM())
     }
 }
 #endif

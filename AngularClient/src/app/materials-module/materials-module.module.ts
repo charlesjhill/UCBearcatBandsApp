@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 // All the Matierals
 // tslint:disable-next-line: max-line-length
-import { MatButtonModule, MatCheckboxModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule, MatRippleModule, MatDialogModule, MatExpansionModule, MatMenuModule, MatSortModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule, MatRippleModule, MatDialogModule, MatExpansionModule, MatMenuModule, MatSortModule, MatStepperModule } from '@angular/material';
 // tslint:disable-next-line: max-line-length
 import { MatFormFieldModule, MatCardModule, MatGridListModule, MatInputModule, MatTableModule, MatSelectModule, MatSlideToggleModule, MatSnackBarModule, MatPaginatorModule } from '@angular/material';
 
@@ -30,7 +30,8 @@ import { MatFormFieldModule, MatCardModule, MatGridListModule, MatInputModule, M
     MatMenuModule,
     MatSortModule,
     MatSnackBarModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatStepperModule
   ],
   exports: [
     MatButtonModule,
@@ -52,7 +53,8 @@ import { MatFormFieldModule, MatCardModule, MatGridListModule, MatInputModule, M
     MatMenuModule,
     MatSortModule,
     MatSnackBarModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatStepperModule
   ]
 })
 export class MaterialsModule { }

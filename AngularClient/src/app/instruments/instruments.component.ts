@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { InstrumentsService, AlertService, EnsembleService, UserService, AssignmentService, EnrollmentService } from '../_services';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { InstrumentsService, AlertService, EnsembleService, AssignmentService, EnrollmentService, StudentService } from '../_services';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
 import { Instrument, Ensemble, Assignment, Enrollment, Student } from '../_models';
@@ -190,7 +190,7 @@ export class InstrumentsComponent implements OnInit {
     );
   }
 
-  private getEnrollment(student: Student, ensemble: Ensemble): Observable<Enrollment> {
+  private getOrCreateEnrollment(student: Student, ensemble: Ensemble): Observable<Enrollment> {
     // Check if the enrollment alreday exists
     for (const enr of ensemble.enrollments) {
       if (enr.student.m_number === student.m_number) {
@@ -209,9 +209,8 @@ export class InstrumentsComponent implements OnInit {
 
   private Assign(id: number, student: Student, ensemble: Ensemble): void {
     // create enrollment
-    this.getEnrollment(student, ensemble).subscribe(
+    this.getOrCreateEnrollment(student, ensemble).subscribe(
       enr => {
-        // Check if assignment already exists
         console.log('creating assignment');
         const newAsm = new Assignment();
         newAsm.enrollment = enr.id;
@@ -311,21 +310,23 @@ export class OverviewDialog implements OnInit {
 })
 export class InstrumentAssignDialog implements OnInit {
 
-  assignForm: FormGroup;
+  ensForm: FormGroup;
+  studentForm: FormGroup;
+
   ensembles: Ensemble[];
   students: Student[];
-  chosen_ensemble: Ensemble;
-  chosen_student: Student;
+
+  chosenEnsemble: Ensemble;
+  chosenStudent: Student;
 
   constructor(
     private fb: FormBuilder,
     private ensembleService: EnsembleService,
-    private userService: UserService,
+    private studentService: StudentService,
     public dialogRef: MatDialogRef<InstrumentAssignDialog>,
-    @Inject(MAT_DIALOG_DATA) data)
-  {
-    this.chosen_ensemble = data.ensemble;
-    this.chosen_student = data.student;
+    @Inject(MAT_DIALOG_DATA) data) {
+    this.chosenEnsemble = data.ensemble;
+    this.chosenStudent = data.student;
   }
 
   onNoClick() {
@@ -333,19 +334,26 @@ export class InstrumentAssignDialog implements OnInit {
   }
 
   save() {
-    this.dialogRef.close(this.assignForm.value);
+    const data = {
+      ensemble: this.ensForm.value.ensemble,
+      student: this.studentForm.value.student
+    };
+    this.dialogRef.close(data);
   }
 
   ngOnInit() {
     this.getEnsembles();
     this.getStudents();
-    this.assignForm = this.fb.group({
-      ensemble: [this.chosen_ensemble, []],
-      student: [this.chosen_student, []],
+    this.ensForm = this.fb.group({
+      ensemble: [this.chosenEnsemble, Validators.required]
+    });
+    this.studentForm = this.fb.group({
+      student: [this.chosenStudent, Validators.required]
     });
   }
 
-  public getEnsembles() {
+  /** Get the list of ensembles from the ensemble service, storing them in this.ensembles */
+  private getEnsembles() {
     this.ensembleService.currentEnsembles.subscribe(
       // the first argument is a function which runs on success
       data => {
@@ -356,11 +364,12 @@ export class InstrumentAssignDialog implements OnInit {
       // the third argument is a function which runs on completion
       () => console.log('Ensembles done loading')
     );
-    this.ensembleService.update();
+    this.ensembleService.update(); // Force a reload of our ensembles
   }
 
- public getStudents() {
-    this.userService.list().subscribe(
+  /** Get the list of students from the student service, storing them in this.students */
+  private getStudents() {
+    this.studentService.currentStudents.subscribe(
       // the first argument is a function which runs on success
       data => {
         this.students = data;
@@ -370,5 +379,6 @@ export class InstrumentAssignDialog implements OnInit {
       // the third argument is a function which runs on completion
       () => console.log('Students done loading')
     );
+    this.studentService.update(); // Force a reload of our students
   }
 }

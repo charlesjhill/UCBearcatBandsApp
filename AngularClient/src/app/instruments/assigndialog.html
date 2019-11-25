@@ -1,23 +1,39 @@
 <h1 mat-dialog-title>Assign Instrument</h1>
-<div mat-dialog-content [formGroup]="assignForm">
-  <mat-form-field>
-    <mat-label>Choose Ensemble</mat-label>
-    <mat-select formControlName="ensemble">
-      <mat-option  *ngFor="let ensemble of ensembles" [value]="ensemble">
-        {{ensemble.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Choose Student</mat-label>
-    <mat-select formControlName="student">
-      <mat-option  *ngFor="let student of students" [value]="student">
-        {{student.user.full_name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="save()">Ok</button>
-  <button mat-button (click)="onNoClick()">Cancel</button>
+<div mat-dialog-content [formGroup]="ensForm">
+  <mat-horizontal-stepper [linear]="true">
+    <mat-step [stepControl]="ensForm">
+      <form [formGroup]="ensForm">
+        <ng-template matStepLabel>Pick an Ensemble</ng-template>
+        <mat-form-field>
+          <mat-label>Choose Ensemble</mat-label>
+          <mat-select formControlName="ensemble">
+            <mat-option *ngFor="let ensemble of ensembles" [value]="ensemble">
+              {{ensemble.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="studentForm">
+      <form [formGroup]="studentForm">
+        <ng-template matStepLabel>Pick a Student</ng-template>
+        <mat-form-field>
+          <mat-label>Choose Student</mat-label>
+          <mat-select formControlName="student">
+            <mat-option *ngFor="let student of students" [value]="student">
+              {{student.user.full_name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="save()">Confirm</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
+
 </div>

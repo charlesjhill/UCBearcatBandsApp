@@ -48,8 +48,8 @@ export class InstrumentsComponent implements OnInit {
   assignment: Assignment;
   assignedString: string[] = [];
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public getInstruments() {
     this.instrumentService.currentInstruments.subscribe(
@@ -91,12 +91,12 @@ export class InstrumentsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(data => {
-          if (data != null) {
-            this.new_instrument = data;
-            console.log(this.new_instrument);
-            this.onAdd();
-          }
-      });
+      if (data != null) {
+        this.new_instrument = data;
+        console.log(this.new_instrument);
+        this.onAdd();
+      }
+    });
   }
 
   onAdd() {
@@ -266,8 +266,7 @@ export class OverviewDialog implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<OverviewDialog>,
-    @Inject(MAT_DIALOG_DATA) data)
-  {
+    @Inject(MAT_DIALOG_DATA) data) {
     this.kind = data.kind;
     this.make = data.make;
     this.model = data.model;
@@ -282,7 +281,7 @@ export class OverviewDialog implements OnInit {
   }
 
   onNoClick() {
-      // Could we add the instrument service call here?
+    // Could we add the instrument service call here?
     this.dialogRef.close();
   }
 
@@ -292,13 +291,13 @@ export class OverviewDialog implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      kind: [{value: this.kind, disabled: this.readonly}, []],
-        make: [{value: this.make, disabled: this.readonly}, []],
-      model: [{value: this.model, disabled: this.readonly}, []],
-      condition: [{value: this.condition, disabled: this.readonly}, []],
-      uc_asset_number: [{value: this.uc_asset_number, disabled: this.readonly}, []],
-      serial_number: [{value: this.serial_number, disabled: this.readonly}, []],
-      uc_tag_number: [{value: this.uc_tag_number, disabled: this.readonly}, []]
+      kind: [{ value: this.kind, disabled: this.readonly }, []],
+      make: [{ value: this.make, disabled: this.readonly }, []],
+      model: [{ value: this.model, disabled: this.readonly }, []],
+      condition: [{ value: this.condition, disabled: this.readonly }, []],
+      uc_asset_number: [{ value: this.uc_asset_number, disabled: this.readonly }, []],
+      serial_number: [{ value: this.serial_number, disabled: this.readonly }, []],
+      uc_tag_number: [{ value: this.uc_tag_number, disabled: this.readonly }, []]
     });
   }
 

@@ -52,8 +52,8 @@ export class UniformsComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.inventory);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        for (const inst of this.inventory) {
-          this.getAssigned(inst.id);
+        for (const uni of this.inventory) {
+          this.getAssigned(uni.id);
         }
       },
       // the second argument is a function which runs on error
@@ -66,7 +66,7 @@ export class UniformsComponent implements OnInit {
   openForm(): void {
     let is_closed = false;
 
-    const dialogRef = this.dialog.open(UniformAssignDialog, {
+    const dialogRef = this.dialog.open(CreateUniformDialog, {
       data: {
         condition: this.condition,
         kind: this.kind,
@@ -118,7 +118,7 @@ export class UniformsComponent implements OnInit {
   editForm(uniform: Uniform, id: number): void {
     let is_closed = false;
 
-    const dialogRef = this.dialog.open(UniformAssignDialog, {
+    const dialogRef = this.dialog.open(CreateUniformDialog, {
       data: {
         condition: uniform.condition,
         kind: uniform.kind,
@@ -142,7 +142,7 @@ export class UniformsComponent implements OnInit {
   viewForm(uniform: Uniform): void {
     let is_closed = false;
 
-    const dialogRef = this.dialog.open(UniformAssignDialog, {
+    const dialogRef = this.dialog.open(CreateUniformDialog, {
       data: {
         condition: uniform.condition,
         kind: uniform.kind,
@@ -156,7 +156,7 @@ export class UniformsComponent implements OnInit {
   }
 
   public getAssigned(id: number): void {
-    // hit /instruments/{{id}}/students
+    // hit /uniforms/{{id}}/students
     // return student name
     let names = '';
     this.uniformService.getStudentsAssigned(id).subscribe(
@@ -231,10 +231,10 @@ export class UniformsComponent implements OnInit {
 }
 
 @Component({
-  selector: 'UniformAssignDialog',
+  selector: 'CreateUniformDialog',
   templateUrl: 'dialog.html',
 })
-export class UniformAssignDialog implements OnInit {
+export class CreateUniformDialog implements OnInit {
   form: FormGroup;
   kind: string;
   condition: string;
@@ -250,7 +250,7 @@ export class UniformAssignDialog implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<UniformAssignDialog>,
+    public dialogRef: MatDialogRef<CreateUniformDialog>,
     @Inject(MAT_DIALOG_DATA) data)
   {
     this.kind = data.kind;

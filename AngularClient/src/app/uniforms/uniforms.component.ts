@@ -1,4 +1,4 @@
-import { InstrumentAssignDialog } from './../instruments/instruments.component';
+import { InstrumentAssignDialog, AssignDialogData } from './../instruments/instruments.component';
 import { EnrollmentService } from 'src/app/_services/enrollment.service';
 import { AssignmentService } from './../_services/assignments.service';
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
@@ -211,10 +211,14 @@ export class UniformsComponent implements OnInit {
   }
 
   public assignForm(uniform: Uniform, id: number): void {
-    let is_closed = false;
+    const assignData: AssignDialogData = {
+      ensemble: null,
+      student: null,
+      dialogName: uniform.name
+    };
 
     const dialogRef = this.dialog.open(InstrumentAssignDialog, {
-      data: {}
+      data: assignData
     });
 
     dialogRef.afterClosed().subscribe(data => {

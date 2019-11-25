@@ -230,8 +230,14 @@ export class InstrumentsComponent implements OnInit {
   public assignForm(instrument: Instrument, id: number): void {
     let is_closed = false;
 
+    const assignData: AssignDialogData = {
+      student: null,
+      ensemble: null,
+      dialogName: instrument.name
+    };
+
     const dialogRef = this.dialog.open(InstrumentAssignDialog, {
-      data: {}
+      data: assignData
     });
 
     dialogRef.afterClosed().subscribe(data => {
@@ -303,6 +309,13 @@ export class OverviewDialog implements OnInit {
 
 }
 
+
+export interface AssignDialogData {
+  student: Student;
+  ensemble: Ensemble;
+  dialogName: string;
+}
+
 @Component({
   selector: 'InstrumentAssignDialog',
   templateUrl: 'assigndialog.html',
@@ -317,15 +330,17 @@ export class InstrumentAssignDialog implements OnInit {
 
   chosenEnsemble: Ensemble;
   chosenStudent: Student;
+  dialogName: string;
 
   constructor(
     private fb: FormBuilder,
     private ensembleService: EnsembleService,
     private studentService: StudentService,
     public dialogRef: MatDialogRef<InstrumentAssignDialog>,
-    @Inject(MAT_DIALOG_DATA) data) {
+    @Inject(MAT_DIALOG_DATA) data: AssignDialogData) {
     this.chosenEnsemble = data.ensemble;
     this.chosenStudent = data.student;
+    this.dialogName = data.dialogName;
   }
 
   onNoClick() {

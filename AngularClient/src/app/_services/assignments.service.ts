@@ -29,24 +29,24 @@ export class AssignmentService {
   /** Get all the assignments from the API */
   list(): Observable<Assignment[]> {
     return this.http.get<Assignment[]>(`${environment.apiUrl}/assignments/`)
-      .pipe(catchError(this.handleError));
+      .pipe(catchError(err => this.handleError(err)));
   }
 
   /** Add an assignment to the API */
   addAssigment(assignment: Assignment): Observable<Assignment> {
     return this.http.post<Assignment>(`${environment.apiUrl}/assignments/`, assignment)
-      .pipe(catchError(this.handleError));
+      .pipe(catchError(err => this.handleError(err)));
   }
 
   /** Delete an assignment from the API */
   deleteAssigment(id: number): Observable<any> {
     return this.http.delete(`${environment.apiUrl}/assignments/${id}/`)
-      .pipe(catchError(this.handleError));
+      .pipe(catchError(err => this.handleError(err)));
   }
 
   /** Update an assignment object */
   updateAssigment(assignment: Assignment, id: number): Observable<Assignment> {
     return this.http.put<Assignment>(`${environment.apiUrl}/assigments/${id}/`, assignment)
-      .pipe(catchError(this.handleError));
+      .pipe(catchError(err => this.handleError(err)));
   }
 }

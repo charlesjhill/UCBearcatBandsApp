@@ -51,8 +51,8 @@ export class UniformsService {
     return this.http.post<Uniform>(`${environment.apiUrl}/uniforms/`, uniform)
       .pipe(
         first(),
-        tap(this.update),
-        catchError(this.handleError)
+        tap(() => this.update()),
+        catchError(err => this.handleError(err))
       );
   }
 
@@ -61,8 +61,8 @@ export class UniformsService {
     return this.http.delete(`${environment.apiUrl}/uniforms/${id}/`)
       .pipe(
         first(),
-        tap(this.update),
-        catchError(this.handleError));
+        tap(() => this.update()),
+        catchError(err => this.handleError(err)));
   }
 
   /** Update a uniform with a given id */
@@ -70,13 +70,13 @@ export class UniformsService {
     return this.http.put<Uniform>(`${environment.apiUrl}/uniforms/` + id + '/', uniform)
       .pipe(
         first(),
-        tap(this.update),
-        catchError(this.handleError)
+        tap(() => this.update()),
+        catchError(err => this.handleError(err))
       );
   }
 
   /** Get the students assigned to a uniform with the given id */
   public getStudentsAssigned(id: number): Observable<Student[]> {
-    return this.http.get<Student[]>(`${environment.apiUrl}/uniforms/${id}/students/`).pipe(first(), catchError(this.handleError));
+    return this.http.get<Student[]>(`${environment.apiUrl}/uniforms/${id}/students/`).pipe(first(), catchError(err => this.handleError(err)));
   }
 }

@@ -70,8 +70,8 @@ export class AuthenticationService {
         return this.http.post<TokenReturn>(`${environment.apiUrl}/rest-auth/login/`, { email, password })
             .pipe(
                 take(1),
-                concatMap(this.tokenToUser),
-                concatMap(this.retUserToUser),
+                concatMap(tr => this.tokenToUser(tr)),
+                concatMap(ru => this.retUserToUser(ru)),
                 concatMap(u => iif(() => u.is_student, this.http.get(`${environment.apiUrl}/students/${u.id}/`), of(u))),
                 tap(thing => {
                     if (thing.hasOwnProperty('m_number') && (thing as Student).m_number) {

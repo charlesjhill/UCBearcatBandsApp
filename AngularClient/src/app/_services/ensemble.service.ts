@@ -36,7 +36,7 @@ export class EnsembleService {
   public add(ensemble: { name: string; term: string; is_active: boolean }): Observable<Ensemble> {
     return this.http.post<Ensemble>(this.baseURL, ensemble).pipe(
       first(),
-      tap(this.update)
+      tap(() => this.update())
     );
   }
 
@@ -44,7 +44,7 @@ export class EnsembleService {
   public delete(id: number): Observable<any> {
     return this.http.delete<any>(this.baseURL + id + '/').pipe(
       first(),
-      tap(this.update)
+      tap(() => this.update())
     );
   }
 

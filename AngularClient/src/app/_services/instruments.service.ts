@@ -51,8 +51,8 @@ export class InstrumentsService {
     return this.http.post<Instrument>(`${environment.apiUrl}/instruments/`, instrument)
       .pipe(
         first(),
-        tap(this.update),
-        catchError(this.handleError),
+        tap(() => this.update()),
+        catchError(err => this.handleError(err))
       );
   }
 
@@ -61,8 +61,8 @@ export class InstrumentsService {
     return this.http.delete(`${environment.apiUrl}/instruments/` + id + '/')
       .pipe(
         first(),
-        tap(this.update),
-        catchError(this.handleError)
+        tap(() => this.update()),
+        catchError(err => this.handleError(err))
       );
   }
 
@@ -72,8 +72,8 @@ export class InstrumentsService {
     return this.http.put<Instrument>(`${environment.apiUrl}/instruments/` + id + '/', instrument)
       .pipe(
         first(),
-        tap(this.update),
-        catchError(this.handleError));
+        tap(() => this.update()),
+        catchError(err => this.handleError(err)));
   }
 
   /** Get the students assigned to a particular instrument */

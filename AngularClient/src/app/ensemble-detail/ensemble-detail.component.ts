@@ -91,11 +91,11 @@ export class EnsembleDetailComponent implements OnInit {
     });
   }
 
-  getAssignedInstruments(enrollment: Enrollment): string {
-    return enrollment.assets.filter(a => a.resourcetype === 'Instrument').map(a => a.name).join('; ');
+  getAssignedInstruments(enrollment: Enrollment): any[] {
+    return enrollment.assets.filter(a => a.resourcetype === 'Instrument');
   }
 
-  getAssignedOtherAssets(enrollment: Enrollment): string {
-    return enrollment.assets.filter(a => a.resourcetype !== 'Instrument').map(a => a.name).join('; ');
+  getAssignedOtherAssets(enrollment: Enrollment): any[] {
+    return enrollment.assets.filter(a => a.resourcetype !== 'Instrument');
   }
 }

@@ -283,7 +283,7 @@ class Invoice(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['vendor', 'invoice_number'], name='unique_invoice')
+            models.UniqueConstraint(fields=['vendor', 'invoice_number'], name='%(class)s_unique_number_for_vendor')
         ]
         abstract = True
 

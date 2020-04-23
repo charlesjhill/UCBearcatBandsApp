@@ -6,7 +6,10 @@ import { UniformsService, AlertService } from '../_services';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Uniform, Student, Ensemble, Enrollment, Assignment } from '../_models';
-import { MatSnackBarRef, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { SnackBarService } from '../_services/snackbar.service';
 import { Observable, of } from 'rxjs';
 

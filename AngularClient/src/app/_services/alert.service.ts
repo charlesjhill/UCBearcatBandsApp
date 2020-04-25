@@ -22,21 +22,25 @@ export class AlertService {
         });
     }
 
-    getAlert(): Observable<any> {
+    /** Get an obsercable of alert events */
+    public getAlert(): Observable<any> {
         return this.subject.asObservable();
     }
 
-    success(message: string, keepAfterRouteChange = false) {
+    /** Create a successful alert */
+    public success(message: string, keepAfterRouteChange = false) {
         this.keepAfterRouteChange = keepAfterRouteChange;
         this.subject.next({ type: 'success', text: message });
     }
 
-    error(message: string, keepAfterRouteChange = false) {
+    /** Create an error alert */
+    public error(message: string, keepAfterRouteChange = false) {
         this.keepAfterRouteChange = keepAfterRouteChange;
         this.subject.next({ type: 'error', text: message });
     }
 
-    clear() {
+    /** Remove any alerts */
+    public clear() {
         // clear by calling subject.next() without parameters
         this.subject.next();
     }

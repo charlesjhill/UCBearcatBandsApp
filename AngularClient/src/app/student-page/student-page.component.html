@@ -1,29 +1,35 @@
-<div class="mat-app-background">
+<div class="mat-app-background" >
   <h1>Welcome {{currentUser.full_name}}</h1>
 
-  <h3> Your ensembles</h3>
-  <mat-accordion>
-    <mat-expansion-panel *ngFor="let ensemble of ensembles">
-      <mat-expansion-panel-header>
-        {{ ensemble.name }} {{ ensemble.term }}
-      </mat-expansion-panel-header>
-      <!-- Content -->
-      <mat-card class="mb-1">
-        <mat-card-title>Instruments</mat-card-title>
-        <mat-list>
-          <mat-list-item *ngFor="let instrument of ensInstruments[ensemble.id]">  
-            {{ instrument.name }}<span *ngIf="instrument.locker"> - Locker: {{instrument.locker.number}} | {{instrument.locker.combination}}</span>
-          </mat-list-item>
-        </mat-list>
-      </mat-card>
-      <mat-card>
-        <mat-card-title>Other Assets</mat-card-title>
-        <mat-list>
-          <mat-list-item *ngFor="let uniform of ensUniforms[ensemble.id]">
+  <div *ngIf="ensembles.length > 0; else elseBlock">
+    <h3> Your ensembles</h3>
+    
+    <mat-accordion *ngIf="ensembles.length">
+      <mat-expansion-panel *ngFor="let ensemble of ensembles">
+        <mat-expansion-panel-header>
+          {{ ensemble.name }} {{ ensemble.term }}
+        </mat-expansion-panel-header>
+        <!-- Content -->
+        <mat-card class="mb-1">
+          <mat-card-title>Instruments</mat-card-title>
+          <mat-list>
+            <mat-list-item *ngFor="let instrument of ensInstruments[ensemble.id]">  
+              {{ instrument.name }}<span *ngIf="instrument.locker"> - Locker: {{instrument.locker.number}} | {{instrument.locker.combination}}</span>
+            </mat-list-item>
+          </mat-list>
+        </mat-card>
+        <mat-card>
+          <mat-card-title>Other Assets</mat-card-title>
+          <mat-list>
+            <mat-list-item *ngFor="let uniform of ensUniforms[ensemble.id]">
               {{uniform.name | titlecase}} <span *ngIf="uniform.locker"> - Locker: {{uniform.locker.number}} | {{uniform.locker.combination}}</span>
-          </mat-list-item>
-        </mat-list>
-      </mat-card>
-    </mat-expansion-panel>
-  </mat-accordion>
+            </mat-list-item>
+          </mat-list>
+        </mat-card>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <ng-template #elseBlock>
+    <h2>You are not enrolled in any ensembles</h2>
+  </ng-template>
 </div>

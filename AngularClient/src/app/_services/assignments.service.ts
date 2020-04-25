@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { UserService } from './user.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Assignment } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class AssignmentService {
 
-  constructor(private __http: HttpClient, private _userService: UserService) { }
+  constructor(private http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -25,46 +24,29 @@ export class AssignmentService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  };
+  }
 
-  //Lists assignments
+  /** Get all the assignments from the API */
   list(): Observable<Assignment[]> {
-    return this.__http.get<Assignment[]>(`${environment.apiUrl}/assignments/`);
+    return this.http.get<Assignment[]>(`${environment.apiUrl}/assignments/`)
+      .pipe(catchError(err => this.handleError(err)));
   }
 
-  //Creates assignments
+  /** Add an assignment to the API */
   addAssigment(assignment: Assignment): Observable<Assignment> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-    return this.__http.post<Assignment>(`${environment.apiUrl}/assignments/`, assignment, httpOptions)
-      .pipe(catchError(this.handleError));
+    return this.http.post<Assignment>(`${environment.apiUrl}/assignments/`, assignment)
+      .pipe(catchError(err => this.handleError(err)));
   }
 
-  //Deletes assignments
-  deleteAssigment(id): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-    return this.__http.delete(`${environment.apiUrl}/assignments/` + id + '/')
-      .pipe(catchError(this.handleError));
+  /** Delete an assignment from the API */
+  deleteAssigment(id: number): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}/assignments/${id}/`)
+      .pipe(catchError(err => this.handleError(err)));
   }
 
-  //updates assignments
-  updateAssigment(assignment: Assignment, id): Observable<Assignment> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-    return this.__http.put<Assignment>(`${environment.apiUrl}/assigments/` + id + '/', assignment, httpOptions)
-      .pipe(catchError(this.handleError));
+  /** Update an assignment object */
+  updateAssigment(assignment: Assignment, id: number): Observable<Assignment> {
+    return this.http.put<Assignment>(`${environment.apiUrl}/assigments/${id}/`, assignment)
+      .pipe(catchError(err => this.handleError(err)));
   }
 }

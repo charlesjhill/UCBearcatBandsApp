@@ -6,9 +6,11 @@ export class SidebarService {
 
   private sidebarToggleSource = new Subject<void>();
 
-  sidebarToggled$ = this.sidebarToggleSource.asObservable();
+  /** An observable which emits whenever the sidebar is to be toggled */
+  public sidebarToggled$ = this.sidebarToggleSource.asObservable();
 
-  toggleSidebar() {
+  /** Toggle the sidebar */
+  public toggleSidebar() {
     this.sidebarToggleSource.next();
   }
 

@@ -19,7 +19,7 @@ router.register(r'maintenances', views.MaintenanceViewSet)
 
 # Include the viewsets' urls, as well as our authentication urls
 urlpatterns = [
-    path('rest-auth/', include('rest_auth.urls')),
-    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('', include(router.urls)),
 ]

@@ -19,17 +19,17 @@ export class StudentService {
   private currentStudentsSubject: BehaviorSubject<Student[]>;
   public currentStudents: Observable<Student[]>;
 
+  /** Get the list of all the students */
   private list(): Observable<Student[]> {
     return this.http.get<Student[]>(this.baseUrl).pipe(first());
   }
 
+  /** Get a student instance given an id */
   public details(id: number): Observable<Student> {
-    return this.http.get<Student>(`${this.baseUrl}/${id}/`);
+    return this.http.get<Student>(`${this.baseUrl}/${id}/`).pipe(first());
   }
 
-  /**
-   * Refresh the students
-   */
+  /** Force a refresh of the stored students */
   public update(): void {
     console.log('updating list of students');
     this.list().subscribe(data => {

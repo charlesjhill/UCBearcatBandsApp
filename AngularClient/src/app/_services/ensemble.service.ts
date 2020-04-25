@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,40 +20,35 @@ export class EnsembleService {
   private currentEnsemblesSubject: BehaviorSubject<Ensemble[]>;
   public currentEnsembles: Observable<Ensemble[]>;
 
+  /** Get all the ensembles from the server */
   private list(): Observable<Ensemble[]> {
     return this.http.get<Ensemble[]>(this.baseURL).pipe(first());
   }
 
+  /** Force a refresh of the stored ensembles */
   public update(): void {
-    console.log('updating list of ensembles');
     this.list().subscribe(data => {
       this.currentEnsemblesSubject.next(data);
     });
   }
 
-  add(ensemble: { name: string; term: string; is_active: boolean }): Observable<Ensemble> {
+  /** Add an ensemble */
+  public add(ensemble: { name: string; term: string; is_active: boolean }): Observable<Ensemble> {
     return this.http.post<Ensemble>(this.baseURL, ensemble).pipe(
       first(),
-      map(ens => {
-        this.update();
-        return ens;
-      })
+      tap(() => this.update())
     );
   }
 
-  delete(id: number): Observable<any> {
-    console.log('Pre delete call');
+  /** Delete an ensemble */
+  public delete(id: number): Observable<any> {
     return this.http.delete<any>(this.baseURL + id + '/').pipe(
       first(),
-      map(result => {
-        console.log('post delete call');
-        this.update();
-        return result;
-      })
+      tap(() => this.update())
     );
   }
 
-  getEnsemble(id: number): Observable<Ensemble> {
+  public getEnsemble(id: number): Observable<Ensemble> {
     return this.http.get<Ensemble>(this.baseURL + id + '/').pipe(
       first()
     );

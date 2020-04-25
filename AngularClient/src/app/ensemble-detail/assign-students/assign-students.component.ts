@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatListOption } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatListOption } from '@angular/material/list';
 import { Ensemble, Student, PostEnrollment } from 'src/app/_models';
 import { StudentService } from 'src/app/_services';
 import { Observable, of, from } from 'rxjs';

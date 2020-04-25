@@ -1,10 +1,11 @@
 ﻿<mat-toolbar color="primary">
     <mat-toolbar-row *ngIf="currentUser">
-        <button mat-icon-button>
-            <!-- We need to fix this; One way would be to put the topbar and sidebar in the same place? -->
-            <mat-icon (click)="toggleSidebar()">menu</mat-icon>
-        </button>
-        <mat-divider [vertical]="true"></mat-divider>
+        <div *ngIf="!currentStudent">
+            <button mat-icon-button>
+                <mat-icon (click)="toggleSidebar()">menu</mat-icon>
+            </button>
+            <mat-divider [vertical]="true"></mat-divider>
+        </div>
         <div>
             <a mat-button [routerLink]="'/'">Home</a>
             <a mat-button (click)="logout()">Logout</a>

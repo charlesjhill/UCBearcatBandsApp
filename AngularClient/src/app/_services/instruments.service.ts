@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { UserService } from './user.service';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, first, map } from 'rxjs/operators';
+import { catchError, first, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Instrument, Student, Ensemble } from '../_models';
+import { Instrument, Student } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class InstrumentsService {
 
-  constructor(private __http: HttpClient) {
+  constructor(private http: HttpClient) {
     this.currentInstrumentsSubject = new BehaviorSubject([]);
     this.currentInstruments = this.currentInstrumentsSubject.asObservable();
     this.update();
@@ -18,6 +17,7 @@ export class InstrumentsService {
   private currentInstrumentsSubject: BehaviorSubject<Instrument[]>;
   public currentInstruments: Observable<Instrument[]>;
 
+  /** Force a refresh of stored instruments */
   public update(): void {
     console.log('updating list of instruments');
     this.list().subscribe(data => {
@@ -41,47 +41,43 @@ export class InstrumentsService {
       'Something bad happened; please try again later.');
   }
 
+  /** Get all the instruments from the server */
   private list(): Observable<Instrument[]> {
-    return this.__http.get<Instrument[]>(`${environment.apiUrl}/instruments/`).pipe(first());
+    return this.http.get<Instrument[]>(`${environment.apiUrl}/instruments/`).pipe(first());
   }
 
+  /** Add an instrument */
   public addInstrument(instrument: Instrument): Observable<Instrument> {
-    return this.__http.post<Instrument>(`${environment.apiUrl}/instruments/`, instrument)
+    return this.http.post<Instrument>(`${environment.apiUrl}/instruments/`, instrument)
       .pipe(
         first(),
-        map(i => {
-          this.update();
-          return i;
-        }),
-        catchError(this.handleError),
+        tap(() => this.update()),
+        catchError(err => this.handleError(err))
       );
   }
 
+  /** Delete an instrument */
   public deleteInstrument(id: number): Observable<any> {
-    return this.__http.delete(`${environment.apiUrl}/instruments/` + id + '/')
+    return this.http.delete(`${environment.apiUrl}/instruments/` + id + '/')
       .pipe(
         first(),
-        map(x => {
-          this.update();
-          return x;
-        }),
-        catchError(this.handleError)
+        tap(() => this.update()),
+        catchError(err => this.handleError(err))
       );
   }
 
   // TODO: We can just use an instrument object, since it contains the id
+  /** Update an instrument */
   public updateInstrument(instrument: Instrument, id: number): Observable<Instrument> {
-    return this.__http.put<Instrument>(`${environment.apiUrl}/instruments/` + id + '/', instrument)
+    return this.http.put<Instrument>(`${environment.apiUrl}/instruments/` + id + '/', instrument)
       .pipe(
         first(),
-        map(x => {
-          this.update();
-          return x;
-        }),
-        catchError(this.handleError));
+        tap(() => this.update()),
+        catchError(err => this.handleError(err)));
   }
 
+  /** Get the students assigned to a particular instrument */
   public getStudentsAssigned(id: number): Observable<Student[]> {
-    return this.__http.get<Student[]>(`${environment.apiUrl}/instruments/` + id + '/students/').pipe(first(), catchError(this.handleError));
+    return this.http.get<Student[]>(`${environment.apiUrl}/instruments/${id}/students`).pipe(first(), catchError(this.handleError));
   }
 }

@@ -3,7 +3,12 @@ import { EnrollmentService, EnsembleService } from '../_services';
 import { AssignStudentsComponent } from './assign-students/assign-students.component';
 
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { MatSlideToggleChange, MatDialog, MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { SnackBarService } from '../_services/snackbar.service';
 
 @Component({
@@ -91,11 +96,11 @@ export class EnsembleDetailComponent implements OnInit {
     });
   }
 
-  getAssignedInstruments(enrollment: Enrollment): string {
-    return enrollment.assets.filter(a => a.resourcetype === 'Instrument').map(a => a.name).join('; ');
+  getAssignedInstruments(enrollment: Enrollment): any[] {
+    return enrollment.assets.filter(a => a.resourcetype === 'Instrument');
   }
 
-  getAssignedOtherAssets(enrollment: Enrollment): string {
-    return enrollment.assets.filter(a => a.resourcetype !== 'Instrument').map(a => a.name).join('; ');
+  getAssignedOtherAssets(enrollment: Enrollment): any[] {
+    return enrollment.assets.filter(a => a.resourcetype !== 'Instrument');
   }
 }

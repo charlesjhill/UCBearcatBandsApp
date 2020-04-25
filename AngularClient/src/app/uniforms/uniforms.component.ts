@@ -1,4 +1,4 @@
-import { InstrumentAssignDialog } from './../instruments/instruments.component';
+import { InstrumentAssignDialog, AssignDialogData } from './../instruments/instruments.component';
 import { EnrollmentService } from 'src/app/_services/enrollment.service';
 import { AssignmentService } from './../_services/assignments.service';
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
@@ -6,7 +6,10 @@ import { UniformsService, AlertService } from '../_services';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Uniform, Student, Ensemble, Enrollment, Assignment } from '../_models';
-import { MatSnackBarRef, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { SnackBarService } from '../_services/snackbar.service';
 import { Observable, of } from 'rxjs';
 
@@ -52,8 +55,8 @@ export class UniformsComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.inventory);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        for (const inst of this.inventory) {
-          this.getAssigned(inst.id);
+        for (const uni of this.inventory) {
+          this.getAssigned(uni.id);
         }
       },
       // the second argument is a function which runs on error
@@ -66,7 +69,7 @@ export class UniformsComponent implements OnInit {
   openForm(): void {
     let is_closed = false;
 
-    const dialogRef = this.dialog.open(UniformAssignDialog, {
+    const dialogRef = this.dialog.open(CreateUniformDialog, {
       data: {
         condition: this.condition,
         kind: this.kind,
@@ -118,7 +121,7 @@ export class UniformsComponent implements OnInit {
   editForm(uniform: Uniform, id: number): void {
     let is_closed = false;
 
-    const dialogRef = this.dialog.open(UniformAssignDialog, {
+    const dialogRef = this.dialog.open(CreateUniformDialog, {
       data: {
         condition: uniform.condition,
         kind: uniform.kind,
@@ -142,7 +145,7 @@ export class UniformsComponent implements OnInit {
   viewForm(uniform: Uniform): void {
     let is_closed = false;
 
-    const dialogRef = this.dialog.open(UniformAssignDialog, {
+    const dialogRef = this.dialog.open(CreateUniformDialog, {
       data: {
         condition: uniform.condition,
         kind: uniform.kind,
@@ -156,7 +159,7 @@ export class UniformsComponent implements OnInit {
   }
 
   public getAssigned(id: number): void {
-    // hit /instruments/{{id}}/students
+    // hit /uniforms/{{id}}/students
     // return student name
     let names = '';
     this.uniformService.getStudentsAssigned(id).subscribe(
@@ -211,10 +214,14 @@ export class UniformsComponent implements OnInit {
   }
 
   public assignForm(uniform: Uniform, id: number): void {
-    let is_closed = false;
+    const assignData: AssignDialogData = {
+      ensemble: null,
+      student: null,
+      dialogName: uniform.name
+    };
 
     const dialogRef = this.dialog.open(InstrumentAssignDialog, {
-      data: {}
+      data: assignData
     });
 
     dialogRef.afterClosed().subscribe(data => {
@@ -227,10 +234,10 @@ export class UniformsComponent implements OnInit {
 }
 
 @Component({
-  selector: 'UniformAssignDialog',
+  selector: 'CreateUniformDialog',
   templateUrl: 'dialog.html',
 })
-export class UniformAssignDialog implements OnInit {
+export class CreateUniformDialog implements OnInit {
   form: FormGroup;
   kind: string;
   condition: string;
@@ -246,7 +253,7 @@ export class UniformAssignDialog implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<UniformAssignDialog>,
+    public dialogRef: MatDialogRef<CreateUniformDialog>,
     @Inject(MAT_DIALOG_DATA) data)
   {
     this.kind = data.kind;

@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { UserService } from './user.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Enrollment, PostEnrollment } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class EnrollmentService {
 
-  constructor(private __http: HttpClient, private _userService: UserService) { }
+  constructor(private http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -25,50 +24,34 @@ export class EnrollmentService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  };
-
-  //Lists assignments
-  list(): Observable<Enrollment[]> {
-    return this.__http.get<Enrollment[]>(`${environment.apiUrl}/enrollments/`);
   }
 
-  //Creates assignments
-  addEnrollment(enrollment: PostEnrollment): Observable<Enrollment> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-    return this.__http.post<Enrollment>(`${environment.apiUrl}/enrollments/`, enrollment, httpOptions)
+  /** List all enrollments */
+  public list(): Observable<Enrollment[]> {
+    return this.http.get<Enrollment[]>(`${environment.apiUrl}/enrollments/`);
+  }
+
+  /** Add an enrollment */
+  public addEnrollment(enrollment: PostEnrollment): Observable<Enrollment> {
+    return this.http.post<Enrollment>(`${environment.apiUrl}/enrollments/`, enrollment)
       .pipe(catchError(this.handleError));
   }
 
-  //Deletes assignments
-  deleteEnrollment(id): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-    return this.__http.delete(`${environment.apiUrl}/enrollments/` + id + '/')
+  /** Delete an enrollment */
+  public deleteEnrollment(id: number): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}/enrollments/${id}/`)
       .pipe(catchError(this.handleError));
   }
 
-  //updates assignments
-  updateEnrollment(enrollment: Enrollment, id): Observable<Enrollment> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'my-auth-token'
-      })
-    };
-    return this.__http.put<Enrollment>(`${environment.apiUrl}/enrollments/` + id + '/', enrollment, httpOptions)
+  /** Update an enrollment */
+  public updateEnrollment(enrollment: Enrollment, id: number): Observable<Enrollment> {
+    return this.http.put<Enrollment>(`${environment.apiUrl}/enrollments/${id}/`, enrollment)
       .pipe(catchError(this.handleError));
   }
 
-  getEnrollment(id): Observable<Enrollment> {
-    return this.__http.get<Enrollment>(`${environment.apiUrl}/enrollments/`+id+'/');
+  /** Get a single enrollment */
+  public getEnrollment(id: number): Observable<Enrollment> {
+    return this.http.get<Enrollment>(`${environment.apiUrl}/enrollments/${id}/`)
+      .pipe(catchError(this.handleError));
   }
 }

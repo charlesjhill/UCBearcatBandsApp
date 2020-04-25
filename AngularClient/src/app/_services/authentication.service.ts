@@ -65,23 +65,11 @@ export class AuthenticationService {
         return of(user);
     }
 
-    private handleAuthError(err: HttpErrorResponse) {
-        if (err.error instanceof ErrorEvent) {
-            console.error('An error occured:', err.error.message);
-        } else {
-            console.error(`Backend returned code ${err.status}, ` +
-                          `body was: ${err.error}`);
-        }
-
-        return throwError('Invalid login credentials');
-    }
-
     /** Login to the site, receiving an API token if everything is good */
     public login(email: string, password: string) {
         return this.http.post<TokenReturn>(`${environment.apiUrl}/rest-auth/login/`, { email, password })
             .pipe(
                 take(1),
-                catchError(this.handleAuthError),
                 concatMap(tr => this.tokenToUser(tr)),
                 concatMap(ru => this.retUserToUser(ru)),
                 concatMap(u => iif(() => u.is_student, this.http.get(`${environment.apiUrl}/students/${u.id}/`), of(u))),

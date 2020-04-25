@@ -17,7 +17,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 location.reload(true);
             }
 
-            const error = err.error.message || err.statusText;
+            const error = err.error.message || err.error.non_field_errors[0] || err.statusText;
             return throwError(error);
         }));
     }

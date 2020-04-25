@@ -1,8 +1,8 @@
 ﻿import { User, TokenReturn, ReturnUser, Student } from '../_models';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, iif, throwError } from 'rxjs';
-import { concatMap, take, tap, catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable, of, iif } from 'rxjs';
+import { concatMap, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 
@@ -46,7 +46,7 @@ export class AuthenticationService {
         };
 
         // Get the user details (which uses the auth token)
-        return this.http.get<ReturnUser>(`${environment.apiUrl}/rest-auth/user/`, httpOptions);
+        return this.http.get<ReturnUser>(`${environment.apiUrl}/dj-rest-auth/user/`, httpOptions);
     }
 
     /** Convert a returnUser to full user instance (with a token) and perform some side effects 8) */
@@ -67,7 +67,7 @@ export class AuthenticationService {
 
     /** Login to the site, receiving an API token if everything is good */
     public login(email: string, password: string) {
-        return this.http.post<TokenReturn>(`${environment.apiUrl}/rest-auth/login/`, { email, password })
+        return this.http.post<TokenReturn>(`${environment.apiUrl}/dj-rest-auth/login/`, { email, password })
             .pipe(
                 take(1),
                 concatMap(tr => this.tokenToUser(tr)),

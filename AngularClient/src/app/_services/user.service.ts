@@ -17,11 +17,11 @@ export class UserService {
 
   /** Register a new user with the server */
   register(user: RegisterUser): Observable<TokenReturn> {
-    return this.http.post<TokenReturn>(`${environment.apiUrl}/rest-auth/registration/`, user).pipe(first());
+    return this.http.post<TokenReturn>(`${environment.apiUrl}/dj-rest-auth/registration/`, user).pipe(first());
   }
 
   /** Update a user's information with the server */
   update(user: User): Observable<User> {
-    return this.http.put<User>(`${environment.apiUrl}/rest-auth/user/`, user).pipe(first());
+    return this.http.put<User>(`${environment.apiUrl}/dj-rest-auth/user/`, user).pipe(first());
   }
 }

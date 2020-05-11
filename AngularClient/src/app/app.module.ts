@@ -1,25 +1,27 @@
-import { MaterialsModule } from './materials-module/materials-module.module';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
-import { appRoutingModule } from './app.routing';
-import { JwtInterceptor, ErrorInterceptor } from './_helpers';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home';
-import { LoginComponent } from './login';
-import { DashboardComponent } from './dashboard';
-import { RegisterComponent } from './register';
-import { AlertComponent } from './_components';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component'
-import { InstrumentsComponent, OverviewDialog, InstrumentAssignDialog } from './instruments/instruments.component';
-import { UniformsComponent, CreateUniformDialog } from './uniforms/uniforms.component';
+import { AppComponent } from './app.component';
+import { appRoutingModule } from './app.routing';
+import { DashboardComponent } from './dashboard';
 import { DashboardEnsemblesComponent, DashEnsembleAddDialog } from './dashboard-ensembles/dashboard-ensembles.component';
-import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.component';
+import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
 import { AssignStudentsComponent } from './ensemble-detail/assign-students/assign-students.component';
+import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.component';
+import { HomeComponent } from './home';
+import { InstrumentDetailComponent } from './instrument-detail/instrument-detail.component';
+import { InstrumentInfoFormComponent } from './instrument-detail/instrument-info-form/instrument-info-form.component';
+import { InstrumentAssignDialog, InstrumentsComponent, OverviewDialog } from './instruments/instruments.component';
+import { LoginComponent } from './login';
+import { MaterialsModule } from './materials-module/materials-module.module';
+import { RegisterComponent } from './register';
 import { StudentPageComponent } from './student-page/student-page.component';
+import { CreateUniformDialog, UniformsComponent } from './uniforms/uniforms.component';
+import { AlertComponent } from './_components';
+import { ErrorInterceptor, JwtInterceptor } from './_helpers';
+
 
 @NgModule({
     imports: [
@@ -48,19 +50,12 @@ import { StudentPageComponent } from './student-page/student-page.component';
         InstrumentAssignDialog,
         StudentPageComponent,
         CreateUniformDialog,
-    ],
-    entryComponents: [
-        OverviewDialog,
-        DashEnsembleAddDialog,
-        AssignStudentsComponent,
-        InstrumentAssignDialog,
-        CreateUniformDialog
+        InstrumentDetailComponent,
+        InstrumentInfoFormComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
-        // provider used to create fake backend
     ],
     bootstrap: [AppComponent]
 })

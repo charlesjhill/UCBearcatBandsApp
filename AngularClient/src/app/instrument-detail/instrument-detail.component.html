@@ -1,0 +1,17 @@
+<div *ngIf="instrument; else loading">
+    <h2>{{ instrument.name }}</h2>
+    <mat-accordion>
+        <mat-expansion-panel>
+            <!-- Instrument Information, stored in the instrument object -->
+            <mat-expansion-panel-header>
+                <mat-panel-title>Instrument Information</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <app-instrument-info-form [instrument]="instrument"></app-instrument-info-form>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+
+<ng-template #loading>
+    Loading Instrument...
+</ng-template>

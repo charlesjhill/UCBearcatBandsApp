@@ -31,10 +31,8 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let instrument">
-          <button mat-button (click)="assignForm(instrument, instrument.id)">Assign</button>
-          <button mat-button (click)="viewForm(instrument)">Details</button>
-          <button mat-button (click)="editForm(instrument, instrument.id)">Edit</button>
-          <button mat-button (click)="onDelete(instrument.id)">Delete</button>
+          <a mat-stroked-button [routerLink]="['../instrument', instrument.id]" >Details</a>
+          <button mat-flat-button color="warn" (click)="onDelete(instrument.id)">Delete</button>
         </td>
       </ng-container>
       

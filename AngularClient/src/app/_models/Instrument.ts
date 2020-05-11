@@ -1,5 +1,6 @@
 export class Instrument {
 
+  /** A list of the possible kinds of Instruments we can have. TODO: Fetch these from the server */
   public static possibleKinds: string[] = [
     'Alto Clarinet',
     'Alto Saxophone',

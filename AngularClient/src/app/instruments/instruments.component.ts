@@ -50,11 +50,11 @@ export class InstrumentsComponent implements OnInit {
   assignment: Assignment;
   assignedString: string[] = [];
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   public getInstruments() {
-    this.instrumentService.currentInstruments.subscribe(
+    this.instrumentService.currentInstruments$.subscribe(
       // the first argument is a function which runs on success
       data => {
         this.inventory = data;
@@ -274,7 +274,8 @@ export class OverviewDialog implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<OverviewDialog>,
-    @Inject(MAT_DIALOG_DATA) data) {
+    @Inject(MAT_DIALOG_DATA) data)
+  {
     this.kind = data.kind;
     this.make = data.make;
     this.model = data.model;
@@ -385,7 +386,7 @@ export class InstrumentAssignDialog implements OnInit {
 
   /** Get the list of students from the student service, storing them in this.students */
   private getStudents() {
-    this.studentService.currentStudents.subscribe(
+    this.studentService.currentStudents$.subscribe(
       // the first argument is a function which runs on success
       data => {
         this.students = data;

@@ -48,7 +48,7 @@ export class UniformsComponent implements OnInit {
   }
 
   public getUniforms() {
-    this.uniformService.currentUniforms.subscribe(
+    this.uniformService.currentUniforms$.subscribe(
       // the first argument is a function which runs on success
       data => {
         this.inventory = data;

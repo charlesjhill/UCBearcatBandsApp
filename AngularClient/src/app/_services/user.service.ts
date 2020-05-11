@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User, RegisterUser, TokenReturn } from '../_models';
-import { environment } from 'src/environments/environment';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { RegisterUser, TokenReturn, User } from '../_models';
 
 export interface Student {
   user: User;
@@ -17,11 +16,11 @@ export class UserService {
 
   /** Register a new user with the server */
   register(user: RegisterUser): Observable<TokenReturn> {
-    return this.http.post<TokenReturn>(`${environment.apiUrl}/dj-rest-auth/registration/`, user).pipe(first());
+    return this.http.post<TokenReturn>(`${environment.apiUrl}/dj-rest-auth/registration/`, user);
   }
 
   /** Update a user's information with the server */
   update(user: User): Observable<User> {
-    return this.http.put<User>(`${environment.apiUrl}/dj-rest-auth/user/`, user).pipe(first());
+    return this.http.put<User>(`${environment.apiUrl}/dj-rest-auth/user/`, user);
   }
 }

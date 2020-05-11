@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +16,13 @@ export class EnsembleService {
     this.update();
   }
 
-  private baseURL = `${environment.apiUrl}/ensembles/`;
+  private readonly baseURL = `${environment.apiUrl}/ensembles/`;
   private currentEnsemblesSubject: BehaviorSubject<Ensemble[]>;
   public currentEnsembles: Observable<Ensemble[]>;
 
   /** Get all the ensembles from the server */
   private list(): Observable<Ensemble[]> {
-    return this.http.get<Ensemble[]>(this.baseURL).pipe(first());
+    return this.http.get<Ensemble[]>(this.baseURL);
   }
 
   /** Force a refresh of the stored ensembles */
@@ -35,7 +35,6 @@ export class EnsembleService {
   /** Add an ensemble */
   public add(ensemble: { name: string; term: string; is_active: boolean }): Observable<Ensemble> {
     return this.http.post<Ensemble>(this.baseURL, ensemble).pipe(
-      first(),
       tap(() => this.update())
     );
   }
@@ -43,14 +42,12 @@ export class EnsembleService {
   /** Delete an ensemble */
   public delete(id: number): Observable<any> {
     return this.http.delete<any>(this.baseURL + id + '/').pipe(
-      first(),
       tap(() => this.update())
     );
   }
 
+  /** Get an ensemble */
   public getEnsemble(id: number): Observable<Ensemble> {
-    return this.http.get<Ensemble>(this.baseURL + id + '/').pipe(
-      first()
-    );
+    return this.http.get<Ensemble>(this.baseURL + id + '/');
   }
 }

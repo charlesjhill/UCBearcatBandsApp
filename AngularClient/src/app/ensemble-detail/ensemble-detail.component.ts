@@ -29,8 +29,8 @@ export class EnsembleDetailComponent implements OnInit {
   sortedData: Enrollment[];
 
   columnsToDisplay = ['name', 'instruments', 'otherAssets', 'actions'];
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
     this.enableDangerZone = false;

@@ -24,7 +24,7 @@ export class AssignStudentsComponent implements OnInit {
   students$: Observable<Student[]>;
 
   ngOnInit() {
-    this.students$ = this.studentService.currentStudents;
+    this.students$ = this.studentService.currentStudents$;
     this.studentService.update();
   }
 

@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
         if (control.value.match(/^[Mm]\d{8}$/)) {
             return null;
         } else {
-            return { 'invalidMNumber' : true };
+            return { invalidMNumber : true };
         }
     }
 

@@ -3,7 +3,6 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Student } from '../_models';
-import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,21 +11,21 @@ export class StudentService {
 
   constructor(private http: HttpClient) {
     this.currentStudentsSubject = new BehaviorSubject([]);
-    this.currentStudents = this.currentStudentsSubject.asObservable();
+    this.currentStudents$ = this.currentStudentsSubject.asObservable();
    }
 
-  private baseUrl = `${environment.apiUrl}/students/`;
+  private readonly baseUrl = `${environment.apiUrl}/students/`;
   private currentStudentsSubject: BehaviorSubject<Student[]>;
-  public currentStudents: Observable<Student[]>;
+  public currentStudents$: Observable<Student[]>;
 
   /** Get the list of all the students */
   private list(): Observable<Student[]> {
-    return this.http.get<Student[]>(this.baseUrl).pipe(first());
+    return this.http.get<Student[]>(this.baseUrl);
   }
 
   /** Get a student instance given an id */
   public details(id: number): Observable<Student> {
-    return this.http.get<Student>(`${this.baseUrl}/${id}/`).pipe(first());
+    return this.http.get<Student>(`${this.baseUrl}/${id}/`);
   }
 
   /** Force a refresh of the stored students */

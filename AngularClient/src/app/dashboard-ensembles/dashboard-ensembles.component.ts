@@ -2,7 +2,7 @@ import { AlertService } from './../_services/alert.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Ensemble } from './../_models/Ensemble';
 import { EnsembleService } from './../_services/ensemble.service';
-import { Component, OnInit, Inject, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
@@ -20,15 +20,13 @@ export interface DialogData {
   templateUrl: './dashboard-ensembles.component.html',
   styleUrls: ['./dashboard-ensembles.component.css']
 })
-export class DashboardEnsemblesComponent implements OnInit, OnDestroy {
-
-  ensembles$: Observable<Ensemble[]>;
-  ensembles: Ensemble[];
+export class DashboardEnsemblesComponent implements OnInit, OnDestroy, AfterViewInit {
   dataSource: MatTableDataSource<Ensemble>;
   currentEnsemble: Ensemble;
   ensSubscription: Subscription;
+  ensembles$: Observable<Ensemble[]>;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private alertService: AlertService,
               private ensembleService: EnsembleService,
@@ -37,19 +35,20 @@ export class DashboardEnsemblesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Get the ensembles from our ensembleService
-    this.ensSubscription = this.ensembleService.currentEnsembles.subscribe(
-      data => {
-        this.ensembles = data;
-        this.dataSource = new MatTableDataSource(this.ensembles);
-        this.dataSource.paginator = this.paginator;
-        this.ensembles$ = this.dataSource.connect();
-      }
-    );
-
-    // Force an update on the ensembleService (in case we never called it before)
-    this.ensembleService.update();
+    this.dataSource = new MatTableDataSource();
+    this.ensSubscription = this.ensembleService.currentEnsembles.subscribe(d => {
+      this.dataSource.data = d;
+      this.dataSource.paginator = this.paginator;
+      this.ensembles$ = this.dataSource.connect();
+    });
 
     this.currentEnsemble = new Ensemble();
+  }
+
+  ngAfterViewInit() {
+    // this.ensSubscription = this.ensembleService.currentEnsembles.subscribe(d => {
+    //   this.dataSource.data = d;
+    // });
   }
 
   ngOnDestroy(): void {

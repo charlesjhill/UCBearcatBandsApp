@@ -44,6 +44,7 @@ export class InstrumentInfoFormComponent implements OnInit {
     if (this.instrumentForm.valid) {
       console.debug(this.instrumentForm.value);
       this.submitted.emit(this.instrumentForm.value);
+      this.editCheckboxToggled();
     }
   }
 

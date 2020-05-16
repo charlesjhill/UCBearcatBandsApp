@@ -1,6 +1,6 @@
 <label>
   Edit
-  <mat-slide-toggle (toggleChange)="editCheckboxToggled()"></mat-slide-toggle>
+  <mat-slide-toggle [checked]="instrumentForm.enabled" (toggleChange)="editCheckboxToggled()"></mat-slide-toggle>
 </label>
 <form [formGroup]="instrumentForm" (ngSubmit)="onSubmit()">
   <mat-form-field>

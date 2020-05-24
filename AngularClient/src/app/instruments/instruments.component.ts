@@ -194,10 +194,22 @@ export class InstrumentsComponent implements OnInit {
 
   private getOrCreateEnrollment(student: Student, ensemble: Ensemble): Observable<Enrollment> {
     // Check if the enrollment alreday exists
-    for (const enr of ensemble.enrollments) {
-      if (enr.student.m_number === student.m_number) {
-        console.log('found enrollment');
-        return of(enr);
+    if (typeof ensemble.enrollments?.[0] === 'number') {
+      // We are working with enrollment IDs
+      for (const enrId of ensemble.enrollments as number[]) {
+        for (const studEnr of student.enrollments) {
+          if (enrId === studEnr.id ?? studEnr) { // The student enrollment object could be an ID too
+            return this.enrollmentService.getEnrollment(enrId);
+          }
+        }
+      }
+    } else {
+      // Full objects
+      for (const enr of ensemble.enrollments as Enrollment[]) {
+        if (enr.student.m_number === student.m_number) {
+          console.log('found enrollment');
+          return of(enr);
+        }
       }
     }
 

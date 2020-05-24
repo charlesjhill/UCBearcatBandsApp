@@ -21,6 +21,7 @@ import { StudentPageComponent } from './student-page/student-page.component';
 import { CreateUniformDialog, UniformsComponent } from './uniforms/uniforms.component';
 import { AlertComponent } from './_components';
 import { ErrorInterceptor, JwtInterceptor } from './_helpers';
+import { LockerInfoComponent } from './instrument-detail/locker-info/locker-info.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { ErrorInterceptor, JwtInterceptor } from './_helpers';
         StudentPageComponent,
         CreateUniformDialog,
         InstrumentDetailComponent,
-        InstrumentInfoFormComponent
+        InstrumentInfoFormComponent,
+        LockerInfoComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -1,4 +1,4 @@
-import { Student, Enrollment } from '.';
+import type { Student, Enrollment } from '.';
 
 export class Ensemble {
     id: number;
@@ -6,5 +6,5 @@ export class Ensemble {
     term: string;
     is_active: boolean;
     members: Student[];
-    enrollments: Enrollment[];
+    enrollments: number[] | Enrollment[];
 }

@@ -24,7 +24,7 @@ class Student(models.Model):
 
     def __str__(self):
         return '{} [{}]'.format(self.user.full_name, self.m_number)
-		
+
     class Meta:
         ordering = ['user__full_name']
 
@@ -81,9 +81,6 @@ class Enrollment(models.Model):
 
 
 # Assets and Stuff
-
-# Consider looking at using django-polymorphic/django-rest-polymorphic to allow for returning instances of base classes
-# (i.e. calling Asset.objects.all() yields <Instrument> AND <UniformPiece> objects)
 class Asset(PolymorphicModel):
     """
     Model representing any asset that should be tracked
@@ -110,6 +107,14 @@ class Asset(PolymorphicModel):
         blank=True,
         null=True,
         related_name="assets"
+    )
+
+    purchase_info = models.ForeignKey(
+        'PurchaseInfo',
+        related_name='assets',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
     )
 
     def __str__(self):
@@ -191,6 +196,7 @@ class Instrument(Asset):
     trombone = 'Trombone'
     trumpet = 'Trumpet'
     tuba = 'Tuba'
+    valvedTrombone = 'Valved Trombone'
     INSTRUMENT_CHOICES = ((altoClarinet, altoClarinet),
                           (altoSaxophone, altoSaxophone),
                           (bariSaxophone, bariSaxophone),
@@ -216,18 +222,45 @@ class Instrument(Asset):
                           (tenorSaxophone, tenorSaxophone),
                           (trombone, trombone),
                           (trumpet, trumpet),
-                          (tuba, tuba))
+                          (tuba, tuba),
+                          (valvedTrombone, valvedTrombone))
+
+    AVERAGE_LIFE_OF_INSTRUMENT = {
+        altoClarinet: 5,
+        altoSaxophone: 15,
+        bariSaxophone: 15,
+        baritone: 15,
+        bassClarinet: 5,
+        bassTrombone: 10,
+        bassoon: 15,
+        clarinet: 15,
+        cornet: 10,
+        eFlatClarinet: 15,
+        electricPiano: 10,
+        electricViolin: 5,
+        euphonium: 15,
+        flute: 15,
+        frenchHorn: 10,
+        marchingHorn: 10,
+        mellophone: 10,
+        oboe: 15,
+        piccolo: 15,
+        sopranoSaxophone: 15,
+        sousaphone: 15,
+        tenorSaxophone: 15,
+        trombone: 10,
+        trumpet: 10,
+        tuba: 15,
+        valvedTrombone: 15
+    }
 
     kind = models.CharField(max_length=100, choices=INSTRUMENT_CHOICES, default=altoClarinet)
     make = models.CharField(max_length=255)
     model = models.CharField(max_length=255)
     serial_number = models.CharField(max_length=255)
     uc_tag_number = models.CharField(max_length=255,
-                                     validators=[RegexValidator(
-                                         regex=r'[A-Z]{1,2}\d+',
-                                         message='Tag numbers take the format of 1-2 capital letters followed by 1 or more digits'
-                                     )])
-    uc_asset_number = models.CharField(max_length=255)
+                                     blank=True, null=True)
+    uc_asset_number = models.CharField(max_length=255, blank=True, null=True)
 
     # Do this work-around to set a name on save
     def get_name(self):
@@ -289,21 +322,19 @@ class Invoice(models.Model):
 
 
 class PurchaseInfo(Invoice):
-    asset = models.OneToOneField(
-        Asset,
-        related_name='purchase_info',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
+    # There is a FK on 'Asset' to handle this
+    # HOWEVER, there is no way of encoding the purchase price of an individual asset
+    # on a receipt, unless we store the purchase price with the instrument? That's a maybe
+    def __str__(self):
+        return str(self.date) + '@' + str(self.vendor)
 
 
 class MaintenanceReport(Invoice):
-    asset = models.ForeignKey(
+    # We may want to come back to this in the future, such as introducing a 'through' model
+    # To encapsulate a `MaintenanceAction` or something, which has specific cost and description
+    assets = models.ManyToManyField(
         Asset,
         related_name='maintenance_reports',
-        on_delete=models.SET_NULL,
-        null=True,
         blank=True
     )
 

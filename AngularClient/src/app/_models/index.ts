@@ -8,3 +8,4 @@ export * from './Instrument';
 export * from './Uniform';
 export * from './Assignment';
 export * from './Enrollment';
+export * from './Locker';

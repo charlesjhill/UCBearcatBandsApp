@@ -72,7 +72,11 @@ export class AuthenticationService {
                 take(1),
                 concatMap(tr => this.tokenToUser(tr)),
                 concatMap(ru => this.retUserToUser(ru)),
-                concatMap(u => iif(() => u.is_student, this.http.get(`${environment.apiUrl}/students/${u.id}/`), of(u))),
+                concatMap(u => iif(
+                    () => u.is_student,
+                    this.http.get(`${environment.apiUrl}/students/${u.id}/`),
+                    of(u))
+                ),
                 tap(thing => {
                     if (thing.hasOwnProperty('m_number') && (thing as Student).m_number) {
                         const student = new Student();

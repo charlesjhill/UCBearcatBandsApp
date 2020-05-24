@@ -20,7 +20,7 @@ const routes: Routes = [
       canActivate: [AdminGuard],
       children: [
           { path: '', component: DashboardHomeComponent, pathMatch: 'full' },
-          { path: 'instrument/:id', component: InstrumentDetailComponent },
+          { path: 'instruments/:id', component: InstrumentDetailComponent },
           { path: 'instruments', component: InstrumentsComponent },
           { path: 'uniforms', component: UniformsComponent },
           { path: 'ensembles', component: DashboardEnsemblesComponent },

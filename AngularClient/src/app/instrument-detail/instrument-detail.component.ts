@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Instrument } from '../_models';
 import { InstrumentsService } from '../_services/instruments.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-instrument-detail',
@@ -22,7 +23,9 @@ export class InstrumentDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.instrumentSub = this.instrumentService.getInstrument(id).subscribe(inst => this.instrument = inst);
+    this.instrumentSub = this.instrumentService.currentInstruments$.pipe(
+      map(insts => insts.find(i => i.id === id))
+    ).subscribe(i => this.instrument = i);
   }
 
   ngOnDestroy(): void {
@@ -31,8 +34,7 @@ export class InstrumentDetailComponent implements OnInit, OnDestroy {
 
   instrumentDetailsEdited(newInst: Partial<Instrument>): void {
     const newInstrument = Object.assign(this.instrument, newInst);
-    console.debug(newInstrument);
-    this.instrumentService.updateInstrument(newInstrument, newInstrument.id).subscribe({
+    this.instrumentService.updateInstrument(newInstrument).subscribe({
       next: () => this.snackBar.openSnackBar('Update Successful'),
       error: () => this.snackBar.openDeleteSnackBar('Update Failed')
     });

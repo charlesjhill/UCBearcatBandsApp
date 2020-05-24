@@ -1,3 +1,5 @@
+import type { Locker } from '.';
+
 export class Uniform {
   id: number;
   kind: string;
@@ -5,5 +7,5 @@ export class Uniform {
   size: string;
   number: string;
   name: string;
-  locker: any; // Locker or number
+  locker: number | Locker;
 }

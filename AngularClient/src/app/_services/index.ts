@@ -7,3 +7,4 @@ export * from './ensemble.service';
 export * from './student.service';
 export * from './enrollment.service';
 export * from './assignments.service';
+export * from './locker.service';

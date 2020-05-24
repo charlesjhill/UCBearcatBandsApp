@@ -34,7 +34,7 @@ export class EnsembleDetailComponent implements OnInit {
 
   ngOnInit() {
     this.enableDangerZone = false;
-    this.sortedData = this.ensemble.enrollments.slice();
+    this.sortedData = (this.ensemble.enrollments as Enrollment[]).slice();
     this.dataSource = new MatTableDataSource(this.sortedData);
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {

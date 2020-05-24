@@ -1,3 +1,5 @@
+import type { Locker } from '.';
+
 export class Instrument {
 
   /** A list of the possible kinds of Instruments we can have. TODO: Fetch these from the server */
@@ -27,11 +29,10 @@ export class Instrument {
     'Tenor Saxophone',
     'Trombone',
     'Trumpet',
-    'Tuba'
+    'Tuba',
+    'Valved Trombone'
   ];
 
-
-  [x: string]: any; // added to do some hacky shit disregard this
   id: number;
   kind: string;
   make: string;

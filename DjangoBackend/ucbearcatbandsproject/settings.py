@@ -73,6 +73,8 @@ REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'ucbearcatbandsproject.users.serializers.CustomRegisterSerializer'
 }
 
+REST_SESSION_LOGIN = True
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',

@@ -4,11 +4,40 @@ from . import models
 from ..users.serializers import UserSerializer
 
 
+class ReadWriteSerializerMixin(object):
+    """
+    Overrides get_serializer_class to choose the read serializer
+    for GET requests and the write serializer for POST requests.
+    """
+    read_serializer_class = None
+    write_serializer_class = None
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update", "destroy"]:
+            return self.get_write_serializer_class()
+        return self.get_read_serializer_class()
+
+    def get_read_serializer_class(self):
+        assert self.read_serializer_class is not None, (
+            "'%s' should either include a `read_serializer_class` attribute,"
+            "or override the `get_read_serializer_class()` method."
+            % self.__class__.__name__
+        )
+        return self.read_serializer_class
+
+    def get_write_serializer_class(self):
+        assert self.write_serializer_class is not None, (
+                "'%s' should either include a `write_serializer_class` attribute,"
+                "or override the `get_write_serializer_class()` method."
+                % self.__class__.__name__
+        )
+        return self.write_serializer_class
+
+
 class AssetAssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.AssetAssignment
         fields = '__all__'
-        # depth = 1
 
 
 # Assets
@@ -16,21 +45,18 @@ class AssetSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Asset
         fields = '__all__'
-        depth = 1
 
 
 class InstrumentSerializer(AssetSerializer):
     class Meta:
         model = models.Instrument
         exclude = ['polymorphic_ctype']
-        depth = 1
 
 
 class UniformSerializer(AssetSerializer):
     class Meta:
         model = models.UniformPiece
         exclude = ['polymorphic_ctype']
-        depth = 1
 
 
 class AssetPolymorphicSerializer(PolymorphicSerializer):
@@ -42,59 +68,26 @@ class AssetPolymorphicSerializer(PolymorphicSerializer):
 
 
 # Students, Ensembles
-class StudentNoEnrollmentSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False, read_only=True)
-
-    class Meta:
-        model = models.Student
-        fields = ('pk', 'user', 'm_number')
-
-        # Controls how many layers of nested serializations should be done
-        # e.g. 1 : Each enrollment is expanded;
-        #      2 : enrollment .ensemble, .student, .assets are all expanded as well
-        depth = 1
-
-
 class EnrollmentSerializer(serializers.ModelSerializer):
-    assets = AssetPolymorphicSerializer(many=True, read_only=True)
-    # student = StudentSerializer(many=False)
-
     class Meta: 
         model = models.Enrollment
         fields = ('id', 'ensemble', 'student', 'assets')
 
 
-# Students, Ensembles
 class StudentSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
-    enrollments = EnrollmentSerializer(many=True, read_only=True)
 
     class Meta:
         model = models.Student
         fields = ('user', 'm_number', 'enrollments')
 
-        # Controls how many layers of nested serializations should be done
-        # e.g. 1 : Each enrollment is expanded;
-        #      2 : enrollment .ensemble, .student, .assets are all expanded as well
-        depth = 1
-
-
-class EnsembleEnrollmentSerializer(serializers.ModelSerializer):
-    assets = AssetPolymorphicSerializer(many=True, read_only=True)
-    student = StudentSerializer(many=False, read_only=True)
-
-    class Meta:
-        model = models.Enrollment
-        fields = ('id', 'ensemble', 'student', 'assets')
-
 
 class EnsembleSerializer(serializers.ModelSerializer):
-    enrollments = EnsembleEnrollmentSerializer(many=True, read_only=True)
+    enrollments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = models.Ensemble
         fields = ('id', 'name', 'term', 'is_active', 'enrollments')
-        depth = 1
 
 
 # Invoices
@@ -112,7 +105,8 @@ class MaintenanceSerializer(serializers.ModelSerializer):
 
 # Other
 class LockerSerializer(serializers.ModelSerializer):
+    assets = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+
     class Meta:
         model = models.Locker
         fields = ('id', 'number', 'combination', 'assets')
-        depth = 1

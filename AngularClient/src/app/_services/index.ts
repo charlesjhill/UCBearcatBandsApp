@@ -8,3 +8,4 @@ export * from './student.service';
 export * from './enrollment.service';
 export * from './assignments.service';
 export * from './locker.service';
+export * from './snackbar.service';

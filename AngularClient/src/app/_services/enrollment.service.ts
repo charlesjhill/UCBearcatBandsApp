@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Enrollment, PostEnrollment } from '../_models';
+import { Enrollment, PostEnrollment, Instrument, Uniform } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class EnrollmentService {
@@ -32,5 +32,9 @@ export class EnrollmentService {
   /** Get a single enrollment */
   public getEnrollment(id: number): Observable<Enrollment> {
     return this.http.get<Enrollment>(`${environment.apiUrl}/enrollments/${id}/`);
+  }
+
+  public getAsset(id: number): Observable<Instrument | Uniform> {
+    return this.http.get<Instrument | Uniform>(`${environment.apiUrl}/assets/${id}/`);
   }
 }

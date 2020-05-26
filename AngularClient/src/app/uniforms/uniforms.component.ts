@@ -5,7 +5,7 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { UniformsService, AlertService } from '../_services';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Uniform, Student, Ensemble, Enrollment, Assignment } from '../_models';
+import { Uniform, Student, Ensemble, Enrollment, Assignment, PostEnrollment } from '../_models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBarRef } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
@@ -189,7 +189,7 @@ export class UniformsComponent implements OnInit {
     } else {
       // Full objects
       for (const enr of ensemble.enrollments as Enrollment[]) {
-        if (enr.student.m_number === student.m_number) {
+        if ((enr.student as any).m_number === student.m_number) {
           console.log('found enrollment');
           return of(enr);
         }
@@ -198,7 +198,7 @@ export class UniformsComponent implements OnInit {
 
     // If we make it here, there is no matching enrollment, so we have to make one
     console.log('creating enrollment');
-    const newEnr = new Enrollment();
+    const newEnr = new PostEnrollment();
     newEnr.student = student.user.id;
     newEnr.ensemble = ensemble.id;
     return this.enrollmentService.addEnrollment(newEnr);

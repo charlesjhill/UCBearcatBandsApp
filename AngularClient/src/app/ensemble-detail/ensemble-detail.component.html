@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="d-flex flex-row mb-1">
         <h4>Members</h4>
-        <button mat-stroked-button class="ml-2"  (click)="addStudents()">ADD STUDENTS</button>
+        <button mat-stroked-button class="ml-2" (click)="addStudents()">ADD STUDENTS</button>
     </div>
     <div class="row">
         <div class="col">
@@ -12,10 +12,10 @@
                 </ng-container>
                 <ng-container matColumnDef="instruments">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Instruments</th>
-                    <td mat-cell *matCellDef="let enrollment"> 
+                    <td mat-cell *matCellDef="let enrollment">
                         <mat-chip-list>
                             <mat-chip style="cursor: pointer;" *ngFor="let inst of getAssignedInstruments(enrollment)"
-                                routerLink="../instrument/{{inst.id}}">
+                                routerLink="../instruments/{{inst.id}}">
                                 {{ inst.name }}
                             </mat-chip>
                         </mat-chip-list>
@@ -23,7 +23,7 @@
                 </ng-container>
                 <ng-container matColumnDef="otherAssets">
                     <th mat-header-cell *matHeaderCellDef>Other Assets</th>
-                    <td mat-cell *matCellDef="let enrollment"> 
+                    <td mat-cell *matCellDef="let enrollment">
                         <mat-chip-list>
                             <mat-chip *ngFor="let other of getAssignedOtherAssets(enrollment)">
                                 {{ other.name | titlecase }}
@@ -39,7 +39,8 @@
                         </button>
                         <mat-menu #actionMenu>
                             <button mat-menu-item>DETAILS</button>
-                            <button mat-menu-item style="color: rgb(255, 0, 0);" (click)="removeStudent(enrollment.id)">REMOVE</button>
+                            <button mat-menu-item style="color: rgb(255, 0, 0);"
+                                (click)="removeStudent(enrollment.id)">REMOVE</button>
                         </mat-menu>
                     </td>
                 </ng-container>
@@ -50,13 +51,15 @@
             <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
         </div>
     </div>
-    
+
     <!-- Actions which affect the entire ensemble -->
     <!-- To keep admins from accidently deleting an ensemble, we'll lock this behind the "danger zone" -->
     <div class="row mt-2">
         <div class="col">
-            <mat-slide-toggle color="warn" (change)="toggleDangerZone($event)" class="mx-2">Enable Danger Zone?</mat-slide-toggle>
-            <button mat-flat-button color="warn" [disabled]="!enableDangerZone" (click)="deleteEnsemble()">DELETE</button>
+            <mat-slide-toggle color="warn" (change)="toggleDangerZone($event)" class="mx-2">Enable Danger Zone?
+            </mat-slide-toggle>
+            <button mat-flat-button color="warn" [disabled]="!enableDangerZone"
+                (click)="deleteEnsemble()">DELETE</button>
         </div>
     </div>
 </div>

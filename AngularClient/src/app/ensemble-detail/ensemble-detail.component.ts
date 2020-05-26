@@ -1,15 +1,15 @@
-import { Ensemble, Enrollment } from '../_models';
-import { EnrollmentService, EnsembleService } from '../_services';
-import { AssignStudentsComponent } from './assign-students/assign-students.component';
-
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { SnackBarService } from '../_services/snackbar.service';
+import { forkJoin, from } from 'rxjs';
+import { mergeMap, reduce } from 'rxjs/operators';
+import { Enrollment, Ensemble } from '../_models';
+import { EnrollmentService, EnsembleService, SnackBarService, StudentService } from '../_services';
+import { AssignStudentsComponent } from './assign-students/assign-students.component';
+
 
 @Component({
   selector: 'app-ensemble-detail',
@@ -19,35 +19,56 @@ import { SnackBarService } from '../_services/snackbar.service';
 export class EnsembleDetailComponent implements OnInit {
 
   constructor(private ensembleService: EnsembleService,
-              private enrollmentService: EnrollmentService,
-              public dialog: MatDialog,
-              private snackBarService: SnackBarService) { }
+    private enrollmentService: EnrollmentService,
+    private studentService: StudentService,
+    public dialog: MatDialog,
+    private snackBarService: SnackBarService) { }
 
   @Input() ensemble: Ensemble;
-  public enableDangerZone: boolean;
-  dataSource: MatTableDataSource<Enrollment>;
-  sortedData: Enrollment[];
-
-  columnsToDisplay = ['name', 'instruments', 'otherAssets', 'actions'];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  public enableDangerZone: boolean;
+  public dataSource: MatTableDataSource<Enrollment>;
+  public columnsToDisplay = ['name', 'instruments', 'otherAssets', 'actions'];
+
+  private sortedData: Enrollment[];
+
   ngOnInit() {
     this.enableDangerZone = false;
-    this.sortedData = (this.ensemble.enrollments as Enrollment[]).slice();
-    this.dataSource = new MatTableDataSource(this.sortedData);
-    this.dataSource.sortingDataAccessor = (item, property) => {
-      switch (property) {
-        case 'name': return item.student.user.full_name;
-        case 'instruments': {
-          const insts = item.assets.filter(val => val.resourcetype === 'Instrument');
-          return (insts ? insts[0].name : '');
+
+    from(this.ensemble.enrollments as number[]).pipe(
+      mergeMap(enrollmentId => this.enrollmentService.getEnrollment(enrollmentId)),
+      mergeMap(enrollment => {
+        // Get the student and assets associated with the enrollment
+        const student$ = this.studentService.details(enrollment.student as number);
+        const assets$ = from(enrollment.assets as number[]).pipe(
+          mergeMap(assetId => this.enrollmentService.getAsset(assetId)),
+          reduce((acc, asset) => [...acc, asset], [])
+        );
+
+        return forkJoin({
+          student: student$,
+          assets: assets$
+        });
+      }),
+      reduce((acc, enrollment) => [...acc, enrollment], [])
+    ).subscribe(data => {
+      this.sortedData = data;
+      this.dataSource = new MatTableDataSource(this.sortedData);
+      this.dataSource.sortingDataAccessor = (item, property) => {
+        switch (property) {
+          case 'name': return (item.student as any).user.full_name;
+          case 'instruments': {
+            const insts = item.assets.filter(val => val.resourcetype === 'Instrument');
+            return (insts ? insts[0].name : '');
+          }
+          default: return item[property];
         }
-        default: return item[property];
-      }
-    };
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+      };
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   toggleDangerZone(event: MatSlideToggleChange) {

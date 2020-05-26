@@ -19,13 +19,13 @@ export class StudentService {
   public currentStudents$: Observable<Student[]>;
 
   /** Get the list of all the students */
-  private list(): Observable<Student[]> {
+  public list(): Observable<Student[]> {
     return this.http.get<Student[]>(this.baseUrl);
   }
 
   /** Get a student instance given an id */
   public details(id: number): Observable<Student> {
-    return this.http.get<Student>(`${this.baseUrl}/${id}/`);
+    return this.http.get<Student>(`${this.baseUrl}${id}/`);
   }
 
   /** Force a refresh of the stored students */

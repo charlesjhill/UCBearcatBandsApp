@@ -1,9 +1,9 @@
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from django.core.validators import RegexValidator
-from rest_auth.serializers import UserDetailsSerializer
+from dj_rest_auth.serializers import UserDetailsSerializer
 from rest_framework import serializers
-from rest_auth.registration.serializers import RegisterSerializer
+from dj_rest_auth.registration.serializers import RegisterSerializer
 
 from ucbearcatbandsproject.bands.models import Student
 from . import models

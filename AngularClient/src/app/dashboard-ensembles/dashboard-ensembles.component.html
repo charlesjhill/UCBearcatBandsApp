@@ -9,7 +9,10 @@
         <div class="col">
             <mat-accordion style="width: 100%">
                 <ng-container *ngFor="let ensemble of ensembles$ | async as list; let i = index">
-                    <mat-expansion-panel>
+                    <mat-expansion-panel
+                        [expanded]="ensemble.id === selectedEnsemble"
+                        (opened)="changeSelectedEnsemble(ensemble.id)"
+                        (closed)="changeSelectedEnsemble(-1)">
                         <mat-expansion-panel-header class="right-aligned-header">
                             <!-- Title info -->
                             <mat-panel-title>

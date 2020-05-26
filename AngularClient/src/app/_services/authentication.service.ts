@@ -1,20 +1,18 @@
-﻿import { User, TokenReturn, ReturnUser, Student } from '../_models';
+﻿import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, iif } from 'rxjs';
-import { concatMap, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, iif, Observable, of } from 'rxjs';
+import { concatMap, map, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ReturnUser, Student, TokenReturn, User } from '../_models';
 
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
-    private currentUserToken = '';
+    public currentUser: Observable<User>;
 
     private currentStudentSubject: BehaviorSubject<Student>;
     public currentStudent: Observable<Student>;
-
-    public currentUser: Observable<User>;
 
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -33,9 +31,7 @@ export class AuthenticationService {
     }
 
     /** Utility function to convert a token to some returnUser object */
-    private tokenToUser(tr: TokenReturn): Observable<ReturnUser> {
-        // First store the received token, then fire off the request for user details
-        this.currentUserToken = tr.key;
+    private tokenToUser(tr: TokenReturn): Observable<{ru: ReturnUser, tr: TokenReturn}> {
 
         // After the following call, we are going to rely on `jwt.interceptor` to handle setting this header
         const httpOptions = {
@@ -46,18 +42,19 @@ export class AuthenticationService {
         };
 
         // Get the user details (which uses the auth token)
-        return this.http.get<ReturnUser>(`${environment.apiUrl}/dj-rest-auth/user/`, httpOptions);
+        return this.http.get<ReturnUser>(`${environment.apiUrl}/dj-rest-auth/user/`, httpOptions)
+            .pipe(map(ru => ({ ru, tr })));
     }
 
     /** Convert a returnUser to full user instance (with a token) and perform some side effects 8) */
-    private retUserToUser(ru: ReturnUser): Observable<User> {
+    private retUserToUser({ ru, tr}: {ru: ReturnUser, tr: TokenReturn}): Observable<User> {
         // Handle the user details, updating our stored 'user' object
         const user = new User();
         user.email = ru.email;
         user.full_name = ru.full_name;
         user.is_student = ru.is_student;
         user.id = ru.id;
-        user.token = this.currentUserToken;
+        user.token = tr.key;
 
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
@@ -74,18 +71,14 @@ export class AuthenticationService {
                 concatMap(ru => this.retUserToUser(ru)),
                 concatMap(u => iif(
                     () => u.is_student,
-                    this.http.get(`${environment.apiUrl}/students/${u.id}/`),
+                    this.http.get<Student>(`${environment.apiUrl}/students/${u.id}/`).pipe(
+                        tap(student => {
+                            localStorage.setItem('currentStudent', JSON.stringify(student));
+                            this.currentStudentSubject.next(student);
+                        })
+                    ),
                     of(u))
-                ),
-                tap(thing => {
-                    if (thing.hasOwnProperty('m_number') && (thing as Student).m_number) {
-                        const student = new Student();
-                        student.m_number = (thing as Student).m_number;
-                        student.enrollments = (thing as Student).enrollments;
-                        localStorage.setItem('currentStudent', JSON.stringify(student));
-                        this.currentStudentSubject.next(student);
-                    }
-                })
+                )
             );
     }
 
@@ -93,7 +86,6 @@ export class AuthenticationService {
     public logout() {
         // remove user from local storage and set current user to null
         localStorage.removeItem('currentUser');
-        this.currentUserToken = '';
         this.currentUserSubject.next(null);
 
         localStorage.removeItem('currentStudent');

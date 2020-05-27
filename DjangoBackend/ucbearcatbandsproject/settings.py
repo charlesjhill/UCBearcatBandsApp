@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'ucbearcatbandsproject.bands',
     'ucbearcatbandsproject.users',
     'corsheaders',
-    'polymorphic'
+    'polymorphic',
+    'ariadne.contrib.django'
 ]
 
 # Auth settings for allauth

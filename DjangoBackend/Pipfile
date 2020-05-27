@@ -15,6 +15,7 @@ dj-rest-auth = "*"
 django-allauth = "*"
 django-polymorphic = "*"
 django-rest-polymorphic = "*"
+ariadne = "*"
 
 [requires]
 python_version = "3.7"

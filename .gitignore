@@ -504,3 +504,4 @@ playground.xcworkspace
 
 # Cuz I don't ever want to see this folder in my git stuff again
 /BlazorWebClient
+DjangoBackend/static

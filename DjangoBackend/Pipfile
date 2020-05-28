@@ -16,6 +16,8 @@ django-allauth = "*"
 django-polymorphic = "*"
 django-rest-polymorphic = "*"
 ariadne = "*"
+django-spa = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.7"

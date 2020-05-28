@@ -1,18 +1,54 @@
-from ariadne import ObjectType, make_executable_schema, gql, snake_case_fallback_resolvers, UnionType
+from ariadne import ObjectType, make_executable_schema, gql, snake_case_fallback_resolvers, UnionType, ScalarType
 
-from .bands.models import Instrument, Locker, UniformPiece
+from .bands.models import Instrument, Locker, UniformPiece, Ensemble, Student, Asset
 
 type_defs = gql('''
     type Query {
-        hello: String! @deprecated
-        instruments: [Instrument!]!
+        instruments(id: ID): [Instrument!]!
         lockers: [Locker!]!
+        ensembles: [Ensemble!]!
+        students(id: ID): [Student!]!
     }
 
-    """
-    An instrument
-    """
+    type Ensemble {
+        id: ID!
+        name: String!
+        term: String!
+        isActive: Boolean!
+        members: [Student!]!
+        enrollments: [Enrollment!]!
+    }
+
+    type Enrollment {
+        student: Student!
+        ensemble: Ensemble!
+        assets: [Asset!]!
+        assetAssignments: [AssetAssignment!]!
+    }
+
+    type AssetAssignment {
+        enrollment: Enrollment!
+        asset: Asset!
+        isActive: Boolean!
+    }
+
+    type Student {
+        user: User!
+        mNumber: String!
+        assets: [Asset!]!
+        enrollments: [Enrollment!]!
+    }
+
+    type User {
+        id: ID!
+        fullName: String!
+        email: String!
+        isStudent: Boolean!
+    }
+
+    """An instrument"""
     type Instrument implements AssetBase {
+        id: ID!
         name: String
         kind: String!
         make: String!
@@ -23,61 +59,128 @@ type_defs = gql('''
         condition: String!
         averageLife: Int!
         locker: Locker
+        purchaseInfo: PurchaseInfo
+        students: [Student!]!
+        enrollments: [Enrollment!]!
+        assignments: [AssetAssignment!]!
     }
 
     type UniformPiece implements AssetBase {
+        id: ID!
         name: String
         condition: String!
         locker: Locker
         kind: String!
         size: String!
         number: String!
+        purchaseInfo: PurchaseInfo
+        students: [Student!]!
+        enrollments: [Enrollment!]!
+        assignments: [AssetAssignment!]!
     }
 
     interface AssetBase {
+        id: ID!
         name: String
         condition: String!
         locker: Locker
+        purchaseInfo: PurchaseInfo
+        students: [Student!]!
+        enrollments: [Enrollment!]!
+        assignments: [AssetAssignment!]!
     }
 
     type Locker {
+        id: ID!
         number: Int!
         combination: String!
         assets: [Asset!]
     }
 
+    type PurchaseInfo {
+        id: ID!
+        date: Date!
+        cost: Float!
+        vendor: String!
+        invoiceNumber: String!
+        content: String!
+    }
+
     union Asset = Instrument | UniformPiece
+
+    scalar Date
 ''')
 
 query = ObjectType("Query")
-
-@query.field("hello")
-def resolve_hello(*_):
-    return "Hello, you!"
+instrument = ObjectType("Instrument")
+uniform = ObjectType("UniformPiece")
+locker = ObjectType("Locker")
+ensemble = ObjectType("Ensemble")
+enrollment = ObjectType("Enrollment")
+student = ObjectType("Student")
 
 @query.field("instruments")
-def resolve_instruments(*_):
-    return Instrument.objects.all()
+def resolve_instruments(parent, info, id=None):
+    if (id is None):
+        return Instrument.objects.all()
+
+    return [Instrument.objects.get(pk=id)]
 
 @query.field("lockers")
 def resolve_lockers(*_):
     return Locker.objects.all()
 
+@query.field("ensembles")
+def resolve_ensembles(*_):
+    return Ensemble.objects.all()
 
-instrument = ObjectType("Instrument")
+@query.field("students")
+def resolve_students(*_, id=None):
+    if (id is None):
+        return Student.objects.all()
+    
+    return [Student.objects.get(pk=id)]
 
 @instrument.field("averageLife")
 def resolve_averageLife(inst: Instrument, _):
     return Instrument.AVERAGE_LIFE_OF_INSTRUMENT.get(inst.kind)
 
-locker = ObjectType("Locker")
+@instrument.field("assignments")
+@uniform.field("assignments")
+def resolve_assignments(asset, _):
+    return asset.assignments.all()
 
 @locker.field("assets")
-def resolve_assets(locker: Locker, _):
-    return locker.assets.all()
+@enrollment.field("assets")
+def resolve_assets(x, _):
+    return x.assets.all()
+
+@ensemble.field("members")
+def resolve_members(ensm: Ensemble, _):
+    return ensm.members.all()
+
+@ensemble.field("enrollments")
+@student.field("enrollments")
+@instrument.field("enrollments")
+@uniform.field("enrollments")
+def resolve_enrollments(ensm: Ensemble, _):
+    return ensm.enrollments.all()
+
+@enrollment.field("assetAssignments")
+def resolve_asset_assignments(enrollment, _):
+    return enrollment.asset_assignments.all()
+
+
+@instrument.field("students")
+@uniform.field("students")
+def resolve_students_using_asset(asset, _):
+    return Student.objects.filter(enrollments__asset_assignments__asset=asset)
+
+@student.field("assets")
+def resolve_assets_from_student(student, _):
+    return Asset.objects.filter(enrollments__student=student)
 
 asset = UnionType("Asset")
-
 @asset.type_resolver
 def resolve_asset_type(obj, *_):
     if isinstance(obj, Instrument):
@@ -86,4 +189,20 @@ def resolve_asset_type(obj, *_):
         return "UniformPiece"
     return None
 
-schema = make_executable_schema(type_defs, query, instrument, locker, asset, snake_case_fallback_resolvers)
+date_scalar = ScalarType("Date")
+@date_scalar.serializer
+def serialize_date(value):
+    return value.isoformat()
+
+
+schema = make_executable_schema(type_defs, \
+                                query, \
+                                student, \
+                                enrollment, \
+                                instrument, \
+                                locker, \
+                                asset, \
+                                ensemble, \
+                                uniform, \
+                                date_scalar, \
+                                snake_case_fallback_resolvers)

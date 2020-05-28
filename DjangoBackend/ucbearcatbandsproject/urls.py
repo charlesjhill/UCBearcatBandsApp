@@ -22,5 +22,5 @@ from .schema import schema
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('ucbearcatbandsproject.bands.urls')),
-    path('graphql/', GraphQLView.as_view(schema=schema), name='graphql')
+    path('api/graphql/', GraphQLView.as_view(schema=schema), name='graphql')
 ]

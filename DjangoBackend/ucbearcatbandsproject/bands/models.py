@@ -109,14 +109,6 @@ class Asset(PolymorphicModel):
         related_name="assets"
     )
 
-    purchase_info = models.ForeignKey(
-        'PurchaseInfo',
-        related_name='assets',
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True
-    )
-
     def __str__(self):
         return self.name
 
@@ -214,7 +206,7 @@ class Instrument(Asset):
                           (frenchHorn, frenchHorn),
                           (marchingHorn, marchingHorn),
                           (mellophone, mellophone),
-                          (oboe, oboe), 
+                          (oboe, oboe),
                           (piano, piano),
                           (piccolo, piccolo),
                           (sopranoSaxophone, sopranoSaxophone),
@@ -306,37 +298,66 @@ class UniformPiece(Asset):
 
 
 # Invoices
-class Invoice(models.Model):
-    date = models.DateField(default=timezone.now)
+class LineItem(models.Model):
+    purchase = "Purchase"
+    maintenance = "Maintenance"
+    TYPES = ((purchase, purchase),
+             (maintenance, maintenance))
+
+    type = models.CharField(max_length=20, choices=TYPES, default=purchase)
     cost = models.DecimalField(decimal_places=2,
                                max_digits=20)
+    notes = models.TextField(default="", blank=True)
+
+    asset = models.ForeignKey(
+        Asset,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="line_items"
+    )
+    invoice = models.ForeignKey(
+        "Invoice",
+        on_delete=models.CASCADE,
+        related_name="line_items"
+    )
+
+    def validate_unique(self, exclude=None):
+        """
+        Provide custom validation logic to prevent asset from being double purchased
+        """
+        # See if there are any entries which prevent us from creating a line item
+        # I.e. this asset already has a purchase lineitem
+        violations = LineItem.objects.filter(type=self.purchase, asset=self.asset)
+
+        # If we have any violations, we shouldn't allow this purchase receipt to pass
+        if violations.exists():
+            raise ValidationError('An asset can only have one purchase receipt')
+
+        return super().validate_unique(exclude=exclude)
+
+    def save(self, *args, **kwargs):
+        """Override saving to run our custom validation logic"""
+        self.validate_unique()
+        super().save(*args, **kwargs)
+
+
+class Invoice(models.Model):
+
+    date = models.DateField(default=timezone.now)
     vendor = models.CharField(max_length=255, default="Buddy Rogers")
     invoice_number = models.CharField(max_length=255)
-    content = models.TextField(default="")
+    notes = models.TextField(default="", blank=True)
+    assets = models.ManyToManyField(
+        Asset,
+        related_name="invoices",
+        through=LineItem,
+        through_fields=("invoice", "asset")
+    )
 
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['vendor', 'invoice_number'], name='%(class)s_unique_number_for_vendor')
         ]
-        abstract = True
-
-
-class PurchaseInfo(Invoice):
-    # There is a FK on 'Asset' to handle this
-    # HOWEVER, there is no way of encoding the purchase price of an individual asset
-    # on a receipt, unless we store the purchase price with the instrument? That's a maybe
-    def __str__(self):
-        return str(self.date) + '@' + str(self.vendor)
-
-
-class MaintenanceReport(Invoice):
-    # We may want to come back to this in the future, such as introducing a 'through' model
-    # To encapsulate a `MaintenanceAction` or something, which has specific cost and description
-    assets = models.ManyToManyField(
-        Asset,
-        related_name='maintenance_reports',
-        blank=True
-    )
 
 
 # Other stuff

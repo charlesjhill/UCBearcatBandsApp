@@ -1,0 +1,149 @@
+type Query {
+    instruments(id: ID): [Instrument!]!
+    lockers: [Locker!]!
+    ensembles: [Ensemble!]!
+    students(id: ID): [Student!]!
+}
+
+"""An Ensemble"""
+type Ensemble {
+    id: ID!
+    name: String!
+    term: String!
+    isActive: Boolean!
+    """A list of all Students enrolled in this Ensemble"""
+    members: [Student!]!
+    """A list of all the raw Enrollments, for this ensemble"""
+    enrollments: [Enrollment!]!
+}
+
+"""An enrollment of a student in an ensemble, with a variable number of assigned assets"""
+type Enrollment {
+    student: Student!
+    ensemble: Ensemble!
+    assets: [Asset!]!
+    assetAssignments: [AssetAssignment!]!
+}
+
+"""An assignment of an asset to an enrollment"""
+type AssetAssignment {
+    enrollment: Enrollment!
+    asset: Asset!
+    isActive: Boolean!
+}
+
+"""A student"""
+type Student {
+    user: User!
+    mNumber: String!
+    assets: [Asset!]!
+    enrollments: [Enrollment!]!
+}
+
+"""A User"""
+type User {
+    id: ID!
+    fullName: String!
+    email: String!
+    isStudent: Boolean!
+    student: Student
+}
+
+"""An instrument"""
+type Instrument implements AssetBase {
+    id: ID!
+    name: String
+    kind: String!
+    make: String!
+    model: String!
+    serialNumber: String!
+    ucTagNumber: String
+    ucAssetNumber: String
+    condition: String!
+    averageLife: Int!
+    locker: Locker
+
+    lineItems(type: ExpenseType): [LineItem!]!
+    invoices(type: ExpenseType): [Invoice!]!
+    accumulatedCost: Float!
+
+    students: [Student!]!
+    enrollments: [Enrollment!]!
+    assignments: [AssetAssignment!]!
+}
+
+"""A piece of a Uniform"""
+type UniformPiece implements AssetBase {
+    id: ID!
+    name: String
+    condition: String!
+    locker: Locker
+    kind: String!
+    size: String!
+    number: String!
+
+    lineItems(type: ExpenseType): [LineItem!]!
+    invoices(type: ExpenseType): [Invoice!]!
+    accumulatedCost: Float!
+
+    students: [Student!]!
+    enrollments: [Enrollment!]!
+    assignments: [AssetAssignment!]!
+}
+
+"""Properties common to all assets"""
+interface AssetBase {
+    id: ID!
+    name: String
+    condition: String!
+    locker: Locker
+
+    lineItems(type: ExpenseType): [LineItem!]!
+    invoices(type: ExpenseType): [Invoice!]!
+    accumulatedCost: Float!
+
+    students: [Student!]!
+    enrollments: [Enrollment!]!
+    assignments: [AssetAssignment!]!
+}
+
+"""A locker"""
+type Locker {
+    id: ID!
+    number: Int!
+    combination: String!
+    assets: [Asset!]
+}
+
+"""A single line-item, linking an Asset to an Invoice"""
+type LineItem {
+    id: ID!
+    asset: Asset
+    Invoice: Invoice!
+    type: ExpenseType!
+    cost: Float!
+    notes: String!
+}
+
+"""A receipt representing a purchase """
+type Invoice {
+    id: ID!
+    date: Date!
+    vendor: String!
+    invoiceNumber: String!
+    notes: String!
+
+    lineItems: [LineItem!]!
+    assets: [Asset!]!
+    totalPrice: Float!
+}
+
+enum ExpenseType {
+    PURCHASE
+    MAINTENANCE
+}
+
+union Asset = Instrument | UniformPiece
+
+"""An ISO8601 Date (e.g. '2020-05-27')"""
+scalar Date

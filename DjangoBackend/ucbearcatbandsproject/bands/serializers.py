@@ -91,17 +91,7 @@ class EnsembleSerializer(serializers.ModelSerializer):
 
 
 # Invoices
-class PurchaseInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.PurchaseInfo
-        fields = '__all__'
-
-
-class MaintenanceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.MaintenanceReport
-        fields = '__all__'
-
+# TODO: Add Invoice and LineItem Serializers
 
 # Other
 class LockerSerializer(serializers.ModelSerializer):

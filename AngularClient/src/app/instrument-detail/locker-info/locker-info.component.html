@@ -1,6 +1,6 @@
 <div *ngIf="locker$ | async as locker; else noLocker">
-    <h3>Number: {{ locker.number }}</h3><br>
-    <h3>Combination: {{ locker.combination }}</h3>
+    <p>Number: <strong>{{ locker.number }}</strong></p>
+    <p>Combination: <strong>{{ locker.combination }}</strong></p>
     <!-- Add ability to change the locker from here -->
 </div>
 

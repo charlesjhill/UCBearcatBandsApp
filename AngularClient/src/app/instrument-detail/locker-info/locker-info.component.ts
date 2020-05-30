@@ -17,7 +17,6 @@ export class LockerInfoComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     const n = changes.lockerNum.currentValue;
-    console.log('lockerNum: ' + n);
     if (n) {
       this.locker$ = this.lockerService.getLocker(n);
     } else {

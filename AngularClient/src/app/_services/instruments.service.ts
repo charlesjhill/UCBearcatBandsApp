@@ -1,16 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, iif, of, from } from 'rxjs';
-import { tap, mergeMap, map, reduce } from 'rxjs/operators';
+import { produce } from 'immer';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Instrument, Student } from '../_models';
-import { LockerService } from '../_services';
-import { produce } from 'immer';
 
 @Injectable({ providedIn: 'root' })
 export class InstrumentsService {
 
-  constructor(private http: HttpClient, private lockerService: LockerService) {
+  constructor(private http: HttpClient) {
     this.currentInstrumentsSubject = new BehaviorSubject([]);
     this.currentInstruments$ = this.currentInstrumentsSubject.asObservable();
     this.update();
@@ -43,7 +42,6 @@ export class InstrumentsService {
 
     this.currentInstrumentsSubject.next(nextState);
   }
-
 
   /** Force a refresh of stored instruments */
   public update(): void {
@@ -106,22 +104,12 @@ export class InstrumentsService {
    * @param id The id of the instrument
    */
   public fetchInstrument(id: number): void {
-    this.http.get<Instrument>(`${environment.apiUrl}/instruments/${id}/`).pipe(
-      // mergeMap(inst => iif(
-      //   () => !!inst.locker,
-      //   this.lockerService.getLocker(inst.locker).pipe(
-      //     map(locker => {
-      //       inst.locker = locker;
-      //       return inst;
-      //     })
-      //   ),
-      //   of(inst))
-      // )
-    ).subscribe(inst => this.replaceOrAddInstrumentFromStore(inst));
+    this.http.get<Instrument>(`${environment.apiUrl}/instruments/${id}/`)
+      .subscribe(inst => this.replaceOrAddInstrumentFromStore(inst));
   }
 
   /** Get the students assigned to a particular instrument */
   public getStudentsAssigned(id: number): Observable<Student[]> {
-    return this.http.get<Student[]>(`${environment.apiUrl}/instruments/${id}/students`);
+    return this.http.get<Student[]>(`${environment.apiUrl}/instruments/${id}/students/`);
   }
 }

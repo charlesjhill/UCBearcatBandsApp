@@ -18,7 +18,6 @@ invoice = ObjectType("Invoice")
 
 # Query Fields
 
-
 @query.field("instruments")
 def resolve_instruments(parent, info, id=None):
     if id is None:
@@ -47,6 +46,13 @@ def resolve_students(*_, id=None):
 
 # Everything else
 
+@student.field("id")
+def resolve_id_from_student(stud: Student, *args):
+    return stud.user_id
+
+@student.field("fullName")
+def resolve_fullName(stud: Student, *args):
+    return stud.user.full_name
 
 @instrument.field('invoices')
 @uniform.field('invoices')
@@ -67,7 +73,7 @@ def resolve_invoices(asset: Asset, _, type: str = None):
 @invoice.field("lineItems")
 @instrument.field("lineItems")
 @uniform.field("lineItems")
-def resolve_line_items(inv: Invoice, type: str = None):
+def resolve_line_items(inv: Invoice, _, type: str = None):
     q = inv.line_items.all()
 
     if type == 'PURCHASE':

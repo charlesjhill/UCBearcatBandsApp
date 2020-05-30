@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row mb-2">
     <div class="col">
-        <button mat-flat-button color="accent" (click)="openForm()">Add Instrument</button>
+        <button mat-flat-button color="accent" (click)="openAddForm()">Add Instrument</button>
     </div>
   </div>
   <div class="mat-elevation-z8">
@@ -31,7 +31,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let instrument">
-          <a mat-stroked-button [routerLink]="[instrument.id]" >Details</a>
+          <a mat-stroked-button [routerLink]="[instrument.id]">Details</a>
           <button mat-flat-button color="warn" (click)="onDelete(instrument.id)">Delete</button>
         </td>
       </ng-container>

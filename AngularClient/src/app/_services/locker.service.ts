@@ -14,7 +14,7 @@ export class LockerService {
   private readonly baseUrl = `${environment.apiUrl}/lockers/`;
 
   getLocker(id: number): Observable<Locker> {
-    return this.http.get<Locker>(this.baseUrl + id);
+    return this.http.get<Locker>(this.baseUrl + id + '/');
   }
 
 }

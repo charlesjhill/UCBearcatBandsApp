@@ -22,6 +22,7 @@ import { CreateUniformDialog, UniformsComponent } from './uniforms/uniforms.comp
 import { AlertComponent } from './_components';
 import { ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { LockerInfoComponent } from './instrument-detail/locker-info/locker-info.component';
+import { GraphQLModule } from './graphql.module';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { LockerInfoComponent } from './instrument-detail/locker-info/locker-info
         HttpClientModule,
         appRoutingModule,
         BrowserAnimationsModule,
-        MaterialsModule
+        MaterialsModule,
+        GraphQLModule
     ],
     declarations: [
         AppComponent,

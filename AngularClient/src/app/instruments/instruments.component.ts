@@ -1,13 +1,15 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { InstrumentsService, AlertService, EnsembleService, AssignmentService, EnrollmentService, StudentService } from '../_services';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable, of } from 'rxjs';
-import { Instrument, Ensemble, Assignment, Enrollment, Student, PostEnrollment } from '../_models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+import { Assignment, Enrollment, Ensemble, Instrument, Student } from '../_models';
+import { AlertService, AssignmentService, EnrollmentService, InstrumentsService, EnsembleService, StudentService } from '../_services';
 import { SnackBarService } from '../_services/snackbar.service';
+import { withLatestFrom, mergeMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-instruments',
@@ -18,52 +20,48 @@ export class InstrumentsComponent implements OnInit {
 
   constructor(
     private instrumentService: InstrumentsService,
-    private formBuilder: FormBuilder,
     private dialog: MatDialog,
     private alertService: AlertService,
-    private enrollmentService: EnrollmentService,
-    private assignmentService: AssignmentService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private apollo: Apollo
   ) { }
 
   // An array of all instrument objects from API
-  public inventory: any[] = [];
   public dataSource: MatTableDataSource<any>;
+  assignedString: Record<number, string> = { };
   displayedColumns: string[] = ['uc_tag_number', 'kind', 'condition', 'assign', 'actions'];
-
-  // TODO: What's this do?
-  registerForm: FormGroup;
 
   // An object representing the data in the 'add' form
   // TODO: What are all these properties? Cull those we don't need
-  public new_instrument: Instrument;
-  public condition: any;
-  public kind: any;
-  public make: any;
-  public model: any;
-  public serial_number: any;
-  public uc_tag_number: any;
-  public uc_asset_number: any;
-  student: Student;
-  ensemble: Ensemble;
-  enrollment: Enrollment;
-  assignment: Assignment;
-  assignedString: string[] = [];
+  public newInstrument = new Instrument();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  public getInstruments() {
-    this.instrumentService.currentInstruments$.subscribe(
+  ngOnInit() {
+    const instrumentsAndNames$ = this.apollo.watchQuery<any>({
+      query: gql`
+        {
+          instruments {
+            id
+            students {
+              fullName
+            }
+          }
+        }
+      `
+    }).valueChanges;
+
+    this.instrumentService.currentInstruments$.pipe(
+      mergeMap(insts => instrumentsAndNames$.pipe(map(({data}) => ({ insts, data }))))
+    ).subscribe(
       // the first argument is a function which runs on success
-      data => {
-        this.inventory = data;
-        this.dataSource = new MatTableDataSource(this.inventory);
+      ({ insts, data }) => {
+        this.dataSource = new MatTableDataSource(insts);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        for (const inst of this.inventory) {
-          this.getAssigned(inst.id);
-        }
+
+        data.instruments.forEach(inst => { this.assignedString[Number(inst.id)] = inst.students.map(s => s.fullName).join(', '); });
       },
       // the second argument is a function which runs on error
       err => console.error(err),
@@ -72,38 +70,24 @@ export class InstrumentsComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-    this.getInstruments();
-  }
-
-  // TODO: Descriptive function naming
-  openForm(): void {
-    let is_closed = false;
-
+  openAddForm(): void {
     const dialogRef = this.dialog.open(OverviewDialog, {
       data: {
-        condition: this.condition,
-        kind: this.kind,
-        make: this.make,
-        model: this.model,
-        serial_number: this.serial_number,
-        uc_tag_number: this.uc_tag_number,
-        uc_asset_number: this.uc_asset_number
+        instrument: this.newInstrument
       }
     });
 
     dialogRef.afterClosed().subscribe(data => {
       if (data != null) {
-        this.new_instrument = data;
-        console.log(this.new_instrument);
+        this.newInstrument = data;
         this.onAdd();
       }
     });
   }
 
   onAdd() {
-    this.instrumentService.addInstrument(this.new_instrument).subscribe(
-      data => { this.snackBarService.openSnackBar('Instrument Added'); },
+    this.instrumentService.addInstrument(this.newInstrument).subscribe(
+      () => { this.snackBarService.openSnackBar('Instrument Added'); },
       error => { this.alertService.error(error); }
     );
   }
@@ -115,147 +99,6 @@ export class InstrumentsComponent implements OnInit {
         data => { this.snackBarService.openSnackBar('Instrument Deleted'); },
         error => { this.alertService.error(error); }
       );
-    });
-  }
-
-  editForm(instrument: Instrument, id: number): void {
-    let is_closed = false;
-
-    const dialogRef = this.dialog.open(OverviewDialog, {
-      data: {
-        condition: instrument.condition,
-        kind: instrument.kind,
-        make: instrument.make,
-        model: instrument.model,
-        serial_number: instrument.serial_number,
-        uc_tag_number: instrument.uc_tag_number,
-        uc_asset_number: instrument.uc_asset_number,
-        title: 'Edit Instrument',
-        detail: 'Change any desired fields',
-        readonly: false
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(data => {
-      if (data != null) {
-        this.new_instrument = data;
-        console.log(this.new_instrument);
-        this.onEdit(this.new_instrument, id);
-      }
-    });
-  }
-
-  onEdit(instrument: Instrument, id: number) {
-    this.instrumentService.updateInstrument(instrument, id).subscribe(
-      data => {
-        this.snackBarService.openSnackBar('Instrument Updated');
-      }, error => {
-        this.alertService.error(error);
-      });
-  }
-
-  viewForm(instrument: Instrument): void {
-    let is_closed = false;
-
-    const dialogRef = this.dialog.open(OverviewDialog, {
-      data: {
-        condition: instrument.condition,
-        kind: instrument.kind,
-        make: instrument.make,
-        model: instrument.model,
-        serial_number: instrument.serial_number,
-        uc_tag_number: instrument.uc_tag_number,
-        uc_asset_number: instrument.uc_asset_number,
-        title: 'Instrument Details',
-        detail: ' ',
-        readonly: true
-      }
-    });
-  }
-
-
-  public getAssigned(id: number): void {
-    // hit /instruments/{{id}}/students
-    // return student name
-    let names = '';
-    this.instrumentService.getStudentsAssigned(id).subscribe(
-      // the first argument is a function which runs on success
-      data => {
-        names = data.map(s => s.user.full_name).join(', ');
-        this.assignedString[id] = names;
-      },
-      err => console.error(err),
-      () => console.log('done loading')
-    );
-  }
-
-  private getOrCreateEnrollment(student: Student, ensemble: Ensemble): Observable<Enrollment> {
-    // Check if the enrollment alreday exists
-    if (typeof ensemble.enrollments?.[0] === 'number') {
-      // We are working with enrollment IDs
-      for (const enrId of ensemble.enrollments as number[]) {
-        for (const studEnr of student.enrollments) {
-          if (enrId === studEnr.id ?? studEnr) { // The student enrollment object could be an ID too
-            return this.enrollmentService.getEnrollment(enrId);
-          }
-        }
-      }
-    } else {
-      // Full objects
-      for (const enr of ensemble.enrollments as Enrollment[]) {
-        if ((enr.student as any).m_number === student.m_number) {
-          console.log('found enrollment');
-          return of(enr);
-        }
-      }
-    }
-
-    // If we make it here, there is no matching enrollment, so we have to make one
-    console.log('creating enrollment');
-    const newEnr = new PostEnrollment();
-    newEnr.student = student.user.id;
-    newEnr.ensemble = ensemble.id;
-    return this.enrollmentService.addEnrollment(newEnr);
-  }
-
-  private Assign(id: number, student: Student, ensemble: Ensemble): void {
-    // create enrollment
-    this.getOrCreateEnrollment(student, ensemble).subscribe(
-      enr => {
-        console.log('creating assignment');
-        const newAsm = new Assignment();
-        newAsm.enrollment = enr.id;
-        newAsm.asset = id;
-        this.assignmentService.addAssigment(newAsm).subscribe(
-          data => {
-            this.snackBarService.openSnackBar('Instrument Assigned!');
-            this.instrumentService.update();
-          },
-          err => { console.log(err); }
-        );
-      },
-      err => { console.log(err); }
-    );
-  }
-
-  public assignForm(instrument: Instrument, id: number): void {
-    let is_closed = false;
-
-    const assignData: AssignDialogData = {
-      student: null,
-      ensemble: null,
-      dialogName: instrument.name
-    };
-
-    const dialogRef = this.dialog.open(InstrumentAssignDialog, {
-      data: assignData
-    });
-
-    dialogRef.afterClosed().subscribe(data => {
-      if (data != null) {
-        console.log(data);
-        this.Assign(id, data.student, data.ensemble);
-      }
     });
   }
 }
@@ -285,13 +128,13 @@ export class OverviewDialog implements OnInit {
     public dialogRef: MatDialogRef<OverviewDialog>,
     @Inject(MAT_DIALOG_DATA) data)
   {
-    this.kind = data.kind;
-    this.make = data.make;
-    this.model = data.model;
-    this.serial_number = data.serial_number;
-    this.uc_tag_number = data.uc_tag_number;
-    this.uc_asset_number = data.uc_asset_number;
-    this.condition = data.condition;
+    this.kind = data.instrument.kind;
+    this.make = data.instrument.make;
+    this.model = data.instrument.model;
+    this.serial_number = data.instrument.serial_number;
+    this.uc_tag_number = data.instrument.uc_tag_number;
+    this.uc_asset_number = data.instrument.uc_asset_number;
+    this.condition = data.instrument.condition;
 
     this.readonly = data.readonly || false;
     this.title = data.title || 'Add Instrument';

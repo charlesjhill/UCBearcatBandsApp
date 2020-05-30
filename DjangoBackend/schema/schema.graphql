@@ -34,7 +34,9 @@ type AssetAssignment {
 
 """A student"""
 type Student {
+    id: ID!
     user: User!
+    fullName: String!
     mNumber: String!
     assets: [Asset!]!
     enrollments: [Enrollment!]!
@@ -119,7 +121,7 @@ type Locker {
 type LineItem {
     id: ID!
     asset: Asset
-    Invoice: Invoice!
+    invoice: Invoice!
     type: ExpenseType!
     cost: Float!
     notes: String!

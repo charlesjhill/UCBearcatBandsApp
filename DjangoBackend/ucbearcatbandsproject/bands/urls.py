@@ -14,8 +14,8 @@ router.register(r'assets', views.AssetViewSet)
 router.register(r'instruments', views.InstrumentViewSet)
 router.register(r'uniforms', views.UniformViewSet)
 router.register(r'lockers', views.LockerViewSet)
-
-# TODO: Add Invoice/ListItem URLs
+router.register(r'invoices', views.InvoiceViewSet)
+router.register(r'lineItems', views.LineItemViewSet)
 
 # Include the viewsets' urls, as well as our authentication urls
 urlpatterns = [

@@ -96,4 +96,11 @@ class LockerViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.LockerSerializer
 
 
-# TODO: Add Invoice and LineItem ViewSets
+class InvoiceViewSet(viewsets.ModelViewSet):
+    queryset = models.Invoice.objects.all()
+    serializer_class = serializers.InvoiceSerializer
+
+
+class LineItemViewSet(viewsets.ModelViewSet):
+    queryset = models.LineItem.objects.all()
+    serializer_class = serializers.LineItemSerializer

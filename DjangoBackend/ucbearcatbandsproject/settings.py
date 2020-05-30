@@ -37,12 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
+    'rest_framework.authtoken',  # region NEEDED for Auth
     'dj_rest_auth',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'dj_rest_auth.registration',
+    'dj_rest_auth.registration',  # endregion NEEDED for Auth
     'ucbearcatbandsproject.bands',
     'ucbearcatbandsproject.users',
     'corsheaders',
@@ -63,6 +63,7 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend"
 )
 
+# Needed for registration
 SITE_ID = 1
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -75,11 +76,10 @@ REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'ucbearcatbandsproject.users.serializers.CustomRegisterSerializer'
 }
 
-REST_SESSION_LOGIN = True
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
     )
 }
 
@@ -123,7 +123,6 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:4200',  # The Angular frontend
 ]
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -133,7 +132,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -153,7 +151,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -166,7 +163,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

@@ -91,7 +91,20 @@ class EnsembleSerializer(serializers.ModelSerializer):
 
 
 # Invoices
-# TODO: Add Invoice and LineItem Serializers
+class InvoiceSerializer(serializers.ModelSerializer):
+    line_items = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    assets = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+    class Meta:
+        model = models.Invoice
+        fields = ('id', 'date', 'vendor', 'invoice_number', 'notes', 'line_items', 'assets')
+
+
+class LineItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.LineItem
+        fields = ('id', 'type', 'cost', 'notes', 'asset', 'invoice')
+
 
 # Other
 class LockerSerializer(serializers.ModelSerializer):

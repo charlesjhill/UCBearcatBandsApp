@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { produce } from 'immer';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Instrument, Student } from '../_models';
 
@@ -12,11 +12,13 @@ export class InstrumentsService {
   constructor(private http: HttpClient) {
     this.currentInstrumentsSubject = new BehaviorSubject([]);
     this.currentInstruments$ = this.currentInstrumentsSubject.asObservable();
-    this.update();
+    this.fetchAllInstruments();
   }
 
   private currentInstrumentsSubject: BehaviorSubject<Instrument[]>;
   public currentInstruments$: Observable<Instrument[]>;
+
+  //#region Helper Methods
 
   /** Replaces an Instrument in the store, or adds one if it doesn't exist */
   private replaceOrAddInstrumentFromStore(newInst: Instrument) {
@@ -43,36 +45,35 @@ export class InstrumentsService {
     this.currentInstrumentsSubject.next(nextState);
   }
 
+  /** Get all the instruments from the server */
+  private list(): Observable<Instrument[]> {
+    return this.http.get<Instrument[]>(`${environment.apiUrl}/instruments/`);
+  }
+
+  //#endregion
+
+  //#region Fetch Methods
+
   /** Force a refresh of stored instruments */
-  public update(): void {
+  public fetchAllInstruments(): void {
     console.log('updating list of instruments');
     this.list().subscribe(data => {
       this.currentInstrumentsSubject.next(data);
     });
   }
 
-  /** Get all the instruments from the server */
-  private list(): Observable<Instrument[]> {
-    return this.http.get<Instrument[]>(`${environment.apiUrl}/instruments/`);
-    // .pipe(
-    //   mergeMap(insts => from(insts).pipe(
-    //     mergeMap(inst => iif(
-    //       () => !!inst.locker,
-    //       this.lockerService.getLocker(inst.locker).pipe(
-    //         map(locker => {
-    //           inst.locker = locker;
-    //           return inst;
-    //         })
-    //       ),
-    //       of(inst)
-    //     )),
-    //   )),
-    //   reduce((acc, v) => {
-    //     acc.push(v);
-    //     return acc;
-    //   }, ([] as Instrument[]))
-    // );
+  /**
+ * Fetch a single instrument, updating currentInstruments$
+ * @param id The id of the instrument
+ */
+  public fetchInstrument(id: number): void {
+    this.http.get<Instrument>(`${environment.apiUrl}/instruments/${id}/`)
+      .subscribe(inst => this.replaceOrAddInstrumentFromStore(inst));
   }
+
+  //#endregion 
+
+  //#region CRUD operations
 
   /** Add an instrument, yielding the new instrument AND updating the store */
   public addInstrument(instrument: Instrument): Observable<Instrument> {
@@ -80,6 +81,21 @@ export class InstrumentsService {
       .pipe(
         // As it stands, we don't expect an instrument to have a locker instance attached when it is first created
         tap(newInst => this.replaceOrAddInstrumentFromStore(newInst)),
+      );
+  }
+
+
+  public getInstrument(id: number): Observable<Instrument> {
+    return this.currentInstruments$.pipe(
+      map(insts => insts.find(i => i.id === id))
+    );
+  }
+
+  /** Update an instrument */
+  public updateInstrument(instrument: Instrument, id?: number): Observable<Instrument> {
+    return this.http.put<Instrument>(`${environment.apiUrl}/instruments/${id ?? instrument.id}/`, instrument)
+      .pipe(
+        tap(inst => this.replaceOrAddInstrumentFromStore(inst))
       );
   }
 
@@ -91,25 +107,14 @@ export class InstrumentsService {
       );
   }
 
-  /** Update an instrument */
-  public updateInstrument(instrument: Instrument, id?: number): Observable<Instrument> {
-    return this.http.put<Instrument>(`${environment.apiUrl}/instruments/${id ?? instrument.id}/`, instrument)
-      .pipe(
-        tap(() => this.fetchInstrument(id ?? instrument.id))
-      );
-  }
+  //#endregion
 
-  /**
-   * Fetch a single instrument, updating currentInstruments$
-   * @param id The id of the instrument
-   */
-  public fetchInstrument(id: number): void {
-    this.http.get<Instrument>(`${environment.apiUrl}/instruments/${id}/`)
-      .subscribe(inst => this.replaceOrAddInstrumentFromStore(inst));
-  }
+  //#region Auxillary Methods
 
   /** Get the students assigned to a particular instrument */
   public getStudentsAssigned(id: number): Observable<Student[]> {
     return this.http.get<Student[]>(`${environment.apiUrl}/instruments/${id}/students/`);
   }
+
+  //#endregion
 }

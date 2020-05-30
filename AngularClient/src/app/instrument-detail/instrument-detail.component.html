@@ -1,24 +1,60 @@
-<div *ngIf="instrument; else loading">
-    <h2>{{ instrument.name }}</h2>
-    <mat-accordion multi=true>
-        <mat-expansion-panel expanded=true>
-            <!-- Instrument Information, stored in the instrument object -->
-            <mat-expansion-panel-header>
-                <mat-panel-title>Instrument Information</mat-panel-title>
-            </mat-expansion-panel-header>
+<div class="container">
+    <div *ngIf="instrument; else loading">
+        <h2>{{ instrument.name }}</h2>
+        <mat-accordion multi=true>
+            <mat-expansion-panel expanded=true>
+                <!-- Instrument Information, stored in the instrument object -->
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h2 class="mat-h2">Instrument Information</h2>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
 
-            <app-instrument-info-form [instrument]="instrument" (submitted)="instrumentDetailsEdited($event)"></app-instrument-info-form>
-        </mat-expansion-panel>
-        <mat-expansion-panel expanded=true>
-            <!-- Current Locker Location -->
-            <mat-expansion-panel-header>
-                <mat-panel-title>Current Locker</mat-panel-title>
-            </mat-expansion-panel-header>
-            <app-locker-info [lockerNum]="instrument.locker"></app-locker-info>
-        </mat-expansion-panel>
-    </mat-accordion>
+                <app-instrument-info-form #infoFormComp [instrument]="instrument"
+                    (submitted)="instrumentDetailsEdited($event)"></app-instrument-info-form>
+
+                <mat-action-row>
+                    <button mat-flat-button color="primary" type="submit"
+                        (click)="instrumentDetailsEdited(infoFormComp.instrumentForm.valid ? infoFormComp.instrumentForm.value : undefined)"
+                        [disabled]="infoFormComp.instrumentForm.disabled || infoFormComp.instrumentForm.invalid">Submit</button>
+                </mat-action-row>
+            </mat-expansion-panel>
+            <mat-expansion-panel expanded=true>
+                <!-- Current Locker Location -->
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Current Locker</mat-panel-title>
+                </mat-expansion-panel-header>
+                <app-locker-info [lockerNum]="instrument.locker"></app-locker-info>
+
+                <mat-action-row>
+                    <ng-container *ngIf="instrument.locker; else hasNoLocker">
+                        <button mat-flat-button color="warn" type="button">Remove from Locker</button>
+                        <button mat-flat-button color="accent" type="button">Move Locker</button>
+                    </ng-container>
+                    <ng-template #hasNoLocker>
+                        <!-- Wire this up -->
+                        <button mat-flat-button color="primary" type=button>Add to Locker</button>
+                    </ng-template>
+                </mat-action-row>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Assignments</mat-panel-title>
+                </mat-expansion-panel-header>
+
+                Lorem ipsum
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Purchase and Maintenance History</mat-panel-title>
+                </mat-expansion-panel-header>
+
+                Lorem ipsum
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
+    <ng-template #loading>
+        Loading Instrument...
+    </ng-template>
 </div>
-
-<ng-template #loading>
-    Loading Instrument...
-</ng-template>

@@ -1,20 +1,23 @@
-<label>
+<mat-slide-toggle [checked]="instrumentForm.enabled" (toggleChange)="editCheckboxToggled()" [color]="'primary'">
   Edit
-  <mat-slide-toggle [checked]="instrumentForm.enabled" (toggleChange)="editCheckboxToggled()"></mat-slide-toggle>
-</label>
-<form [formGroup]="instrumentForm" (ngSubmit)="onSubmit()">
+</mat-slide-toggle>
+
+<form class="mt-2" [formGroup]="instrumentForm">
   <mat-form-field>
     <mat-select formControlName="kind" placeholder="Kind">
       <mat-option *ngFor="let kind of kinds" [value]="kind">
         {{kind | titlecase}}
       </mat-option>
     </mat-select>
+    <mat-error *ngIf="instrumentForm.controls.kind.invalid">Kind is required</mat-error>
   </mat-form-field>
   <mat-form-field>
     <input matInput formControlName="make" placeholder="Make">
+    <mat-error *ngIf="instrumentForm.controls.make.invalid">Make is required</mat-error>
   </mat-form-field>
   <mat-form-field>
     <input matInput formControlName="model" placeholder="Model">
+    <mat-error *ngIf="instrumentForm.controls.model.invalid">Model is required</mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-select formControlName="condition" placeholder="Condition">
@@ -22,9 +25,11 @@
         {{condition | titlecase}}
       </mat-option>
     </mat-select>
+    <mat-error *ngIf="instrumentForm.controls.condition.invalid">Condition is required</mat-error>
   </mat-form-field>
   <mat-form-field>
     <input matInput formControlName="serial_number" placeholder="Serial Number">
+    <mat-error *ngIf="instrumentForm.controls.serial_number.invalid">Serial Number is required</mat-error>
   </mat-form-field>
   <mat-form-field>
     <input matInput formControlName="uc_tag_number" placeholder="Tag Number">
@@ -32,5 +37,4 @@
   <mat-form-field>
     <input matInput formControlName="uc_asset_number" placeholder="Asset Number">
   </mat-form-field>
-  <button mat-flat-button color="primary" type="submit" [disabled]="instrumentForm.disabled">Submit</button>
 </form>

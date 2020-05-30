@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Instrument } from 'src/app/_models';
 
 @Component({
@@ -21,10 +21,10 @@ export class InstrumentInfoFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.instrumentForm = this.fb.group({
-      kind: [this.instrument.kind],
-      make: [this.instrument.make],
-      model: [this.instrument.model],
-      condition: [this.instrument.condition],
+      kind: [this.instrument.kind, [Validators.required]],
+      make: [this.instrument.make, [Validators.required]],
+      model: [this.instrument.model, [Validators.required]],
+      condition: [this.instrument.condition, [Validators.required]],
       uc_asset_number: [this.instrument.uc_asset_number],
       serial_number: [this.instrument.serial_number],
       uc_tag_number: [this.instrument.uc_tag_number]
@@ -35,16 +35,11 @@ export class InstrumentInfoFormComponent implements OnInit {
   public editCheckboxToggled() {
     if (this.instrumentForm.enabled) {
       this.instrumentForm.disable();
+      // TODO: Decide if "reset form state on disable edit checkbox" is a good idea
+      // const { id, locker, name, ...partialInst } = this.instrument;
+      // this.instrumentForm.setValue(partialInst);
     } else {
       this.instrumentForm.enable();
     }
   }
-
-  public onSubmit() {
-    if (this.instrumentForm.valid) {
-      this.submitted.emit(this.instrumentForm.value);
-      this.instrumentForm.disable();
-    }
-  }
-
 }

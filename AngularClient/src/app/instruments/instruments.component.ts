@@ -52,10 +52,9 @@ export class InstrumentsComponent implements OnInit {
       `
     }).valueChanges;
 
-    this.instrumentService.currentInstruments$.pipe(
+    this.instrumentService.getAll().pipe(
       mergeMap(insts => instrumentsAndNames$.pipe(map(({data}) => ({ insts, data }))))
     ).subscribe(
-      // the first argument is a function which runs on success
       ({ insts, data }) => {
         this.dataSource = new MatTableDataSource(insts);
         this.dataSource.paginator = this.paginator;
@@ -63,9 +62,7 @@ export class InstrumentsComponent implements OnInit {
 
         data.instruments.forEach(inst => { this.assignedString[Number(inst.id)] = inst.students.map(s => s.fullName).join(', '); });
       },
-      // the second argument is a function which runs on error
       err => console.error(err),
-      // the third argument is a function which runs on completion
       () => console.log('done loading')
     );
   }
@@ -86,7 +83,7 @@ export class InstrumentsComponent implements OnInit {
   }
 
   onAdd() {
-    this.instrumentService.addInstrument(this.newInstrument).subscribe(
+    this.instrumentService.add(this.newInstrument).subscribe(
       () => { this.snackBarService.openSnackBar('Instrument Added'); },
       error => { this.alertService.error(error); }
     );
@@ -95,7 +92,7 @@ export class InstrumentsComponent implements OnInit {
   onDelete(id: number) {
     const bar = this.snackBarService.openDeleteSnackBar('Are you sure?', 'DELETE', 10000);
     bar.onAction().subscribe(() => {
-      this.instrumentService.deleteInstrument(id).subscribe(
+      this.instrumentService.delete(id).subscribe(
         data => { this.snackBarService.openSnackBar('Instrument Deleted'); },
         error => { this.alertService.error(error); }
       );
@@ -223,7 +220,7 @@ export class InstrumentAssignDialog implements OnInit {
 
   /** Get the list of ensembles from the ensemble service, storing them in this.ensembles */
   private getEnsembles() {
-    this.ensembleService.currentEnsembles.subscribe(
+    this.ensembleService.getAll().subscribe(
       // the first argument is a function which runs on success
       data => {
         this.ensembles = data;
@@ -233,7 +230,6 @@ export class InstrumentAssignDialog implements OnInit {
       // the third argument is a function which runs on completion
       () => console.log('Ensembles done loading')
     );
-    this.ensembleService.update(); // Force a reload of our ensembles
   }
 
   /** Get the list of students from the student service, storing them in this.students */

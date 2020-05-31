@@ -43,7 +43,7 @@ export class StudentPageComponent implements OnInit {
     from(this.enrollments).pipe(
       mergeMap(enrollment => {
         const id = enrollment.ensemble;
-        return this.ensembleService.getEnsemble(id);
+        return this.ensembleService.get(id);
       })
     ).subscribe(
       ensemble => {

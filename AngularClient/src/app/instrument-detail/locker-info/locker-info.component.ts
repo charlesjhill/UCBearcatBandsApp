@@ -18,7 +18,7 @@ export class LockerInfoComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     const n = changes.lockerNum.currentValue;
     if (n) {
-      this.locker$ = this.lockerService.getLocker(n);
+      this.locker$ = this.lockerService.get(n);
     } else {
       this.locker$ = EMPTY;
     }

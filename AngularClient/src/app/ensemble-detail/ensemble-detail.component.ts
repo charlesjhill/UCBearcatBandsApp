@@ -5,7 +5,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { forkJoin, from } from 'rxjs';
-import { mergeMap, reduce } from 'rxjs/operators';
+import { mergeMap, reduce, map } from 'rxjs/operators';
 import { Enrollment, Ensemble } from '../_models';
 import { EnrollmentService, EnsembleService, SnackBarService, StudentService } from '../_services';
 import { AssignStudentsComponent } from './assign-students/assign-students.component';
@@ -88,7 +88,7 @@ export class EnsembleDetailComponent implements OnInit {
       if (result) {
         // If we modified an ensemble we need to update
         this.snackBarService.openSnackBar('Students added!');
-        this.ensembleService.update();
+        this.ensembleService.fetch(this.ensemble.id);
       }
     });
   }
@@ -99,8 +99,7 @@ export class EnsembleDetailComponent implements OnInit {
       console.log(`deleting enrollment ${enrollmentId}`);
       this.enrollmentService.deleteEnrollment(enrollmentId).subscribe(
         result => {
-          // We should update just the affected ensemble, in the future
-          this.ensembleService.update();
+          this.ensembleService.fetch(this.ensemble.id);
         },
         error => { console.log(error); }
       );

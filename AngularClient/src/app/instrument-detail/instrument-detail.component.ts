@@ -22,7 +22,7 @@ export class InstrumentDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.instrumentSub = this.instrumentService.getInstrument(id)
+    this.instrumentSub = this.instrumentService.get(id)
       .subscribe(i => this.instrument = i);
   }
 
@@ -33,7 +33,7 @@ export class InstrumentDetailComponent implements OnInit, OnDestroy {
   instrumentDetailsEdited(newInst: Partial<Instrument>): void {
     if (!newInst) { return; }
     const newInstrument = Object.assign(this.instrument, newInst);
-    this.instrumentService.updateInstrument(newInstrument).subscribe({
+    this.instrumentService.update(newInstrument).subscribe({
       next: () => this.snackBar.openSnackBar('Update Successful'),
       error: () => this.snackBar.openDeleteSnackBar('Update Failed')
     });

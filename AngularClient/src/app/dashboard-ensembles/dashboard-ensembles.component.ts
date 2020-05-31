@@ -46,7 +46,7 @@ export class DashboardEnsemblesComponent implements OnInit, OnDestroy {
     // Get the ensembles from our ensembleService
     this.dataSource = new MatTableDataSource();
     this.dataSource.paginator = this.paginator;
-    this.ensSubscription = this.ensembleService.currentEnsembles.subscribe(d => {
+    this.ensSubscription = this.ensembleService.getAll().subscribe(d => {
       this.dataSource.data = d;
       this.ensembles$ = this.dataSource.connect();
     });

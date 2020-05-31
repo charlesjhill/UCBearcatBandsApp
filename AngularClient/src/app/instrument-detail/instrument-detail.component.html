@@ -1,13 +1,11 @@
-<div class="container">
+<div class="container-fluid">
     <div *ngIf="instrument; else loading">
-        <h2>{{ instrument.name }}</h2>
-        <mat-accordion multi=true>
+        <h1 class="mat-h1 mb-1">{{ instrument.name }}</h1>
+        <mat-accordion class="mat-typography" multi=true>
+            <!-- Instrument Information, stored in the instrument object -->
             <mat-expansion-panel expanded=true>
-                <!-- Instrument Information, stored in the instrument object -->
                 <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <h2 class="mat-h2">Instrument Information</h2>
-                    </mat-panel-title>
+                    <mat-panel-title>Instrument Information</mat-panel-title>
                 </mat-expansion-panel-header>
 
                 <app-instrument-info-form #infoFormComp [instrument]="instrument"
@@ -19,8 +17,8 @@
                         [disabled]="infoFormComp.instrumentForm.disabled || infoFormComp.instrumentForm.invalid">Submit</button>
                 </mat-action-row>
             </mat-expansion-panel>
-            <mat-expansion-panel expanded=true>
-                <!-- Current Locker Location -->
+            <!-- Current Locker Location -->
+            <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>Current Locker</mat-panel-title>
                 </mat-expansion-panel-header>
@@ -28,8 +26,8 @@
 
                 <mat-action-row>
                     <ng-container *ngIf="instrument.locker; else hasNoLocker">
-                        <button mat-flat-button color="warn" type="button">Remove from Locker</button>
                         <button mat-flat-button color="accent" type="button">Move Locker</button>
+                        <button mat-flat-button color="warn" type="button">Remove from Locker</button>
                     </ng-container>
                     <ng-template #hasNoLocker>
                         <!-- Wire this up -->
@@ -37,13 +35,20 @@
                     </ng-template>
                 </mat-action-row>
             </mat-expansion-panel>
+            <!-- Any assignments -->
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>Assignments</mat-panel-title>
                 </mat-expansion-panel-header>
 
                 Lorem ipsum
+
+                <mat-action-row>
+                    <button mat-flat-button color="accent">Assign</button>
+                    <button mat-flat-button color="warn" type="button">Unassign All</button>
+                </mat-action-row>
             </mat-expansion-panel>
+            <!-- Purchase and Maintenance History -->
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>Purchase and Maintenance History</mat-panel-title>

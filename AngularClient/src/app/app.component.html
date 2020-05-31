@@ -1,5 +1,5 @@
 ﻿<mat-toolbar color="primary">
-    <mat-toolbar-row *ngIf="currentUser">
+    <ng-container *ngIf="currentUser; else loggedOut">
         <div *ngIf="!currentStudent">
             <button mat-icon-button>
                 <mat-icon (click)="toggleSidebar()">menu</mat-icon>
@@ -10,10 +10,10 @@
             <a mat-button [routerLink]="'/'">Home</a>
             <a mat-button (click)="logout()">Logout</a>
         </div>
-    </mat-toolbar-row>
-    <mat-toolbar-row style="height: 4vh">
+    </ng-container>
+    <ng-template #loggedOut>
         <span style="font-size: 12px;">The UC Bearcat Bands App helps you manage the UC Bearcat Bands</span>
-    </mat-toolbar-row>
+    </ng-template>
 </mat-toolbar>
 
 

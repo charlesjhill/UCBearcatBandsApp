@@ -50,7 +50,7 @@ export class EnsembleDetailComponent implements OnInit {
         return forkJoin({
           student: student$,
           assets: assets$
-        });
+        }).pipe(map(things => ({ ...things, id: enrollment.id })));
       }),
       reduce((acc, enrollment) => [...acc, enrollment], [])
     ).subscribe(data => {

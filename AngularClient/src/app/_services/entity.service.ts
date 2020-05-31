@@ -1,7 +1,9 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import produce from 'immer';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, filter } from 'rxjs/operators';
+import { isEqual } from 'lodash';
+
 
 export interface Keyable {
   id: number;
@@ -32,19 +34,22 @@ export abstract class EntityService<T extends Keyable> {
   protected abstract getApiUrl(): string;
 
   protected replaceOrAddToStore(entity: T): void {
-    // draft is of type Draft<T>[], which we cannot push a T to, unfortunately
-    const nextState = produce(this.entitiesSubject.value, (draft: any) => {
-      const index = draft.findIndex(v => v.id === entity.id);
-      if (index === -1) {
-        draft.push(entity);
-      } else {
-        draft[index] = entity;
-      }
-    });
-    this.entitiesSubject.next(nextState);
+    const ind = this.entitiesSubject.value.findIndex(e => e.id === entity.id);
+    if (ind === -1 || !isEqual(this.entitiesSubject.value[ind], entity)) {
+      // draft is of type Draft<T>[], which we cannot push a T to, unfortunately
+      const nextState = produce(this.entitiesSubject.value, (draft: any) => {
+        if (ind === -1) {
+          draft.push(entity);
+        } else {
+          draft[ind] = entity;
+        }
+      });
+      this.entitiesSubject.next(nextState);
+    }
   }
 
   protected deleteFromStore(entity: T): void {
+    if (!entity) { return; }
     const nextState = produce(this.entitiesSubject.value, draft => {
       const index = draft.findIndex(i => i.id === entity.id);
       if (index !== -1) {
@@ -68,7 +73,9 @@ export abstract class EntityService<T extends Keyable> {
    */
   public fetch(id: number): void {
     this.http.get<T>(this.baseUrl + `${id}/`)
-      .subscribe(entity => this.replaceOrAddToStore(entity));
+      .subscribe(entity => {
+        this.replaceOrAddToStore(entity);
+      });
   }
 
   //#region CRUD
@@ -86,7 +93,8 @@ export abstract class EntityService<T extends Keyable> {
   public get(id: number): Observable<T> {
     this.fetch(id);
     return this.entities$.pipe(
-      map(entities => entities.find(i => i.id === id))
+      map(entities => entities.find(i => i.id === id)),
+      filter(ent => !!ent)
     );
   }
 

@@ -182,7 +182,7 @@ export class UniformsComponent implements OnInit {
       for (const enrId of ensemble.enrollments as number[]) {
         for (const studEnr of student.enrollments) {
           if (enrId === studEnr.id ?? studEnr) { // The student enrollment object could be an ID too
-            return this.enrollmentService.getEnrollment(enrId);
+            return this.enrollmentService.get(enrId);
           }
         }
       }
@@ -201,7 +201,7 @@ export class UniformsComponent implements OnInit {
     const newEnr = new PostEnrollment();
     newEnr.student = student.user.id;
     newEnr.ensemble = ensemble.id;
-    return this.enrollmentService.addEnrollment(newEnr);
+    return this.enrollmentService.add(newEnr as any);
   }
 
   private Assign(id: number, student: Student, ensemble: Ensemble): void {

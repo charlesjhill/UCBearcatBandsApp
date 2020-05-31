@@ -37,7 +37,7 @@ export class AssignStudentsComponent implements OnInit {
         payload.ensemble = this.data.ensemble.id;
         payload.student = option.value;
 
-        return this.enrollmentService.addEnrollment(payload);
+        return this.enrollmentService.add(payload as any);
       })
     ).subscribe(
       data => { console.log('successful enrollment'); },

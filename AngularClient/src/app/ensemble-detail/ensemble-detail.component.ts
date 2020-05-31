@@ -5,7 +5,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { forkJoin, from } from 'rxjs';
-import { mergeMap, reduce, map } from 'rxjs/operators';
+import { mergeMap, reduce, map, switchMap, filter, first } from 'rxjs/operators';
 import { Enrollment, Ensemble } from '../_models';
 import { EnrollmentService, EnsembleService, SnackBarService, StudentService } from '../_services';
 import { AssignStudentsComponent } from './assign-students/assign-students.component';
@@ -38,7 +38,7 @@ export class EnsembleDetailComponent implements OnInit {
     this.enableDangerZone = false;
 
     from(this.ensemble.enrollments as number[]).pipe(
-      mergeMap(enrollmentId => this.enrollmentService.getEnrollment(enrollmentId)),
+      mergeMap(enrollmentId => this.enrollmentService.get(enrollmentId).pipe(first())),
       mergeMap(enrollment => {
         // Get the student and assets associated with the enrollment
         const student$ = this.studentService.details(enrollment.student as number);
@@ -97,7 +97,7 @@ export class EnsembleDetailComponent implements OnInit {
     const bar = this.snackBarService.openDeleteSnackBar('Are you sure?', 'DELETE', 6000);
     bar.onAction().subscribe(() => {
       console.log(`deleting enrollment ${enrollmentId}`);
-      this.enrollmentService.deleteEnrollment(enrollmentId).subscribe(
+      this.enrollmentService.delete(enrollmentId).subscribe(
         result => {
           this.ensembleService.fetch(this.ensemble.id);
         },

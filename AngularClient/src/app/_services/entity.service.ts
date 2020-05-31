@@ -86,10 +86,11 @@ export abstract class EntityService<T extends Keyable> {
    */
   public add(entity: T): Observable<T> {
     return this.http.post<T>(this.baseUrl, entity).pipe(
-      tap(entity => this.replaceOrAddToStore(entity))
+      tap(ent => this.replaceOrAddToStore(ent))
     );
   }
 
+  /** Get a single entity. Can emit many times. Will not emit falsy values.  */
   public get(id: number): Observable<T> {
     this.fetch(id);
     return this.entities$.pipe(
@@ -98,11 +99,13 @@ export abstract class EntityService<T extends Keyable> {
     );
   }
 
+  /** Get all entities. May emit multiple times. */
   public getAll(): Observable<T[]> {
     this.fetchAll();
     return this.entities$;
   }
 
+  /** PUT a new entity. Will return the newly updated entity. */
   public update(entity: T): Observable<T> {
     return this.http.put<T>(this.baseUrl + `${entity.id}/`, entity)
       .pipe(
@@ -110,6 +113,7 @@ export abstract class EntityService<T extends Keyable> {
       );
   }
 
+  /** DELETE a given entity */
   public delete(id: number): Observable<any> {
     return this.http.delete(this.baseUrl + `${id}/`)
       .pipe(

@@ -1,7 +1,7 @@
-<div class="container-fluid">
+<div class="container-fluid mat-typography">
     <div *ngIf="instrument; else loading">
         <h1 class="mat-h1 mb-1">{{ instrument.name }}</h1>
-        <mat-accordion class="mat-typography" multi=true>
+        <mat-accordion multi=true>
             <!-- Instrument Information, stored in the instrument object -->
             <mat-expansion-panel expanded=true>
                 <mat-expansion-panel-header>
@@ -41,11 +41,10 @@
                     <mat-panel-title>Assignments</mat-panel-title>
                 </mat-expansion-panel-header>
 
-                Lorem ipsum
+                <app-assignment-history [instId]="instrument.id"></app-assignment-history>
 
                 <mat-action-row>
                     <button mat-flat-button color="accent">Assign</button>
-                    <button mat-flat-button color="warn" type="button">Unassign All</button>
                 </mat-action-row>
             </mat-expansion-panel>
             <!-- Purchase and Maintenance History -->
@@ -55,6 +54,7 @@
                 </mat-expansion-panel-header>
 
                 Lorem ipsum
+
             </mat-expansion-panel>
         </mat-accordion>
     </div>

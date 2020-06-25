@@ -23,6 +23,7 @@ import { AlertComponent } from './_components';
 import { ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { LockerInfoComponent } from './instrument-detail/locker-info/locker-info.component';
 import { GraphQLModule } from './graphql.module';
+import { AssignmentHistoryComponent } from './instrument-detail/assignment-history/assignment-history.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { GraphQLModule } from './graphql.module';
         CreateUniformDialog,
         InstrumentDetailComponent,
         InstrumentInfoFormComponent,
-        LockerInfoComponent
+        LockerInfoComponent,
+        AssignmentHistoryComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

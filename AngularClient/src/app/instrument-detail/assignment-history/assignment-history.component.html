@@ -1,0 +1,11 @@
+<!-- Add styling -->
+<ul>
+  <li *ngFor="let group of assignmentVM">
+    {{ group[0] }}
+    <ul>
+      <li *ngFor="let enrDetails of group[1]">
+        {{enrDetails.ensemble.name}} | {{enrDetails.student.fullName}}
+      </li>
+    </ul>
+  </li>
+</ul>

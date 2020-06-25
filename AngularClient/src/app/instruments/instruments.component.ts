@@ -6,10 +6,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import { Assignment, Enrollment, Ensemble, Instrument, Student } from '../_models';
-import { AlertService, AssignmentService, EnrollmentService, InstrumentsService, EnsembleService, StudentService } from '../_services';
-import { SnackBarService } from '../_services/snackbar.service';
-import { withLatestFrom, mergeMap, map } from 'rxjs/operators';
+import { Ensemble, Instrument, Student } from '../_models';
+import { AlertService, InstrumentsService, EnsembleService, StudentService } from '../_services';
+import { SnackBarService } from '../_services';
+import { mergeMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-instruments',
@@ -28,11 +28,11 @@ export class InstrumentsComponent implements OnInit {
 
   // An array of all instrument objects from API
   public dataSource: MatTableDataSource<any>;
+  // A mapping of instruments to the string showing what students are assigned to it
   assignedString: Record<number, string> = { };
   displayedColumns: string[] = ['uc_tag_number', 'kind', 'condition', 'assign', 'actions'];
 
   // An object representing the data in the 'add' form
-  // TODO: What are all these properties? Cull those we don't need
   public newInstrument = new Instrument();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -53,6 +53,7 @@ export class InstrumentsComponent implements OnInit {
     }).valueChanges;
 
     this.instrumentService.getAll().pipe(
+      // Combine our traditional data with the nested information we need
       mergeMap(insts => instrumentsAndNames$.pipe(map(({data}) => ({ insts, data }))))
     ).subscribe(
       ({ insts, data }) => {

@@ -16,7 +16,6 @@ export class InstrumentsService extends EntityService<Instrument> {
     return `${environment.apiUrl}/instruments/`;
   }
 
-
   /** Get the students assigned to a particular instrument */
   public getStudentsAssigned(id: number): Observable<Student[]> {
     return this.http.get<Student[]>(this.baseUrl + `${id}/students/`);

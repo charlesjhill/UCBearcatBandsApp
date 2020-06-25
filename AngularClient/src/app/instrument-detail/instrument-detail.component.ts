@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Instrument } from '../_models';
-import { InstrumentsService } from '../_services/instruments.service';
-import { SnackBarService } from './../_services/snackbar.service';
+import { InstrumentsService } from '../_services';
+import { SnackBarService } from '../_services';
 
 @Component({
   selector: 'app-instrument-detail',

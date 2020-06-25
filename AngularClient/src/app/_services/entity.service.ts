@@ -4,7 +4,6 @@ import produce from 'immer';
 import { tap, map, filter } from 'rxjs/operators';
 import { isEqual } from 'lodash';
 
-
 export interface Keyable {
   id: number;
 }
@@ -19,7 +18,7 @@ export abstract class EntityService<T extends Keyable> {
   protected entitiesSubject: BehaviorSubject<T[]>;
   protected entities$: Observable<T[]>;
 
-  constructor(protected http: HttpClient) {
+  protected constructor(protected http: HttpClient) {
     this.entitiesSubject = new BehaviorSubject([]);
     this.entities$ = this.entitiesSubject.asObservable();
     this.baseUrl = this.getApiUrl();
@@ -37,6 +36,7 @@ export abstract class EntityService<T extends Keyable> {
     const ind = this.entitiesSubject.value.findIndex(e => e.id === entity.id);
     if (ind === -1 || !isEqual(this.entitiesSubject.value[ind], entity)) {
       // draft is of type Draft<T>[], which we cannot push a T to, unfortunately
+      // hence the `any` typing
       const nextState = produce(this.entitiesSubject.value, (draft: any) => {
         if (ind === -1) {
           draft.push(entity);

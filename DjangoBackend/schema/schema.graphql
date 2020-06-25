@@ -10,7 +10,8 @@ type Ensemble {
     id: ID!
     name: String!
     term: String!
-    isActive: Boolean!
+    startDate: Date!
+    endDate: Date
     """A list of all Students enrolled in this Ensemble"""
     members: [Student!]!
     """A list of all the raw Enrollments, for this ensemble"""
@@ -38,6 +39,7 @@ type Student {
     user: User!
     fullName: String!
     mNumber: String!
+    isActive: Boolean!
     assets: [Asset!]!
     enrollments: [Enrollment!]!
 }

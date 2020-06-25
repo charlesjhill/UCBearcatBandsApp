@@ -1,7 +1,7 @@
 from ariadne import ObjectType, make_executable_schema, snake_case_fallback_resolvers, UnionType, ScalarType, \
     load_schema_from_path
 from .bands.models import Instrument, Locker, UniformPiece, Ensemble, Student, Asset, Enrollment, Invoice, LineItem
-from django.db.models import Sum, QuerySet
+from django.db.models import Sum
 
 type_defs = load_schema_from_path("schema/")
 
@@ -50,9 +50,11 @@ def resolve_students(*_, id=None):
 def resolve_id_from_student(stud: Student, *args):
     return stud.user_id
 
+
 @student.field("fullName")
 def resolve_fullName(stud: Student, *args):
     return stud.user.full_name
+
 
 @instrument.field('invoices')
 @uniform.field('invoices')
@@ -122,7 +124,9 @@ def resolve_members(ensm: Ensemble, _):
 @instrument.field("enrollments")
 @uniform.field("enrollments")
 def resolve_enrollments(ensm: Ensemble, _):
-    return ensm.enrollments.all()
+    return ensm.enrollments \
+        .order_by('-ensemble__term', 'student__user__full_name') \
+        .all()
 
 
 @enrollment.field("assetAssignments")
@@ -133,7 +137,7 @@ def resolve_asset_assignments(enr: Enrollment, _):
 @instrument.field("students")
 @uniform.field("students")
 def resolve_students_using_asset(asset, _):
-    return Student.objects.filter(enrollments__asset_assignments__asset=asset)
+    return Student.objects.filter(enrollments__asset_assignments__asset=asset).distinct()
 
 
 @student.field("assets")

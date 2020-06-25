@@ -73,7 +73,6 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         model = models.Enrollment
         fields = ('id', 'ensemble', 'student', 'assets')
 
-
 class StudentSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
 
@@ -87,7 +86,7 @@ class EnsembleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Ensemble
-        fields = ('id', 'name', 'term', 'is_active', 'enrollments')
+        fields = ('id', 'name', 'term', 'start_date', 'end_date', 'enrollments')
 
 
 # Invoices

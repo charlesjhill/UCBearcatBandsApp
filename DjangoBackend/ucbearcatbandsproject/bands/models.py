@@ -1,10 +1,9 @@
+from datetime import date
 from django.db import models
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
-from django.utils import timezone
 from polymorphic.models import PolymorphicModel
 from ..settings import AUTH_USER_MODEL
-
 
 # Students and Ensembles
 class Student(models.Model):
@@ -21,6 +20,7 @@ class Student(models.Model):
             regex=r'[Mm]\d{8,8}',
             message='Please enter an M followed by 8 digits')]
     )
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return '{} [{}]'.format(self.user.full_name, self.m_number)
@@ -32,7 +32,8 @@ class Student(models.Model):
 class Ensemble(models.Model):
     name = models.CharField(max_length=255)
     term = models.CharField(max_length=50)
-    is_active = models.BooleanField(default=True)
+    start_date = models.DateField(default=date.today)
+    end_date = models.DateField(default=date.today)
     members = models.ManyToManyField(
         Student,
         through='Enrollment',
@@ -131,6 +132,8 @@ class AssetAssignment(models.Model):
     )
 
     # Use an is_active flag to track current vs. previous assignments
+    # I don't know if this is actually needed; How often do we need to re-assign an instrument
+    # within an ensemble AND track the previous assignments
     is_active = models.BooleanField(default=True)
 
     def validate_unique(self, exclude=None):
@@ -342,8 +345,7 @@ class LineItem(models.Model):
 
 
 class Invoice(models.Model):
-
-    date = models.DateField(default=timezone.now)
+    date = models.DateField(default=date.today)
     vendor = models.CharField(max_length=255, default="Buddy Rogers")
     invoice_number = models.CharField(max_length=255)
     notes = models.TextField(default="", blank=True)

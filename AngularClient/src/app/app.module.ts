@@ -24,6 +24,7 @@ import { ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { LockerInfoComponent } from './instrument-detail/locker-info/locker-info.component';
 import { GraphQLModule } from './graphql.module';
 import { AssignmentHistoryComponent } from './instrument-detail/assignment-history/assignment-history.component';
+import { CostHistoryComponent } from './instrument-detail/cost-history/cost-history.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { AssignmentHistoryComponent } from './instrument-detail/assignment-histo
         InstrumentDetailComponent,
         InstrumentInfoFormComponent,
         LockerInfoComponent,
-        AssignmentHistoryComponent
+        AssignmentHistoryComponent,
+        CostHistoryComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

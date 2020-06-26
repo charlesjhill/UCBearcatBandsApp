@@ -53,8 +53,11 @@
                     <mat-panel-title>Purchase and Maintenance History</mat-panel-title>
                 </mat-expansion-panel-header>
 
-                Lorem ipsum
+                <app-cost-history [instId]="instrument.id"></app-cost-history>
 
+                <mat-action-row>
+                  <button mat-flat-button color="accent">Add Maintenance</button>
+                </mat-action-row>
             </mat-expansion-panel>
         </mat-accordion>
     </div>

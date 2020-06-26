@@ -330,11 +330,11 @@ class LineItem(models.Model):
         """
         # See if there are any entries which prevent us from creating a line item
         # I.e. this asset already has a purchase lineitem
-        violations = LineItem.objects.filter(type=self.purchase, asset=self.asset)
-
-        # If we have any violations, we shouldn't allow this purchase receipt to pass
-        if violations.exists():
-            raise ValidationError('An asset can only have one purchase receipt')
+        if self.type == LineItem.purchase:
+            violations = LineItem.objects.filter(type=LineItem.purchase, asset=self.asset)
+            # If we have any violations, we shouldn't allow this purchase receipt to pass
+            if violations.exists():
+                raise ValidationError('An asset can only have one purchase receipt')
 
         return super().validate_unique(exclude=exclude)
 

@@ -11,7 +11,7 @@ interface EnrollmentVM {
   };
   ensemble: {
     name: string;
-    term: string;
+    endDate: string;  // In ISO format
   }
 }
 
@@ -39,7 +39,7 @@ export class InstrumentEnrollmentsGQL extends Query<Response> {
           }
           ensemble {
             name
-            term
+            endDate
           }
         }
       }
@@ -69,10 +69,12 @@ export class AssignmentHistoryComponent implements OnInit, OnDestroy {
       }).valueChanges.pipe(
         map(result => {
           // Group the enrolloments by Date
-          const instVM = result.data.instruments[0];
           const retObj: Record<string, EnrollmentVM[]> = { };
+          const instVM = result.data.instruments[0];
+
           for (const enr of instVM.enrollments) {
-            const term = enr.ensemble.term;
+            const endDateStr = enr.ensemble.endDate;
+            const term = (new Date(endDateStr)).getFullYear();
             if (!retObj[term]) {
               retObj[term] = [];
             }

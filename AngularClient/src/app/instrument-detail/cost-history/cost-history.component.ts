@@ -21,6 +21,7 @@ interface HistoryVM {
   purchase: LineItemVM[];
   maintenances: LineItemVM[];
   accumulatedCost: number;
+  costToReplace: number;
 }
 
 interface Response {
@@ -38,6 +39,7 @@ const CostHistoryForInstrument = gql`
         ...liInfo
       }
       accumulatedCost
+      costToReplace
     }
   }
 
@@ -66,7 +68,6 @@ export class CostHistoryComponent implements OnInit, OnDestroy {
   public fullReturnData: HistoryVM = null;
   public purchaseVM: LineItemVM;
   public maintenancesVM: LineItemVM[];
-  public costToReplace = 0;
 
   constructor(private apollo: Apollo, private http: HttpClient) { }
 
@@ -87,34 +88,10 @@ export class CostHistoryComponent implements OnInit, OnDestroy {
       this.purchaseVM = retData.purchase?.[0];
       this.maintenancesVM = retData.maintenances
         .sort((a, b) => a.invoice.date.localeCompare(b.invoice.date));
-      this.getCostToReplace(this.purchaseVM);
     });
   }
 
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
-  }
-
-  public getCostToReplace(purchase: LineItemVM): void {
-    if (!purchase) {
-      return;
-    }
-    const apiUrl = 'https://www.statbureau.org/calculate-inflation-price-json';
-
-    let params = new HttpParams();
-    params = params.append('country', 'united-states');
-    params = params.append('start', purchase.invoice.date);
-    params = params.append('end', (new Date(Date.now())).toISOString());
-    params = params.append('amount', purchase.cost.toString());
-    params = params.append('format', 'false');
-
-    this.http.get<any>(apiUrl, {
-      params,
-      responseType: 'json'
-    }).pipe(
-      map(str => JSON.parse(str))
-    ).subscribe(val => {
-      this.costToReplace = val;
-    });
   }
 }

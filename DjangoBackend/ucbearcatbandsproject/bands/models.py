@@ -1,4 +1,6 @@
 from datetime import date
+from decimal import Decimal
+
 from django.db import models
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
@@ -249,6 +251,12 @@ class Instrument(Asset):
         valvedTrombone: 15
     }
 
+    # This the average yearly inflation on the cost of Musical Instruments over the period May 2010 - May 2020 period
+    # This figure is sourced from https://fred.stlouisfed.org/series/PCU3399923399927
+    # It would make sense to trigger this to be updated from time to time, but it is probably good enough
+    # for estimations of cost to replace for the time being
+    YEARLY_INFLATION_PCT = 0.0197
+
     kind = models.CharField(max_length=100, choices=INSTRUMENT_CHOICES, default=altoClarinet)
     make = models.CharField(max_length=255)
     model = models.CharField(max_length=255)
@@ -267,6 +275,21 @@ class Instrument(Asset):
     def save(self, *args, **kwargs):
         self.name = self.get_name()
         super().save(*args, **kwargs)
+
+    @property
+    def cost_to_replace(self):
+        purchases = list(self.line_items.filter(type=LineItem.purchase))
+        if len(purchases) == 0:
+            return 0
+
+        li: LineItem = purchases[0]
+        date_of_purchase = li.invoice.date
+        cost_of_purchase = li.cost
+
+        num_years_since_purchase = (date.today() - date_of_purchase).days / 365.25
+
+        cost_multiplier = num_years_since_purchase * Instrument.YEARLY_INFLATION_PCT
+        return float(cost_of_purchase * Decimal(1 + cost_multiplier))
 
     class Meta:
         constraints = [

@@ -28,8 +28,7 @@
 
   <p><b>Accumulated Cost: </b> {{ fullReturnData?.accumulatedCost | currency:'USD' }}</p>
   <p><b>Estimated Resale Value: </b> {{ 0 | currency:'USD' }}</p>
-  <p><b>Estimated Cost to Replace: </b> {{ costToReplace | currency:'USD'}}</p>
-  <small>Inflation data provided by <a href="https://www.statbureau.org">www.statbureau.org</a></small>
+  <p><b>Estimated Cost to Replace: </b> {{ fullReturnData?.costToReplace | currency:'USD'}}</p>
   
 </div>
 <ng-template #noData>

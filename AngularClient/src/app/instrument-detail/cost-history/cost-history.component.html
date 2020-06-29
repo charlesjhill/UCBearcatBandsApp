@@ -1,26 +1,37 @@
-<h4>PURCHASE</h4>
-<ul>
-  <li *ngIf="purchaseVM">
-    {{ purchaseVM.invoice.date | date:'shortDate' }} - {{ purchaseVM.cost | currency:'USD' }}
-    <ul *ngIf="purchaseVM.notes || purchaseVM.invoice.notes">
+<div *ngIf="purchaseVM || maintenancesVM?.length; else noData">
+  <div *ngIf="purchaseVM">
+    <h4>PURCHASE</h4>
+    <ul>
       <li>
-        <small>{{ purchaseVM.notes || purchaseVM.invoice.notes }}</small>
+        {{ purchaseVM.invoice.date | date:'shortDate' }} - {{ purchaseVM.cost | currency:'USD' }}
+        <ul *ngIf="purchaseVM.notes || purchaseVM.invoice.notes">
+          <li>
+            <small>{{ purchaseVM.notes || purchaseVM.invoice.notes }}</small>
+          </li>
+        </ul>
       </li>
     </ul>
-  </li>
-</ul>
-<h4>MAINTENANCE</h4>
-<ul>
-  <li *ngFor="let item of maintenancesVM">
-    {{ item.invoice.date | date:'shortDate' }} - {{ item.cost | currency:'USD' }}
-    <ul *ngIf="item.notes || item.invoice.notes">
-      <li>
-        <small>{{ item.notes || item.invoice.notes }}</small>
+  </div>
+  <div *ngIf="maintenancesVM?.length">
+    <h4>MAINTENANCE</h4>
+    <ul>
+      <li *ngFor="let item of maintenancesVM">
+        {{ item.invoice.date | date:'shortDate' }} - {{ item.cost | currency:'USD' }}
+        <ul *ngIf="item.notes || item.invoice.notes">
+          <li>
+            <small>{{ item.notes || item.invoice.notes }}</small>
+          </li>
+        </ul>
       </li>
     </ul>
-  </li>
-</ul>
-<p><b>Accumulated Cost: </b> {{ fullReturnData?.accumulatedCost | currency:'USD' }}</p>
-<!-- Placeholders below -->
-<p><b>Estimated Resale Value: </b> {{ 0 | currency:'USD' }}</p>
-<p><b>Estimated Cost to Replace: </b> {{ 0 | currency:'USD'}}</p>
+  </div>
+
+  <p><b>Accumulated Cost: </b> {{ fullReturnData?.accumulatedCost | currency:'USD' }}</p>
+  <p><b>Estimated Resale Value: </b> {{ 0 | currency:'USD' }}</p>
+  <p><b>Estimated Cost to Replace: </b> {{ costToReplace | currency:'USD'}}</p>
+  <small>Inflation data provided by <a href="https://www.statbureau.org">www.statbureau.org</a></small>
+  
+</div>
+<ng-template #noData>
+  <p>This item has no purchase or maintenance history</p>
+</ng-template>

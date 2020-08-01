@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from ucbearcatbandsproject.keyconfig import Database, Secrets
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'q_m-h+uudmjczt5j%-3@vmok^_@j&_g=_6x+^yw55gczi4l$6h'
+SECRET_KEY = Secrets.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -120,18 +121,31 @@ WSGI_APPLICATION = 'ucbearcatbandsproject.wsgi.application'
 #  you need to add it's domain/port to this list.
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',  # The django-API
-    'http://localhost:4200',  # The Angular frontend
+    'http://localhost:4200',  # The Angular frontend (ng serve)
+    'http://localhost:8080',  # The Angular frontend (docker)
 ]
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if Database.TYPE == 'postgres':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': Database.NAME,
+            'USER': Database.USER,
+            'PASSWORD': Database.PASSWORD,
+            'HOST': Database.HOST,
+            'PORT': Database.PORT,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

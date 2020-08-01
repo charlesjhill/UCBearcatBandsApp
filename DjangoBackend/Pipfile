@@ -18,6 +18,7 @@ django-rest-polymorphic = "*"
 ariadne = "*"
 django-spa = "*"
 whitenoise = "*"
+psycopg2 = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"

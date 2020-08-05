@@ -4,8 +4,11 @@ LABEL maintainer="Charles Hill <chasehill70@gmail.com>"
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
+RUN apt-get update && apt-get install -y netcat
+
 # Install dependencies
 COPY requirements.txt /
+RUN pip install --upgrade pip
 RUN pip install -r /requirements.txt
 
 RUN mkdir /code
@@ -16,8 +19,4 @@ COPY . /code/
 
 EXPOSE 8000
 
-# TODO: This wasn't working earlier, but the gist was to wait until
-#       postgres had spun up to then make migrations, migrate, 
-#       and maybe collect static files.
-# RUN apt-get update && apt-get install -y netcat
-# ENTRYPOINT [ "/code/entrypoint.sh" ]
+ENTRYPOINT [ "/code/entrypoint.sh" ]

@@ -9,7 +9,7 @@ import { mergeMap, reduce, map, switchMap, filter, first } from 'rxjs/operators'
 import { Enrollment, Ensemble } from '../_models';
 import { EnrollmentService, EnsembleService, SnackBarService, StudentService } from '../_services';
 import { AssignStudentsComponent } from './assign-students/assign-students.component';
-
+import type { Student } from '../_models';
 
 @Component({
   selector: 'app-ensemble-detail',
@@ -122,5 +122,9 @@ export class EnsembleDetailComponent implements OnInit {
 
   getAssignedOtherAssets(enrollment: Enrollment): any[] {
     return enrollment.assets.filter(a => a.resourcetype !== 'Instrument');
+  }
+
+  getStudentEmail(enrollment: Enrollment): string {
+    return `mailto:${(enrollment.student as Student).user.email}`
   }
 }

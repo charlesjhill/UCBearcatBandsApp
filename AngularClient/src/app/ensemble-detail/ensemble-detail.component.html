@@ -38,6 +38,7 @@
                             <mat-icon>menu</mat-icon>
                         </button>
                         <mat-menu #actionMenu>
+                            <a mat-menu-item [href]="getStudentEmail(enrollment)">EMAIL</a>
                             <button mat-menu-item>DETAILS</button>
                             <button mat-menu-item style="color: rgb(255, 0, 0);"
                                 (click)="removeStudent(enrollment.id)">REMOVE</button>
@@ -56,7 +57,7 @@
     <!-- To keep admins from accidently deleting an ensemble, we'll lock this behind the "danger zone" -->
     <div class="row mt-2">
         <div class="col">
-            <mat-slide-toggle color="warn" (change)="toggleDangerZone($event)" class="mx-2">Enable Danger Zone?
+            <mat-slide-toggle color="warn" (change)="toggleDangerZone($event)" class="mx-2">Enable Dangerous Actions
             </mat-slide-toggle>
             <button mat-flat-button color="warn" [disabled]="!enableDangerZone"
                 (click)="deleteEnsemble()">DELETE</button>

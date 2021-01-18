@@ -13,14 +13,14 @@ import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.compo
 import { HomeComponent } from './home';
 import { InstrumentDetailComponent } from './instrument-detail/instrument-detail.component';
 import { InstrumentInfoFormComponent } from './instrument-detail/instrument-info-form/instrument-info-form.component';
-import { InstrumentAssignDialog, InstrumentsComponent, OverviewDialog } from './instruments/instruments.component';
+import { InstrumentAssignDialog, InstrumentsComponent, OverviewDialog } from './instruments';
 import { LoginComponent } from './login';
 import { MaterialsModule } from './materials-module/materials-module.module';
 import { RegisterComponent } from './register';
 import { StudentPageComponent } from './student-page/student-page.component';
 import { CreateUniformDialog, UniformsComponent } from './uniforms/uniforms.component';
 import { AlertComponent } from './_components';
-import { ErrorInterceptor, JwtInterceptor } from './_helpers';
+import { ErrorInterceptor, JwtInterceptor, CsrfInterceptor } from './_helpers';
 import { LockerInfoComponent } from './instrument-detail/locker-info/locker-info.component';
 import { GraphQLModule } from './graphql.module';
 import { AssignmentHistoryComponent } from './instrument-detail/assignment-history/assignment-history.component';
@@ -64,6 +64,7 @@ import { CostHistoryComponent } from './instrument-detail/cost-history/cost-hist
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true },
     ],
     bootstrap: [AppComponent]
 })

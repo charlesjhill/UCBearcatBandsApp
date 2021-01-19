@@ -13,7 +13,9 @@ export class InstrumentInfoFormComponent implements OnInit {
   constructor(private fb: FormBuilder) { }
 
   @Input() instrument: Instrument;
+  @Input() editTogglable = true;
   @Output() submitted = new EventEmitter<any>();
+  @Output() statusChange = new EventEmitter<string>();
   public readonly kinds = Instrument.possibleKinds;
   public readonly conditions: string[] = ['new', 'good', 'fair', 'poor', 'bad', 'unusable'];
 
@@ -29,10 +31,19 @@ export class InstrumentInfoFormComponent implements OnInit {
       serial_number: [this.instrument.serial_number],
       uc_tag_number: [this.instrument.uc_tag_number]
     });
-    this.instrumentForm.disable(); // We want the form to disabled to begin with
+
+    if (this.editTogglable) {
+      // We want the form to disabled to begin with
+      this.instrumentForm.disable();
+    }
+
+    this.instrumentForm.statusChanges.subscribe(
+      status => this.statusChange.emit(status)
+    );
   }
 
-  public editCheckboxToggled() {
+  /** Toggle if the form should be editable*/
+  public toggleEditable() {
     if (this.instrumentForm.enabled) {
       this.instrumentForm.disable();
       // TODO: Decide if "reset form state on disable edit checkbox" is a good idea
@@ -41,5 +52,16 @@ export class InstrumentInfoFormComponent implements OnInit {
     } else {
       this.instrumentForm.enable();
     }
+  }
+
+  /** Get if the form is ready to submit */
+  get isReadyToSubmit() {
+
+    return this.instrumentForm.valid
+  }
+
+  /** Get the current value of the form */
+  get value() {
+    return this.instrumentForm.value
   }
 }

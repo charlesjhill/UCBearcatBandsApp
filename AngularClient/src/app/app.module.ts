@@ -12,7 +12,7 @@ import { AssignStudentsComponent } from './ensemble-detail/assign-students/assig
 import { EnsembleDetailComponent } from './ensemble-detail/ensemble-detail.component';
 import { HomeComponent } from './home';
 import { InstrumentDetailComponent } from './instrument-detail/instrument-detail.component';
-import { InstrumentInfoFormComponent } from './instrument-detail/instrument-info-form/instrument-info-form.component';
+import { InstrumentInfoFormComponent } from './_forms';
 import { InstrumentAssignDialog, InstrumentsComponent, OverviewDialog } from './instruments';
 import { LoginComponent } from './login';
 import { MaterialsModule } from './materials-module/materials-module.module';

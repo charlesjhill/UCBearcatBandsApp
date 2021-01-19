@@ -1,5 +1,3 @@
-import type { Locker } from '.';
-
 export class Instrument {
 
   /** A list of the possible kinds of Instruments we can have. TODO: Fetch these from the server */

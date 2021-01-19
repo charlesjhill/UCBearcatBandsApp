@@ -1,10 +1,12 @@
-<mat-slide-toggle [checked]="instrumentForm.enabled" (toggleChange)="editCheckboxToggled()" [color]="'primary'">
-  Edit
-</mat-slide-toggle>
+<ng-container *ngIf="editTogglable">
+  <mat-slide-toggle [checked]="instrumentForm.enabled" (toggleChange)="toggleEditable()" color='primary'>
+    Edit
+  </mat-slide-toggle>
+</ng-container>
 
 <form class="mt-2" [formGroup]="instrumentForm">
   <mat-form-field>
-    <mat-select formControlName="kind" placeholder="Kind">
+    <mat-select formControlName="kind" placeholder="Kind" required>
       <mat-option *ngFor="let kind of kinds" [value]="kind">
         {{kind | titlecase}}
       </mat-option>
@@ -12,15 +14,15 @@
     <mat-error *ngIf="instrumentForm.controls.kind.invalid">Kind is required</mat-error>
   </mat-form-field>
   <mat-form-field>
-    <input matInput formControlName="make" placeholder="Make">
+    <input matInput formControlName="make" placeholder="Make" required>
     <mat-error *ngIf="instrumentForm.controls.make.invalid">Make is required</mat-error>
   </mat-form-field>
   <mat-form-field>
-    <input matInput formControlName="model" placeholder="Model">
+    <input matInput formControlName="model" placeholder="Model" required>
     <mat-error *ngIf="instrumentForm.controls.model.invalid">Model is required</mat-error>
   </mat-form-field>
   <mat-form-field>
-    <mat-select formControlName="condition" placeholder="Condition">
+    <mat-select formControlName="condition" placeholder="Condition" required>
       <mat-option *ngFor="let condition of conditions" [value]="condition">
         {{condition | titlecase}}
       </mat-option>
@@ -28,7 +30,7 @@
     <mat-error *ngIf="instrumentForm.controls.condition.invalid">Condition is required</mat-error>
   </mat-form-field>
   <mat-form-field>
-    <input matInput formControlName="serial_number" placeholder="Serial Number">
+    <input matInput formControlName="serial_number" placeholder="Serial Number" required>
     <mat-error *ngIf="instrumentForm.controls.serial_number.invalid">Serial Number is required</mat-error>
   </mat-form-field>
   <mat-form-field>

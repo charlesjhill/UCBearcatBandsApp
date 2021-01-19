@@ -103,63 +103,34 @@ export class InstrumentsComponent implements OnInit {
 
 @Component({
   selector: 'OverviewDialog',
-  templateUrl: 'dialog.html',
+  template: `
+    <h1 mat-dialog-title>{{ title | titlecase }}</h1>
+    <div mat-dialog-content>
+      <p>{{ detail }}</p>
+      <app-instrument-info-form #form [instrument]="this.instrument" [editTogglable]="false"></app-instrument-info-form>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-flat-button (click)="save(form.value)" [disabled]="!form.isReadyToSubmit" color="primary">Save Instrument</button>
+    </div>
+  `
 })
-export class OverviewDialog implements OnInit {
-  form: FormGroup;
-  kind: string;
-  make: string;
-  model: string;
-  serial_number: string;
-  uc_tag_number: string;
-  uc_asset_number: any;
-  condition: string;
-  readonly: boolean;
+export class OverviewDialog {
+  instrument: Instrument;
   title: string;
   detail: string;
 
-  conditions: string[] = ['new', 'good', 'fair', 'poor', 'bad', 'unusable'];
-  kinds: string[] = Instrument.possibleKinds;
-
   constructor(
-    private fb: FormBuilder,
     public dialogRef: MatDialogRef<OverviewDialog>,
     @Inject(MAT_DIALOG_DATA) data)
   {
-    this.kind = data.instrument.kind;
-    this.make = data.instrument.make;
-    this.model = data.instrument.model;
-    this.serial_number = data.instrument.serial_number;
-    this.uc_tag_number = data.instrument.uc_tag_number;
-    this.uc_asset_number = data.instrument.uc_asset_number;
-    this.condition = data.instrument.condition;
-
-    this.readonly = data.readonly || false;
+    this.instrument = data.instrument;
     this.title = data.title || 'Add Instrument';
     this.detail = data.detail || 'Input data into the fileds to create an Instrument';
   }
 
-  onNoClick() {
-    // Could we add the instrument service call here?
-    this.dialogRef.close();
+  save(value) {
+    this.dialogRef.close(value);
   }
-
-  save() {
-    this.dialogRef.close(this.form.value);
-  }
-
-  ngOnInit() {
-    this.form = this.fb.group({
-      kind: [{ value: this.kind, disabled: this.readonly }, []],
-      make: [{ value: this.make, disabled: this.readonly }, []],
-      model: [{ value: this.model, disabled: this.readonly }, []],
-      condition: [{ value: this.condition, disabled: this.readonly }, []],
-      uc_asset_number: [{ value: this.uc_asset_number, disabled: this.readonly }, []],
-      serial_number: [{ value: this.serial_number, disabled: this.readonly }, []],
-      uc_tag_number: [{ value: this.uc_tag_number, disabled: this.readonly }, []]
-    });
-  }
-
 }
 
 

@@ -13,8 +13,8 @@
 
                 <mat-action-row>
                     <button mat-flat-button color="primary" type="submit"
-                        (click)="instrumentDetailsEdited(infoFormComp.instrumentForm.valid ? infoFormComp.instrumentForm.value : undefined)"
-                        [disabled]="infoFormComp.instrumentForm.disabled || infoFormComp.instrumentForm.invalid">Submit</button>
+                        (click)="instrumentDetailsEdited(infoFormComp.value)"
+                        [disabled]="!infoFormComp.isReadyToSubmit">Save Changes</button>
                 </mat-action-row>
             </mat-expansion-panel>
             <!-- Current Locker Location -->

@@ -6,7 +6,7 @@
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                             <div *ngIf="f.email.errors.required">Email is required</div>
                             <div *ngIf="f.email.errors.email">Input should be a valid email address</div>
@@ -26,7 +26,7 @@
                         </button>
                         <a mat-stroked-button routerLink="/register" class="btn btn-link">Register</a>
                     </div>
-                </form>           
+                </form>
             </div>
         </div>
     </div>

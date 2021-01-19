@@ -1,4 +1,4 @@
-<div class="container-fluid mat-typography">
+<div class="container mat-typography">
     <div *ngIf="instrument; else loading">
         <h1 class="mat-h1 mb-1">{{ instrument.name }}</h1>
         <mat-accordion multi=true>
@@ -30,7 +30,7 @@
                         <button mat-flat-button color="warn" type="button">Remove from Locker</button>
                     </ng-container>
                     <ng-template #hasNoLocker>
-                        <!-- Wire this up -->
+                        <!-- TODO: Wire this up -->
                         <button mat-flat-button color="primary" type=button>Add to Locker</button>
                     </ng-template>
                 </mat-action-row>

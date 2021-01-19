@@ -193,13 +193,10 @@ export class InstrumentAssignDialog implements OnInit {
   /** Get the list of ensembles from the ensemble service, storing them in this.ensembles */
   private getEnsembles() {
     this.ensembleService.getAll().subscribe(
-      // the first argument is a function which runs on success
       data => {
         this.ensembles = data;
       },
-      // the second argument is a function which runs on error
       err => console.error(err),
-      // the third argument is a function which runs on completion
       () => console.log('Ensembles done loading')
     );
   }
@@ -207,13 +204,10 @@ export class InstrumentAssignDialog implements OnInit {
   /** Get the list of students from the student service, storing them in this.students */
   private getStudents() {
     this.studentService.currentStudents$.subscribe(
-      // the first argument is a function which runs on success
       data => {
         this.students = data;
       },
-      // the second argument is a function which runs on error
       err => console.error(err),
-      // the third argument is a function which runs on completion
       () => console.log('Students done loading')
     );
     this.studentService.update(); // Force a reload of our students

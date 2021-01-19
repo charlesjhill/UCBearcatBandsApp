@@ -1,7 +1,8 @@
-<div class="container-fluid">
+<div class="container">
   <div class="row mb-2">
-    <div class="col">
+    <div class="col button-row">
         <button mat-flat-button color="accent" (click)="openAddForm()">Add Instrument</button>
+        <button mat-flat-button color="primary">Add Invoice</button>
     </div>
   </div>
   <div class="mat-elevation-z8">
@@ -10,33 +11,33 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Tag Number </th>
         <td mat-cell *matCellDef="let instrument"> {{instrument.uc_tag_number}} </td>
       </ng-container>
-     
+
       <ng-container matColumnDef="kind">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Kind </th>
         <td mat-cell *matCellDef="let instrument"> {{instrument.kind | titlecase}}</td>
       </ng-container>
-      
+
       <ng-container matColumnDef="condition" >
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Condition </th>
         <td mat-cell *matCellDef="let instrument"> {{instrument.condition | titlecase}}</td>
       </ng-container>
-      
+
       <ng-container matColumnDef="assign">
         <th mat-header-cell *matHeaderCellDef> Assigned To </th>
         <td mat-cell *matCellDef="let instrument">
           {{assignedString[instrument.id]}}
         </td>
       </ng-container>
-      
+
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
-        <td mat-cell *matCellDef="let instrument">
+        <td mat-cell *matCellDef="let instrument" class="button-row">
           <a mat-stroked-button [routerLink]="[instrument.id]">Details</a>
           <button mat-flat-button color="warn" (click)="onDelete(instrument.id)">Delete</button>
         </td>
       </ng-container>
-      
-      
+
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>

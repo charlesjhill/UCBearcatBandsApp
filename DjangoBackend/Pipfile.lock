@@ -212,6 +212,7 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==2.30.0"
+
         },
         "requests-oauthlib": {
             "hashes": [
@@ -252,6 +253,7 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==2.0.2"
+
         }
     },
     "develop": {
